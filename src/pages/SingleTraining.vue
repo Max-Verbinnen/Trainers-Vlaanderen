@@ -20,8 +20,8 @@
         <p><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
         <p><span id="subtitle">Hoofdthema</span>: {{training.hoofdthema}}</p>
         <p><span id="subtitle">Subthema</span>: {{training.subthema}}</p>
-        <p v-if="training.variaties"><span id="subtitle">Subthema</span>: {{training.variaties}}</p>
-        <p v-if="training.doorschuifsysteem"><span id="subtitle">Subthema</span>: {{training.doorschuifsysteem}}</p>
+        <p v-if="training.variaties"><span id="subtitle">Variaties</span>: {{training.variaties}}</p>
+        <p v-if="training.doorschuifsysteem"><span id="subtitle">Doorschuifsysteem</span>: {{training.doorschuifsysteem}}</p>
       </div>
       
       <div class="print">
