@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="home-page">
     <Header />
     <keep-alive>
       <FilterModal
@@ -120,6 +120,10 @@ export default {
 </script>
 
 <style scoped>
+
+#home-page {
+  min-height: 110vh;
+}
 
 .intro h2 {
   max-width: 40rem;

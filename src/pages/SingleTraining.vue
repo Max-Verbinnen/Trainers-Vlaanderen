@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="single-training-page">
     <Header />
     <section id="training">
       <div id="print">
@@ -68,6 +68,10 @@ export default {
 </script>
 
 <style scoped>
+
+#single-training-page {
+  min-height: 110vh;
+}
 
 #training {
   margin-bottom: 4.5rem;

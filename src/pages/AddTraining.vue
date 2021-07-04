@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="add-training-page">
     <Header />
     <section id="add-training">
       <h2>Deel je trainingen door het formulier in te vullen</h2>

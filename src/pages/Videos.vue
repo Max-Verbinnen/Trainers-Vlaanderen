@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="videos-page">
     <Header />
     <section id="videos">
       <h2>YouTube-video's van trainingen</h2>
@@ -83,6 +83,10 @@ export default {
 </script>
 
 <style scoped>
+
+#videos-page {
+  min-height: 110vh;
+}
 
 h2 {
   margin-bottom: 2rem;
