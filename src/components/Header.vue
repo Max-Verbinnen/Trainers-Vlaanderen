@@ -1,0 +1,86 @@
+<template>
+  <header>
+    <nav>
+      <h1><router-link to="/" exact>Trainers Vlaanderen</router-link></h1>
+      <ul>
+        <li><router-link to="/videos" exact>Trainingen op YouTube</router-link></li>
+        <li><router-link to="/toevoegen" exact>Voeg je eigen training toe</router-link></li>
+      </ul>
+    </nav>
+  </header>
+</template>
+
+<script>
+
+
+
+</script>
+
+<style scoped>
+
+header {
+  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5rem;
+}
+
+nav {
+  margin: 0 auto;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+ul li {
+  display: inline-block;
+  margin: 0 2rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: initial;
+}
+
+h1 a {
+  color: var(--primary-green);
+}
+
+a.router-link-active:not(h1 a) {
+  position: relative;
+}
+
+a.router-link-active:not(h1 a)::before {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 50%;
+  height: 2px;
+  background: var(--primary-green);
+  transform: translate(-50%);
+}
+
+@media screen and (max-width: 1020px) {
+  nav {
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 6rem;
+  }
+  ul li {
+    margin: 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  ul li {
+    display: block;
+    margin: 0;
+    text-align: center;
+  }
+
+  ul li:nth-child(2) {
+    margin-top: 0.25rem;
+  }
+}
+
+</style>

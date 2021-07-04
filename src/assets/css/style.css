@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+  --primary-green: #7bbb53;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, textarea {
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  position: relative;
+}
+
+body.modal-open {
+  height: 100vh;
+  overflow-y: hidden;
+  padding-right: 15px;
+}
+
+section, nav {
+  width: 85%;
+  margin: 0 auto;
+}
+
+section h2 {
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.btn {
+  text-decoration: none;
+  color: initial;
+  background-color: var(--primary-green);
+  padding: 0.75rem 1.25rem;
+  color: white;
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 460px) {
+  html {
+    font-size: 80%;
+  }
+  section {
+    width: 90%;
+  }
+}
+
+
+/* Animations */
+@keyframes bounce {
+	0%, 100%, 20%, 50%, 80% {
+		-webkit-transform: translateY(0);
+		-ms-transform:     translateY(0);
+		transform:         translateY(0);
+	}
+	40% {
+		-webkit-transform: translateY(-15px);
+		-ms-transform:     translateY(-15px);
+		transform:         translateY(-15px);
+	}
+	60% {
+		-webkit-transform: translateY(-7px);
+		-ms-transform:     translateY(-7px);
+		transform:         translateY(-7px);
+	}
+}
+
+.main-cta {
+  padding-right: 2rem;
+}
+
+.bounce-animation {
+  position: absolute;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.main-cta:hover .bounce-animation {
+  animation-name: bounce;
+  -moz-animation-name: bounce;
+}
