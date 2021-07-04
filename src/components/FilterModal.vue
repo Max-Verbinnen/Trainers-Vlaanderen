@@ -165,6 +165,7 @@ export default {
   border-radius: 0.5rem;
   background: #fff;
   padding: 2rem;
+  overflow-y: scroll;
 }
 
 form {
@@ -209,6 +210,32 @@ h3 {
   border: none;
   cursor: pointer;
   font-size: 1.1rem;
+}
+
+@media screen and (max-width: 1100px) {
+  form {
+    flex-direction: column;
+  }
+  .modal {
+    width: 500px;
+  }
+  .column {
+    margin-bottom: 1rem;
+  }
+  h3 {
+    margin-bottom: 0.5rem;
+  }
+  .apply-filters {
+    bottom: initial;
+    right: initial;
+    padding-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .modal {
+    width: 300px;
+  }
 }
 
 </style>
