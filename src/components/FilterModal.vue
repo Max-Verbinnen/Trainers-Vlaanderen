@@ -228,13 +228,16 @@ h3 {
   .apply-filters {
     bottom: initial;
     right: initial;
-    padding-bottom: 2rem;
+  }
+  .btn {
+    margin-bottom: 2rem;
   }
 }
 
 @media screen and (max-width: 540px) {
   .modal {
     width: 300px;
+    height: 500px;
   }
 }
 
