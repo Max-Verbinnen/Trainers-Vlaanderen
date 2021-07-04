@@ -127,6 +127,12 @@ img.training {
   }
 }
 
+@media screen and (max-width: 560px) {
+  .uitleg img {
+    width: 280px;
+  }
+}
+
 .print button {
   outline: none;
   border: none;
