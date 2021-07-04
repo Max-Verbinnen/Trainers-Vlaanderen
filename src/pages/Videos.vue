@@ -1,6 +1,5 @@
 <template>
   <div id="videos-page">
-    <Header />
     <section id="videos">
       <h2>YouTube-video's van trainingen</h2>
       <div class="videos-categories">
@@ -28,12 +27,11 @@
 
 <script>
 import firebase from "firebase"
-import Header from "../components/Header.vue"
 
 export default {
   data() {
     return {
-      themas: ["Thema 1", "Thema 2", "Thema 3", "Thema 4"],
+      themas: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down"],
       input: {
         url: "",
         selectedThema: ""
@@ -71,12 +69,12 @@ export default {
         });
     }
   },
-  components: {
-    Header
-  },
   created() {
     document.title = "Trainers Vlaanderen | YouTube video's";
     this.getVideos();
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   }
 }
 

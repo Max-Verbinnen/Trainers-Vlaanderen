@@ -1,6 +1,5 @@
 <template>
   <div id="add-training-page">
-    <Header />
     <section id="add-training">
       <h2>Deel je trainingen door het formulier in te vullen</h2>
       <form @submit.prevent="handleSubmit" v-if="!submitted">
@@ -145,7 +144,6 @@
 
 <script>
 import firebase from "firebase"
-import Header from "../components/Header.vue"
 
 export default {
   data() {
@@ -197,11 +195,11 @@ export default {
       }
     }
   },
-  components: {
-    Header
-  },
   created() {
     document.title = "Trainers Vlaanderen | Deel je eigen trainingen"
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   }
 }
 

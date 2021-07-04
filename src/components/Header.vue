@@ -19,8 +19,13 @@
 <style scoped>
 
 header {
-  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.1);
   margin-bottom: 5rem;
+  z-index: 100;
+  background: white;
 }
 
 nav {
@@ -52,7 +57,7 @@ a.router-link-active:not(h1 a) {
 a.router-link-active:not(h1 a)::before {
   content: "";
   position: absolute;
-  bottom: -5px;
+  bottom: -4px;
   left: 50%;
   width: 50%;
   height: 2px;

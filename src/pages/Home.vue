@@ -1,6 +1,5 @@
 <template>
   <div id="home-page">
-    <Header />
     <keep-alive>
       <FilterModal
       v-if="isFilterOpen"
@@ -55,7 +54,6 @@
 </template>
 
 <script>
-import Header from "../components/Header.vue"
 import FilterModal from "../components/FilterModal.vue"
 
 export default {
@@ -84,7 +82,6 @@ export default {
     }
   },
   components: {
-    Header,
     FilterModal
   },
   created() {
@@ -100,6 +97,9 @@ export default {
         this.trainings = trainingsArray;
         this.trainingsCopy = [...this.trainings];
       });
+  },
+  mounted() {
+    window.scrollTo(0, 0);
   },
   filters: {
     shorten(value) {

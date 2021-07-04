@@ -1,6 +1,5 @@
 <template>
   <div id="single-training-page">
-    <Header />
     <section id="training">
       <div id="print">
         <h2>{{training.titel}}</h2>
@@ -35,7 +34,6 @@
 </template>
 
 <script>
-import Header from "../components/Header.vue"
 import {printPage} from "../utils"
 
 export default {
@@ -55,8 +53,8 @@ export default {
         document.title = "Trainers Vlaanderen | " + this.training.titel;
       });
   },
-  components: {
-    Header
+  mounted() {
+    window.scrollTo(0, 0);
   },
   filters: {
     destructure(value) {
