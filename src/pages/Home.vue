@@ -218,7 +218,7 @@ button.filter {
 
 .trainer {
   position: absolute;
-  bottom: 6rem;
+  bottom: 5rem;
   display: flex;
   font-weight: 500;
 }
@@ -229,7 +229,7 @@ button.filter {
 
 .tags {
   position: absolute;
-  bottom: 2rem;
+  bottom: 1rem;
   font-size: 0.8rem;
   padding-right: 1.5rem;
 }
