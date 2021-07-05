@@ -2,6 +2,15 @@
   <div id="videos-page">
     <section id="videos">
       <h2>YouTube-video's van trainingen</h2>
+      <form class="add-videos" @submit.prevent="handleSubmit">
+        <input type="url" v-model.trim="input.url" placeholder="Plak hier de URL naar de YouTube video" required>
+        <select v-model="input.selectedThema" required>
+          <option disabled value="">Kies één thema</option>
+          <option v-for="thema in themas" :key="thema">{{thema}}</option>
+        </select>
+        <input type="submit" value="Voeg toe" class="btn">
+        <p v-if="submitted">De video is toegevoegd bij het juiste thema.</p>
+      </form>
       <div class="videos-categories">
         <div class="themas">
           <div class="thema" v-for="thema in themas" :key="thema">
@@ -12,15 +21,6 @@
           </div>
         </div>
       </div>
-      <form class="add-videos" @submit.prevent="handleSubmit">
-        <input type="url" v-model.trim="input.url" placeholder="Plak hier de URL naar de YouTube video" required>
-        <select v-model="input.selectedThema" required>
-          <option disabled value="">Kies één thema</option>
-          <option v-for="thema in themas" :key="thema">{{thema}}</option>
-        </select>
-        <input type="submit" value="Voeg toe" class="btn">
-        <p v-if="submitted">De video is toegevoegd bij het juiste thema.</p>
-      </form>
     </section>
   </div>
 </template>

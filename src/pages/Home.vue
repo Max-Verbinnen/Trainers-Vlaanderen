@@ -177,7 +177,7 @@ button.filter {
 
 .container .card {
   position: relative;
-  max-width: 20rem;
+  width: 20rem;
   height: 26.25rem;
   background: rgb(246, 253, 243);
   margin: 3.5rem 1.25rem;
@@ -192,15 +192,16 @@ button.filter {
 
 .container .card .imgBx {
   position: relative;
-  width: 16.25rem;
   top: -3.75rem;
   left: 1.875rem;
   z-index: 1;
 }
 
 .container .card .imgBx img {
-  max-width: 100%;
   border-radius: 0 0 0.5rem 0.5rem;
+  width: 16.25rem;
+  max-height: 12.5rem;
+  object-fit: cover;
 }
 
 .container .card .content {
