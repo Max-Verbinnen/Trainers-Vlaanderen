@@ -86,8 +86,8 @@
           </select>
         </div>
         <div class="input-group subthema" v-if="training.hoofdthema === 'Techniek'">
-          <label id="info">Subthema*</label><br>
-          <select id="fill" v-model="training.subthema" required>
+          <label id="info">Subthema</label><br>
+          <select id="fill" v-model="training.subthema">
             <option disabled value="">Kies één subthema</option>
             <option>Frontaal</option>
             <option>Schuin-frontaal</option>
@@ -96,8 +96,8 @@
           </select>
         </div>
         <div class="input-group subthema" v-if="training.hoofdthema === 'Speelwijze'">
-          <label id="info">Subthema*</label><br>
-          <select id="fill" v-model="training.subthema" required>
+          <label id="info">Subthema</label><br>
+          <select id="fill" v-model="training.subthema">
             <option disabled value="">Kies één subthema</option>
             <option>Opbouw</option>
             <option>Aanval via de flank</option>
@@ -106,8 +106,8 @@
           </select>
         </div>
         <div class="input-group subthema" v-if="training.hoofdthema === 'Fysiek'">
-          <label id="info">Subthema*</label><br>
-          <select id="fill" v-model="training.subthema" required>
+          <label id="info">Subthema</label><br>
+          <select id="fill" v-model="training.subthema">
             <option disabled value="">Kies één subthema</option>
             <option>Coördinatie</option>
             <option>Uithouding</option>
