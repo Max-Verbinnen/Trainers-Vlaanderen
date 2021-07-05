@@ -212,7 +212,7 @@ button.filter {
 
 .container .card .content h4 {
   font-size: 1.5rem;
-  margin: 1.5rem 0;
+  margin: 0.9rem 0;
   text-align: center;
 }
 
