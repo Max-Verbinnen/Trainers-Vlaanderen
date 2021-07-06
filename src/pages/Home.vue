@@ -157,6 +157,10 @@ button.filter {
   margin: 0 auto 4rem auto;
   cursor: pointer;
   font-size: 1rem;
+  background: var(--primary-green);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
 }
 
 .error-msg {
