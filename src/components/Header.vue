@@ -3,8 +3,9 @@
     <nav>
       <h1><router-link to="/" exact>Trainers Vlaanderen</router-link></h1>
       <ul>
-        <li><router-link to="/videos" exact>Trainingen op YouTube</router-link></li>
         <li><router-link to="/toevoegen" exact>Voeg je eigen training toe</router-link></li>
+        <li><router-link to="/videos" exact>Trainingen op YouTube</router-link></li>
+        <li><router-link to="/boards" exact>Coaching boards</router-link></li>
       </ul>
     </nav>
   </header>

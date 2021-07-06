@@ -30,7 +30,7 @@
               <label>U{{n + 5}}</label>
             </div>
             <div>
-              <input type="checkbox" value="21" v-model="training.categorie">
+              <input type="checkbox" value="U21" v-model="training.categorie">
               <label>U21</label>
             </div>
             <div>
@@ -46,7 +46,13 @@
         <div class="input-group players">
           <label id="info">Spelers*</label><br>
           <select id="fill" v-model="training.spelers" required>
-            <option v-for="n in 20" :key="n">{{n}}</option>
+            <option v-for="n in 22" :key="n">{{n}}</option>
+          </select>
+        </div>
+        <div class="input-group keepers">
+          <label id="info">Keepers*</label><br>
+          <select id="fill" v-model="training.keepers" required>
+            <option v-for="n in 3" :key="n">{{n}}</option>
           </select>
         </div>
         <div class="input-group niveau">
@@ -58,9 +64,16 @@
             <div><input type="radio" value="Uitstekend" v-model="training.niveau"><label>Uitstekend</label></div>
           </div>
         </div>
-        <div class="input-group">
-          <label id="info">Duur (in minuten)*</label><br>
-          <input id="fill" type="number" v-model="training.duur" required>
+        <div class="input-group duur">
+          <label id="info">Duur*</label><br>
+          <select id="fill" v-model="training.duur" required>
+            <option disabled value="">Kies één optie</option>
+            <option>Arbeid</option>
+            <option>Rust</option>
+            <option>Herhalingen</option>
+            <option>Sessie</option>
+            <option>Rustsessie</option>
+          </select>
         </div>
         <div class="input-group onderdeel">
           <label id="info">Onderdeel*</label><br>
@@ -83,6 +96,7 @@
             <option>Techniek</option>
             <option>Speelwijze</option>
             <option>Fysiek</option>
+            <option>Spelfases</option>
           </select>
         </div>
         <div class="input-group subthema" v-if="training.hoofdthema === 'Techniek'">
@@ -93,6 +107,7 @@
             <option>Schuin-frontaal</option>
             <option>Zijwaarts</option>
             <option>Achterwaarts</option>
+            <option>Gerichte aanname</option>
           </select>
         </div>
         <div class="input-group subthema" v-if="training.hoofdthema === 'Speelwijze'">
@@ -109,8 +124,20 @@
           <label id="info">Subthema</label><br>
           <select id="fill" v-model="training.subthema">
             <option disabled value="">Kies één subthema</option>
-            <option>Coördinatie</option>
-            <option>Uithouding</option>
+            <option>Activatie</option>
+            <option>Aerobic</option>
+            <option>Anaerobic</option>
+            <option>Sterkte</option>
+            <option>SAQ (Speed, Agility + Quickness)</option>
+          </select>
+        </div>
+        <div class="input-group subthema" v-if="training.hoofdthema === 'Spelfases'">
+          <label id="info">Subthema</label><br>
+          <select id="fill" v-model="training.subthema">
+            <option disabled value="">Kies één subthema</option>
+            <option>Vrije trappen (B+, B-)</option>
+            <option>Penalty's</option>
+            <option>Corners (B+, B-)</option>
           </select>
         </div>
         <div class="input-group">
@@ -154,6 +181,7 @@ export default {
         diploma: "",
         categorie: [],
         spelers: 1,
+        keepers: 1,
         niveau: "",
         duur: 0,
         onderdeel: "",
@@ -222,7 +250,7 @@ h2 {
   margin-top: 0.5rem;
 }
 
-input, .players select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, textarea {
+input, .players select, .keepers select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid rgb(161, 161, 161);

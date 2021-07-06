@@ -11,9 +11,14 @@
         <input type="submit" value="Voeg toe" class="btn">
         <p v-if="submitted">De video is toegevoegd bij het juiste thema.</p>
       </form>
+      <div class="links">
+        <a v-for="thema in themas" :href="'#' + thema" :key="thema">
+          {{thema}}
+        </a>
+      </div>
       <div class="videos-categories">
         <div class="themas">
-          <div class="thema" v-for="thema in themas" :key="thema">
+          <div class="thema" v-for="thema in themas" :key="thema" :id="thema">
             <h3>{{thema}}</h3>
             <template v-for="video in videos">
               <iframe v-if="video.selectedThema === thema" :key="video.id" :src="'https://www.youtube-nocookie.com/embed/' + getVideoID(video)" allowfullscreen frameborder="0"></iframe>
@@ -96,7 +101,8 @@ h3 {
 }
 
 .thema {
-  margin-bottom: 2rem;
+  padding-top: 5rem;
+  margin-bottom: -3rem;
 }
 
 .videos-categories {
@@ -134,13 +140,28 @@ form p {
 }
 
 .add-videos {
-  margin-bottom: 4rem;
+  margin-bottom: 0.5rem;
 }
 
 @media screen and (max-width: 350px) {
   iframe {
     max-width: 250px;
   }
+}
+
+.links {
+  margin-top: 1rem;
+}
+
+.links a {
+  text-decoration: none;
+  display: inline-block;
+  background: #D0EAE8;
+  color: #66A8A2;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5rem;
+  margin: 0 0.25rem 0.5rem 0;
+  font-size: 0.9rem;
 }
 
 </style>

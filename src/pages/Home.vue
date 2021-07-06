@@ -13,8 +13,7 @@
       <div class="intro">
         <h2>Waar alle voetbaltrainingen samenkomen</h2>
         <h4>
-          Trainers Vlaanderen is volledig gericht op de trainer zelf. Het is de ideale plek om
-          trainingen te bekijken en zelf toe te voegen.
+          Trainers Vlaanderen is een site waar voetbalcoaches gemakkelijk en gratis trainingsideeën kunnen delen en ontdekken. De site bestaat uit 3 ruimtes: een ruimte om voetbaltrainingen uit te schrijven, eentje om sessies vanuit YouTube te delen en eentje met handige tips voor het digitaal uitschrijven van oefeningen.
         </h4>
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
@@ -37,13 +36,15 @@
             <div class="content">
               <h4>{{training.titel}}</h4>
               <p>{{training.uitleg | shorten}}</p>
-              <p class="trainer"><img src="../assets/img/user.svg" alt="trainer"> <span>{{training.trainer}}</span></p>
-              <p class="tags">
-                <span v-if="training.categorie">{{training.categorie | destructure}}</span>
-                <span>{{training.spelers}} spelers</span>
-                <span>{{training.onderdeel}}</span>
-                <span>{{training.hoofdthema}}</span>
-              </p>
+              <div class="bottom-info">
+                <p class="trainer"><img src="../assets/img/user.svg" alt="trainer"> <span>{{training.trainer}}</span></p>
+                <p class="tags">
+                  <span v-if="training.categorie">{{training.categorie | destructure}}</span>
+                  <span>{{training.spelers}} spelers</span>
+                  <span>{{training.onderdeel}}</span>
+                  <span>{{training.hoofdthema}}</span>
+                </p>
+              </div>
             </div>
             </router-link>
           </div>
@@ -131,7 +132,7 @@ export default {
 
 .intro h4 {
   font-weight: 300;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   margin: 1.5rem 0 2rem 0;
   max-width: 40rem;
 }
@@ -216,11 +217,15 @@ button.filter {
   text-align: center;
 }
 
-.trainer {
+.bottom-info {
   position: absolute;
-  bottom: 5rem;
+  bottom: 0.5rem;
+}
+
+.trainer {
   display: flex;
   font-weight: 500;
+  margin-bottom: 0.5rem;
 }
 
 .trainer img {
@@ -228,8 +233,6 @@ button.filter {
 }
 
 .tags {
-  position: absolute;
-  bottom: 1rem;
   font-size: 0.8rem;
   padding-right: 1.5rem;
 }

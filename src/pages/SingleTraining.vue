@@ -14,6 +14,7 @@
       <div class="details">
         <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{training.categorie | destructure}}</p>
         <p><span id="subtitle">Spelers</span>: {{training.spelers}}</p>
+        <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{training.keepers}}</p>
         <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{training.niveau}}</p>
         <p><span id="subtitle">Duur van de training</span>: {{training.duur}} minuten</p>
         <p><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
