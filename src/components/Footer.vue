@@ -17,16 +17,17 @@ footer {
   width: 100%;
   height: 4rem;
   text-align: center;
+  border-top: 2px solid #eee;
 }
 
 .copyright {
-  background: rgb(250, 250, 250);
+  /* background: rgb(250, 250, 250); */
   padding: 0.5rem 0;
 }
 
 .collab {
   padding: 1rem 0;
-  background: rgb(246, 253, 243);
+  /* background: rgb(246, 253, 243); */
 }
 
 footer a {
