@@ -31,7 +31,7 @@
           <div class="card" v-for="training in trainingsCopy" :key="training.id">
             <router-link :to="'/training/' + training.id">
             <div class="imgBx">
-              <img :src="training.img" alt="training foto">
+              <img :src="training.img" alt="training foto" loading="lazy">
             </div>
             <div class="content">
               <h4>{{training.titel}}</h4>
