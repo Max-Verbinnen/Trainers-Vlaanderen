@@ -52,7 +52,7 @@
         <div class="input-group keepers">
           <label id="info">Keepers*</label><br>
           <select id="fill" v-model="training.keepers" required>
-            <option v-for="n in 3" :key="n">{{n}}</option>
+            <option v-for="n in 4" :key="n">{{n - 1}}</option>
           </select>
         </div>
         <div class="input-group niveau">
@@ -181,7 +181,7 @@ export default {
         diploma: "",
         categorie: [],
         spelers: 1,
-        keepers: 1,
+        keepers: 0,
         niveau: "",
         duur: 0,
         onderdeel: "",

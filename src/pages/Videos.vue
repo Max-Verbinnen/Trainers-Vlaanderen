@@ -36,7 +36,7 @@ import firebase from "firebase"
 export default {
   data() {
     return {
-      themas: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down"],
+      themas: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Spelfases"],
       input: {
         url: "",
         selectedThema: ""
