@@ -5,7 +5,7 @@
       <form @submit.prevent="handleSubmit" v-if="!submitted">
         <div class="input-group">
           <label id="info">Titel*</label><br>
-          <input id="fill" type="text" v-model="training.titel" autofocus required>
+          <input id="fill" type="text" v-model="training.titel" required>
         </div>
         <div class="input-group">
           <label id="info">Trainer*</label><br>

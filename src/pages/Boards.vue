@@ -52,7 +52,7 @@
           <h3>Powerpoint</h3>
           <div class="content">
             <div class="explanation">
-              <p class="exp">Via powerpoint kan je eenvoudig trainingen uitschrijven. Perfecte, gratische oplossing voor startende trainers of coaches die niet bereid zijn om te investeren in een trainingssoftware.
+              <p class="exp">Via powerpoint kan je eenvoudig trainingen uitschrijven. Perfecte, gratische oplossing voor startende trainers of coaches die niet bereid zijn om te investeren in een trainingssoftware. Download <a href="https://drive.google.com/file/d/1FYBuPRhxZsgO4HhEEsn8xY9MegyGQpzf/view?usp=sharing" target="_blank" rel="noopener">hier</a> een template.
               </p>
               <p><strong>Prijs:</strong>€0</p>
             </div>
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+// import axios from "axios"
 
 export default {
   created() {
