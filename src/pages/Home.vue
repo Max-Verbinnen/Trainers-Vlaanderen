@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import FilterModal from "../components/FilterModal.vue"
 
 export default {
   data() {
@@ -83,7 +82,7 @@ export default {
     }
   },
   components: {
-    FilterModal
+    FilterModal: () => import("../components/FilterModal.vue")
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
