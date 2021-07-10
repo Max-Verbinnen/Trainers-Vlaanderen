@@ -1,7 +1,7 @@
 <template>
   <footer>
     <p class="copyright">&copy; Copyright Trainers Vlaanderen <span>{{new Date().getFullYear()}}</span></p>
-    <p class="collab">Tijl Verbesselt 🤝 <a href="https://www.maxverbinnen.be/" target="_blank" rel="noopener">Max Verbinnen</a></p>
+    <p class="collab"><a href="https://www.maxverbinnen.be/" target="_blank" rel="noopener">Max Verbinnen</a> 🤝 Tijl Verbesselt  </p>
   </footer>
 </template>
 
