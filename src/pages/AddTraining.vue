@@ -46,13 +46,13 @@
         <div class="input-group players">
           <label id="info">Spelers*</label><br>
           <select id="fill" v-model="training.spelers" required>
-            <option v-for="n in 22" :key="n">{{n}}</option>
+            <option v-for="n in 23" :key="n">{{n - 1}}</option>
           </select>
         </div>
         <div class="input-group keepers">
           <label id="info">Keepers*</label><br>
           <select id="fill" v-model="training.keepers" required>
-            <option v-for="n in 4" :key="n">{{n - 1}}</option>
+            <option v-for="n in 6" :key="n">{{n - 1}}</option>
           </select>
         </div>
         <div class="input-group niveau">
@@ -65,8 +65,12 @@
           </div>
         </div>
         <div class="input-group duur">
-          <label id="info">Duur*</label><br>
-          <select id="fill" v-model="training.duur" required>
+          <label id="info">Duur (in minuten)*</label><br>
+          <input id="fill" type="number" required autocomplete="off">
+        </div>
+        <div class="input-group intensiteit">
+          <label id="info">Intensiteit*</label><br>
+          <select id="fill" v-model="training.intensiteit" required>
             <option disabled value="">Kies één optie</option>
             <option>Arbeid</option>
             <option>Rust</option>
@@ -87,6 +91,7 @@
             <option>Wedstrijdvorm</option>
             <option>Spelvorm</option>
             <option>Cooling down</option>
+            <option>Keepertraining</option>
           </select>
         </div>
         <div class="input-group hoofdthema">
@@ -141,6 +146,10 @@
           </select>
         </div>
         <div class="input-group">
+          <label id="info">Doelstellingen</label><br>
+          <textarea id="fill" v-model="training.doelstellingen" placeholder="Wat wil je bereiken met deze vorm?"></textarea>
+        </div>
+        <div class="input-group">
           <label id="info">Uitleg van de training*</label><br>
           <textarea id="fill" v-model="training.uitleg" required></textarea>
         </div>
@@ -180,13 +189,15 @@ export default {
         trainer: "",
         diploma: "",
         categorie: [],
-        spelers: 1,
+        spelers: 0,
         keepers: 0,
         niveau: "",
-        duur: 0,
+        duur: "",
+        intensiteit: "",
         onderdeel: "",
         hoofdthema: "",
         subthema: "",
+        doelstellingen: "",
         uitleg: "",
         variaties: "",
         doorschuifsysteem: "",
@@ -250,7 +261,7 @@ h2 {
   margin-top: 0.5rem;
 }
 
-input, .players select, .keepers select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, textarea {
+input, .players select, .keepers select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, .intensiteit select, textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid rgb(161, 161, 161);

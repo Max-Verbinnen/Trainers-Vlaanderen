@@ -7,7 +7,11 @@
           <span>({{training.diploma}})</span></span>
         </p>
         <div class="uitleg">
-          <p>{{training.uitleg}}</p>
+          <div>
+            <p>{{training.uitleg}}</p>
+            <h4>Doelstellingen</h4>
+            <p>{{training.doelstellingen}}</p>
+          </div>
           <img :src="training.img" alt="training afbeelding" class="training">
         </div>
       </div>
@@ -17,6 +21,7 @@
         <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{training.keepers}}</p>
         <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{training.niveau}}</p>
         <p><span id="subtitle">Duur van de training</span>: {{training.duur}}</p>
+        <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{training.intensiteit}}</p>
         <p><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
         <p><span id="subtitle">Hoofdthema</span>: {{training.hoofdthema}}</p>
         <p v-if="training.subthema"><span id="subtitle">Subthema</span>: {{training.subthema}}</p>
@@ -94,6 +99,10 @@ img.training {
   display: flex;
   justify-content: space-between;
   margin-bottom: 4rem;
+}
+
+.uitleg h4 {
+  margin: 1rem 0 0.25rem 0;
 }
 
 .uitleg p {
