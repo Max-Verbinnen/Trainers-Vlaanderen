@@ -77,7 +77,7 @@ export default {
       filterCategorie: [],
       filterSpelers: [],
       filterOnderdelen: [],
-      onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down"]
+      onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Keepertraining"]
     }
   },
   props: ["trainings"],

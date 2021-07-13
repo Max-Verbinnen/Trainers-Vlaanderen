@@ -69,8 +69,8 @@
           <input id="fill" type="number" required autocomplete="off">
         </div>
         <div class="input-group intensiteit">
-          <label id="info">Intensiteit*</label><br>
-          <select id="fill" v-model="training.intensiteit" required>
+          <label id="info">Intensiteit</label><br>
+          <select id="fill" v-model="training.intensiteit">
             <option disabled value="">Kies één optie</option>
             <option>Arbeid</option>
             <option>Rust</option>
