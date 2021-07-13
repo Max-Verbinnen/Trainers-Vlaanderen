@@ -15,6 +15,11 @@
           <label id="info">Diploma</label><br>
           <select id="fill" v-model="training.diploma">
             <option disabled value="">Kies één diploma</option>
+            <option>Geen diploma</option>
+            <option>Keepertrainer 1</option>
+            <option>Keepertrainer 2</option>
+            <option>Physical coach 1</option>
+            <option>Physical coach 2</option>
             <option>Initiator C</option>
             <option>Instructeur B</option>
             <option>UEFA B</option>
