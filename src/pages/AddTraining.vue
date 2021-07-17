@@ -60,6 +60,10 @@
             <option v-for="n in 6" :key="n">{{n - 1}}</option>
           </select>
         </div>
+        <div class="input-group">
+          <label id="info">Materiaal</label><br>
+          <input type="text" id="fill" v-model="training.materiaal" autocomplete="off">
+        </div>
         <div class="input-group niveau">
           <label id="info">Niveau van spelers</label><br>
           <div id="fill">
@@ -167,7 +171,7 @@
           <input id="fill" type="text" v-model="training.doorschuifsysteem">
         </div>
         <div class="input-group">
-          <label id="info">Afbeelding*</label><br>
+          <label id="info">Afbeelding* (.jpg / .png / .gif)</label><br>
           <input id="fill" type="file" @change="handleFile" accept="image/*" required>
         </div>
         <div class="input-group submit">
@@ -196,6 +200,7 @@ export default {
         categorie: [],
         spelers: 0,
         keepers: 0,
+        materiaal: "",
         niveau: "",
         duur: "",
         intensiteit: "",

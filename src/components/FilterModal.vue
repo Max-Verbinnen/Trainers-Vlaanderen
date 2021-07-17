@@ -49,6 +49,13 @@
             </div>
           </div>
           <div class="column onderdeel">
+            <h3>Hoofdthema</h3>
+            <div class="input-group" v-for="hoofdthema in hoofdthemas" :key="hoofdthema">
+              <input type="checkbox" :value="hoofdthema" v-model="filterHoofdthemas">
+              <label>{{hoofdthema}}</label>
+            </div>
+          </div>
+          <div class="column onderdeel">
             <h3>Onderdeel</h3>
             <div class="input-group" v-for="onderdeel in onderdelen" :key="onderdeel">
               <input type="checkbox" :value="onderdeel" v-model="filterOnderdelen">
@@ -76,8 +83,10 @@ export default {
       filterTrainer: [],
       filterCategorie: [],
       filterSpelers: [],
+      filterHoofdthemas: [],
       filterOnderdelen: [],
-      onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Keepertraining"]
+      onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Keepertraining"],
+      hoofdthemas: ["Techniek", "Speelwijze", "Fysiek", "Spelfases"],
     }
   },
   props: ["trainings"],
@@ -115,6 +124,15 @@ export default {
         trainingsFilteredBySpelers = this.trainings;
       }
 
+      let trainingsFilteredByHoofdthema;
+      if (this.filterHoofdthemas.length > 0) {
+        trainingsFilteredByHoofdthema = this.trainings.filter(training => {
+          return this.filterHoofdthemas.includes(training.hoofdthema);
+        });
+      } else {
+        trainingsFilteredByHoofdthema = this.trainings;
+      }
+
       let trainingsFilteredByOnderdeel;
       if (this.filterOnderdelen.length > 0) {
         trainingsFilteredByOnderdeel = this.trainings.filter(training => {
@@ -124,8 +142,8 @@ export default {
         trainingsFilteredByOnderdeel = this.trainings;
       }
       
-      // Get common elements of 4 arrays
-      const arrays = [trainingsFilteredByTrainer, trainingsFilterdByCategorie, trainingsFilteredBySpelers, trainingsFilteredByOnderdeel];
+      // Get common elements of 5 arrays
+      const arrays = [trainingsFilteredByTrainer, trainingsFilterdByCategorie, trainingsFilteredBySpelers, trainingsFilteredByHoofdthema, trainingsFilteredByOnderdeel];
       const merged = arrays.reduce((p,c) => p.filter(e => c.includes(e)));
       this.$emit("filtered", merged);
       this.$emit("exitModal");

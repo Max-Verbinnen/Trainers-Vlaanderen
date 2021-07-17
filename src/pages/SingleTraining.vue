@@ -17,13 +17,14 @@
       </div>
       <div class="details">
         <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{training.categorie | destructure}}</p>
-        <p><span id="subtitle">Spelers</span>: {{training.spelers}}</p>
+        <p v-if="training.spelers"><span id="subtitle">Spelers</span>: {{training.spelers}}</p>
         <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{training.keepers}}</p>
+        <p v-if="training.materiaal"><span id="subtitle">Materiaal</span>: {{training.materiaal}}</p>
         <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{training.niveau}}</p>
-        <p><span id="subtitle">Duur van de training</span>: {{training.duur}}</p>
+        <p v-if="training.duur"><span id="subtitle">Duur van de training</span>: {{training.duur}}</p>
         <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{training.intensiteit}}</p>
-        <p><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
-        <p><span id="subtitle">Hoofdthema</span>: {{training.hoofdthema}}</p>
+        <p v-if="training.onderdeel"><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
+        <p v-if="training.hoofdthema"><span id="subtitle">Hoofdthema</span>: {{training.hoofdthema}}</p>
         <p v-if="training.subthema"><span id="subtitle">Subthema</span>: {{training.subthema}}</p>
         <p v-if="training.variaties"><span id="subtitle">Variaties</span>: {{training.variaties}}</p>
         <p v-if="training.doorschuifsysteem"><span id="subtitle">Doorschuifsysteem</span>: {{training.doorschuifsysteem}}</p>
