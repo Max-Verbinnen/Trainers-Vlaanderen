@@ -91,6 +91,10 @@ export default {
   min-height: 110vh;
 }
 
+#videos {
+  margin-bottom: 5rem;
+}
+
 h2 {
   margin-bottom: 2rem;
 }

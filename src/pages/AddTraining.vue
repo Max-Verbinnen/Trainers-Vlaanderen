@@ -309,7 +309,6 @@ textarea {
 }
 
 input[type="submit"] {
-  margin-bottom: 4rem;
   cursor: pointer;
   font-size: 1.1rem;
 }
@@ -322,6 +321,5 @@ input[type="submit"] {
 
 .success h3 {
   font-weight: 600;
-  margin-bottom: 2rem;
 }
 </style>

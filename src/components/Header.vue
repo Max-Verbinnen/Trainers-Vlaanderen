@@ -9,6 +9,7 @@
         <li><router-link to="/toevoegen" exact>Voeg je eigen training toe</router-link></li>
         <li><router-link to="/videos" exact>Trainingen op YouTube</router-link></li>
         <li><router-link to="/boards" exact>Coaching boards</router-link></li>
+        <li><router-link to="/account" exact>Account</router-link></li>
       </ul>
     </nav>
   </header>

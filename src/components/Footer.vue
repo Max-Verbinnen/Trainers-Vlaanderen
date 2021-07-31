@@ -18,6 +18,7 @@ footer {
   height: 4rem;
   text-align: center;
   border-top: 2px solid #eee;
+  margin-top: 4rem;
 }
 
 .copyright {
