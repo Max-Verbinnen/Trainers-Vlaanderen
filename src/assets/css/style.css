@@ -3,7 +3,8 @@
 
 :root {
   --primary-green: #7bbb53;
-  --secondary-green: #bcf39b;
+  --secondary-green: #c7ffa4;
+  --light-green: rgb(246, 253, 243);
 }
 
 * {
@@ -22,6 +23,7 @@ html, textarea {
 
 body {
   position: relative;
+  overflow-x: hidden;
 }
 
 body.modal-open {

@@ -2,32 +2,56 @@
   <div class="container">
     <div class="wrapper">
       <div class="box signin">
-        <h2>Heb je al een account?</h2>
-        <button class="signInBtn" @click="handleSignInClick">Login</button>
+        <h2>Al een account?</h2>
+        <button class="signInBtn btn" @click="handleSignInClick">Login</button>
       </div>
       <div class="box signup">
-        <h2>Heb je nog geen account?</h2>
-        <button class="signupBtn" @click="handleSignUpClick">Registreer</button>
+        <h2>Nog geen account?</h2>
+        <button class="signUpBtn btn" @click="handleSignUpClick">Registreer</button>
       </div>
     </div>
     <div class="formBx" ref="formBx">
       <div class="form signInForm">
         <form>
           <h3>Login</h3>
-          <input type="email" placeholder="Email">
-          <input type="password" placeholder="Wachtwoord">
-          <input type="submit" value="Login">
+          <div class="input-data">
+            <input type="email" autocomplete="email" required>
+            <div class="underline"></div>
+            <label>Email</label>
+          </div>
+          <div class="input-data">
+            <input type="password" required>
+            <div class="underline"></div>
+            <label>Wachtwoord</label>
+          </div>
+          <input type="submit" value="Login" class="btn">
           <a href="#" class="forgot">Wachtwoord vergeten</a>
         </form>
       </div>
       <div class="form signUpForm">
         <form>
           <h3>Registreer</h3>
-          <input type="text" placeholder="Naam">
-          <input type="email" placeholder="Email">
-          <input type="password" placeholder="Wachtwoord">
-          <input type="password" placeholder="Bevestig wachtwoord">
-          <input type="submit" value="Registreer">
+          <div class="input-data">
+            <input type="text" autocomplete="name" required>
+            <div class="underline"></div>
+            <label>Naam</label>
+          </div>
+          <div class="input-data">
+            <input type="email" autocomplete="email" required>
+            <div class="underline"></div>
+            <label>Email</label>
+          </div>
+          <div class="input-data">
+            <input type="password" required>
+            <div class="underline"></div>
+            <label>Wachtwoord</label>
+          </div>
+          <div class="input-data">
+            <input type="password" required>
+            <div class="underline"></div>
+            <label>Bevestig wachtwoord</label>
+          </div>
+          <input type="submit" value="Registreer" class="btn">
         </form>
       </div>
     </div>
@@ -53,16 +77,16 @@ export default {
 
 .container {
   position: relative;
-  width: 800px;
-  height: 500px;
-  margin: 20px;
+  width: 50em;
+  height: 31.25em;
+  margin: 1.25rem;
 }
 
 .wrapper {
   position: absolute;
-  top: 40px;
+  top: 2.5em;
   width: 100%;
-  height: 420px;
+  height: 26.25em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,16 +107,14 @@ export default {
 .wrapper .box h2 {
   font-size: 1.2rem;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
 .wrapper .box button {
   cursor: pointer;
-  padding: 10px 20px;
-  color: #333;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 0.625rem 1.25rem;
   border: none;
+  color: initial;
 }
 
 .formBx {
@@ -102,7 +124,6 @@ export default {
   width: 50%;
   height: 100%;
   background: #fff;
-  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,7 +140,7 @@ export default {
   position: absolute;
   left: 0;
   width: 100%;
-  padding: 50px;
+  padding: 3.125rem;
   transition: 0.5s;
 }
 
@@ -147,38 +168,100 @@ export default {
   flex-direction: column;
 }
 
+.input-data {
+  height: 40px;
+  width: 100%;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-data input {
+  height: 100%;
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 17px;
+  border-bottom: 2px solid silver;
+}
+
+.input-data input:focus ~ label, .input-data input:valid ~ label {
+  transform: translateY(-25px);
+  font-size: 0.8rem;
+  color: initial;
+}
+
+.input-data label {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  color: grey;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-data .underline {
+  position: absolute;
+  height: 2px;
+  width: 100%;
+  bottom: 0;
+}
+
+.input-data .underline::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: var(--primary-green);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.input-data input:focus ~ .underline:before, .input-data input:valid ~ .underline:before {
+  transform: scaleX(1);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+ -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.signInBtn, .signUpBtn, input[type="submit"] {
+  font-size: 1rem;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
 .formBx .form form h3 {
   font-size: 1.5rem;
   color: #333;
-  margin-bottom: 20px;
-  font-weight: 500;
-}
-
-.formBx .form form input {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 10px;
-  outline: none;
-  font-size: 16px;
-  border: 1px solid #333;
+  margin-bottom: 1.25rem;
 }
 
 .formBx .form form input[type="submit"] {
+  max-width: 10em;
   background: var(--primary-green);
   border: none;
   color: #fff;
-  max-width: 100px;
   cursor: pointer;
+  padding: 0.75rem 1.25rem;
+}
+
+.btn {
+  background: #fff;
+  margin-top: 1rem;
 }
 
 .formBx .form form .forgot {
   color: initial;
+  margin-top: 1rem;
 }
 
 @media (max-width: 991px) {
   .container {
-    max-width: 400px;
-    height: 650px;
+    max-width: 25em;
+    height: 40.625em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -189,14 +272,14 @@ export default {
   }
   .formBx {
     width: 100%;
-    height: 500px;
+    height: 31.25em;
     top: 0;
     box-shadow: none;
   }
   .wrapper .box {
     position: absolute;
     width: 100%;
-    height: 150px;
+    height: 9.375em;
     bottom: 0;
   }
   .box.signin {
@@ -204,7 +287,7 @@ export default {
   }
   .formBx.active {
     left: 0;
-    top: 150px;
+    top: 9.375em;
   }
 }
 
