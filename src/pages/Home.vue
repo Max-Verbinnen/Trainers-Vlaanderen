@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { db } from "../firebase"
 
 export default {
   data() {
@@ -62,7 +63,7 @@ export default {
       trainings: [],
       trainingsCopy: [],
       isFilterOpen: false,
-      reset: false
+      reset: false,
     }
   },
   methods: {
@@ -86,17 +87,18 @@ export default {
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
-    this.$http.get("https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/Trainings.json")
-      .then(data => data.json())
-      .then(data => {
-        let trainingsArray = [];
-        for (let key in data) {
-          data[key].id = key;
-          trainingsArray.push(data[key]);
-        }
-        this.trainings = trainingsArray;
-        this.trainingsCopy = [...this.trainings];
-      });
+
+    db.ref('Trainings').once('value', snapshot => {
+      const data = snapshot.val();
+      let trainingsArray = [];
+
+      for (let key in data) {
+        data[key].id = key;
+        trainingsArray.push(data[key]);
+      }
+      this.trainings = trainingsArray;
+      this.trainingsCopy = [...this.trainings];
+    });
   },
   mounted() {
     window.scrollTo(0, 0);
@@ -114,7 +116,7 @@ export default {
       if (!value) return;
       return value.toString();
     }
-  }
+  },
 }
 
 </script>

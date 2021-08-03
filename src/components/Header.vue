@@ -1,19 +1,27 @@
 <template>
   <header>
     <nav>
-      <h1><router-link to="/" exact>
-        <img src="../assets/img/logo.svg" alt="Logo">
-        <span>Trainers Vlaanderen</span>
+      <h1 @click.stop="handleMobileNavClick"><router-link to="/" exact>
+        <img src="../assets/img/logo.svg" alt="Logo" id="nav-title">
+        <span id="nav-title">Trainers Vlaanderen</span>
       </router-link></h1>
-      <img class="hamburger-menu" src="../assets/img/menu.svg" @click="handleHamburgerClick">
+      <img class="hamburger-menu" src="../assets/img/menu.svg" @click="handleMobileNavClick">
       <ul ref="list">
-        <li><router-link to="/toevoegen" exact>Voeg je eigen training toe</router-link></li>
-        <li><router-link to="/videos" exact>Trainingen op YouTube</router-link></li>
-        <li><router-link to="/boards" exact>Coaching boards</router-link></li>
-        <li><router-link to="/account" exact>
-          <img src="../assets/img/user.svg">
-          Account
+        <li @click="handleMobileNavClick">
+          <router-link to="/toevoegen" exact>Voeg je eigen training toe
         </router-link></li>
+        <li @click="handleMobileNavClick">
+          <router-link to="/videos" exact>Trainingen op YouTube
+        </router-link></li>
+        <li @click="handleMobileNavClick">
+          <router-link to="/boards" exact>Coaching boards
+        </router-link></li>
+        <li @click="handleMobileNavClick" class="account-link">
+          <router-link to="/account" exact>
+            <img src="../assets/img/user.svg">
+            <span>Account</span>
+          </router-link>
+        </li>
       </ul>
     </nav>
   </header>
@@ -23,7 +31,8 @@
 
 export default {
   methods: {
-    handleHamburgerClick() {
+    handleMobileNavClick(e) {
+      if (e.target.id === "nav-title" && !this.$refs.list.classList.contains("active")) return;
       this.$refs.list.classList.toggle("active");
     },
   },
@@ -95,6 +104,14 @@ a.router-link-active:not(h1 a)::before {
   height: 2px;
   background: var(--primary-green);
   transform: translate(-50%);
+}
+
+.account-link a {
+  font-weight: 600;
+}
+
+.account-link a img {
+  margin-right: 0.25rem;
 }
 
 @media screen and (max-width: 1020px) {

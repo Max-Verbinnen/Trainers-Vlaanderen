@@ -12,45 +12,42 @@
     </div>
     <div class="formBx" ref="formBx">
       <div class="form signInForm">
-        <form>
+        <form @submit.prevent="handleLoginSubmission">
           <h3>Login</h3>
           <div class="input-data">
-            <input type="email" autocomplete="email" required>
+            <input type="email" autocomplete="email" required v-model="loginData.email">
             <div class="underline"></div>
             <label>Email</label>
           </div>
           <div class="input-data">
-            <input type="password" required>
+            <input type="password" required v-model="loginData.password">
             <div class="underline"></div>
             <label>Wachtwoord</label>
           </div>
+          <p class="errMsg">{{ loginData.errorMsg }}</p>
           <input type="submit" value="Login" class="btn">
-          <a href="#" class="forgot">Wachtwoord vergeten</a>
+          <a href="#" class="forgot" @click="handleForgotPassword">Wachtwoord vergeten</a>
         </form>
       </div>
       <div class="form signUpForm">
-        <form>
+        <form @submit.prevent="handleSignupSubmission">
           <h3>Registreer</h3>
           <div class="input-data">
-            <input type="text" autocomplete="name" required>
+            <input type="text" autocomplete="name" required v-model="signupData.name">
             <div class="underline"></div>
-            <label>Naam</label>
+            <label>Volledige naam</label>
           </div>
           <div class="input-data">
-            <input type="email" autocomplete="email" required>
+            <input type="email" autocomplete="email" required v-model="signupData.email">
             <div class="underline"></div>
             <label>Email</label>
           </div>
           <div class="input-data">
-            <input type="password" required>
+            <input type="password" required v-model="signupData.password">
             <div class="underline"></div>
             <label>Wachtwoord</label>
           </div>
-          <div class="input-data">
-            <input type="password" required>
-            <div class="underline"></div>
-            <label>Bevestig wachtwoord</label>
-          </div>
+          <p class="errMsg">{{ signupData.errorMsg }}</p>
           <input type="submit" value="Registreer" class="btn">
         </form>
       </div>
@@ -59,8 +56,25 @@
 </template>
 
 <script>
+import { db, auth } from "../firebase"
+import { authErrors } from "../utils"
 
 export default {
+  data() {
+    return {
+      loginData: {
+        email: "",
+        password: "",
+        errorMsg: "",
+      },
+      signupData: {
+        name: "",
+        email: "",
+        password: "",
+        errorMsg: "",
+      },
+    }
+  },
   methods: {
     handleSignInClick() {
       this.$refs.formBx.classList.remove("active");
@@ -68,7 +82,51 @@ export default {
     handleSignUpClick() {
       this.$refs.formBx.classList.add("active");
     },
-  }
+    handleLoginSubmission() {
+      auth.signInWithEmailAndPassword(this.loginData.email, this.loginData.password)
+        .then(() => this.loginData = {})
+        .catch(err => this.handleError(err, "login"));
+    },
+    handleSignupSubmission() {
+      auth.createUserWithEmailAndPassword(this.signupData.email, this.signupData.password)
+        .then(data => {
+          db.ref('Users/' + data.user.uid).set({
+            name: this.signupData.name,
+            email: data.user.email,
+            diploma: null,
+            premium: false,
+          });
+          this.signupData = {};
+        })
+        .catch(err => this.handleError(err, "signup"));
+    },
+    handleForgotPassword() {
+      auth.sendPasswordResetEmail(this.loginData.email)
+        .then(() => console.log('email sent'))
+        .catch(err => this.handleError(err));
+    },
+    handleError(error, state) {
+      console.log(error.code, ' - ', error.message);
+      const code = error.code.split("/")[1];
+
+      if (authErrors()[code]) {
+        if (state === "login") this.loginData.errorMsg = authErrors()[code];
+        if (state === "signup") this.signupData.errorMsg = authErrors()[code];
+      } else {
+        const defaultErr = "Er is een fout opgetreden in ons systeem. Onze excuses hiervoor.";
+        if (state === "login") this.loginData.errorMsg = defaultErr;
+        if (state === "signup") this.signupData.errorMsg = defaultErr;
+      }
+
+      setTimeout(() => {
+        this.loginData.errorMsg = "";
+        this.signupData.errorMsg = "";
+      }, 5000);
+    },
+    handleLogout() {
+      auth.signOut();
+    },
+  },
 }
 
 </script>
@@ -256,6 +314,11 @@ input:-webkit-autofill:active {
 .formBx .form form .forgot {
   color: initial;
   margin-top: 1rem;
+}
+
+.errMsg {
+  color: var(--error-red);
+  font-size: 0.9rem;
 }
 
 @media (max-width: 991px) {

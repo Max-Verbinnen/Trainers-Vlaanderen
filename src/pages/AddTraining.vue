@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import { db, storage } from "../firebase";
 
 export default {
   data() {
@@ -221,7 +221,7 @@ export default {
   methods: {
     handleSubmit() {
       // Store image in firebase storage
-      const storageRef = firebase.storage().ref(`${this.file.name}`).put(this.file);
+      const storageRef = storage.ref(`${this.file.name}`).put(this.file);
       storageRef.on(`state_changed`, () => {
         storageRef.snapshot.ref.getDownloadURL().then(url => {
           this.training.img = url;
@@ -238,7 +238,7 @@ export default {
     gotURL() {
       // Store in real-time database
       if (this.gotURL) {
-        firebase.database().ref("Trainings").push(this.training)
+        db.ref("Trainings").push(this.training)
         .then(() => this.submitted = true)
         .catch(err => console.log(err));
       }
@@ -321,5 +321,6 @@ input[type="submit"] {
 
 .success h3 {
   font-weight: 600;
+  margin-bottom: 2rem;
 }
 </style>

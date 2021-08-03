@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import firebase from "firebase"
+import { db } from "../firebase";
 
 export default {
   data() {
@@ -48,13 +48,13 @@ export default {
   methods: {
     handleSubmit() {
       // Upload to database
-      firebase.database().ref("Videos").push(this.input)
+      db.ref("Videos").push(this.input)
         .then(() => this.getVideos());
 
       // Reset values
-      this.input.url = "";
-      this.input.selectedThema = "";
+      this.input = {};
       this.submitted = true;
+      setTimeout(() => this.submitted = false, 3000);
     },
     getVideoID(video) {
       const regex = /.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#&?]*).*/;
@@ -62,16 +62,16 @@ export default {
       return (match && match[1].length == 11) ? match[1] : false;
     },
     getVideos() {
-      this.$http.get("https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/Videos.json")
-        .then(data => data.json())
-        .then(data => {
-          let videosArray = [];
-          for (let key in data) {
-            data[key].id = key;
-            videosArray.push(data[key]);
-          }
-          this.videos = videosArray;
-        });
+      db.ref('Videos').once('value', snapshot => {
+        const data = snapshot.val();
+        let videosArray = [];
+
+        for (let key in data) {
+          data[key].id = key;
+          videosArray.push(data[key]);
+        }
+        this.videos = videosArray;
+      });
     }
   },
   created() {
