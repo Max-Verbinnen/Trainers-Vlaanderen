@@ -6,6 +6,7 @@
   --secondary-green: #c7ffa4;
   --light-green: rgb(246, 253, 243);
   --error-red: #ff0033;
+  --disabled-grey: rgba(0, 0, 0, 0.2);
 }
 
 * {

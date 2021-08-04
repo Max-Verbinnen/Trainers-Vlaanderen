@@ -66,7 +66,7 @@
       </div>
 
       <div class="close-modal">
-        <button @click="$emit('exitModal')"><img src="../assets/img/close.svg" alt="sluiten"></button>
+        <button @click="$emit('exitModal')"><img src="../../assets/img/close.svg" alt="sluiten"></button>
       </div>
       <div class="apply-filters">
         <button class="btn" @click="filterTrainings">Pas filters toe</button>
@@ -100,7 +100,7 @@ export default {
       let trainingsFilteredByTrainer;
       if (this.filterTrainer.length > 0) {
         trainingsFilteredByTrainer = this.trainings.filter(training => {
-          return this.filterTrainer.includes(training.trainer);
+          return this.filterTrainer.includes(training.trainer || training.user.name);
         });
       } else {
         trainingsFilteredByTrainer = this.trainings;
@@ -153,7 +153,7 @@ export default {
     getTrainers() {
       let listOfTrainers = [];
       for (let training of this.trainings) {
-        if (!listOfTrainers.includes(training.trainer)) listOfTrainers.push(training.trainer);
+        if (!listOfTrainers.includes(training.trainer || training.user.name)) listOfTrainers.push(training.trainer || training.user.name);
       }
       return listOfTrainers;
     }

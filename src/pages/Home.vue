@@ -37,7 +37,9 @@
               <h4>{{training.titel}}</h4>
               <p>{{training.uitleg | shorten}}</p>
               <div class="bottom-info">
-                <p class="trainer"><img src="../assets/img/user.svg" alt="trainer"> <span>{{training.trainer}}</span></p>
+                <p class="trainer">
+                  <img src="../assets/img/user.svg" alt="trainer">
+                  <span>{{ training.trainer || training.user.name }}</span></p>
                 <p class="tags">
                   <span v-if="training.categorie">{{training.categorie | destructure}}</span>
                   <span>{{training.spelers}} spelers</span>
@@ -83,7 +85,7 @@ export default {
     }
   },
   components: {
-    FilterModal: () => import("../components/FilterModal.vue")
+    FilterModal: () => import("../components/modals/FilterModal.vue")
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";

@@ -53,7 +53,7 @@ export const authErrors = () => {
     "too-many-requests": "We hebben alle verzoeken van deze gebruiker geblokkeerd wegens ongewoonlijke activiteit. Probeer het later opnieuw.",
     "unverified-email": "Je e-mail is niet geverifieerd.",
     "user-cancelled": "Je hebt de nodige toegang niet gegeven.",
-    "user-not-found": "Deze gebruiker kan niet worden gevonden in ons systeem.",
+    "user-not-found": "Dit account bestaat niet.",
     "user-disabled": "Je account is geblokkeerd door een administrator.",
     "user-mismatch": "De logingegevens komen niet overeen met de vroeger ingelogde gebruiker.",
     "weak-password": "Het wachtwoord moet minstens 6 karakters bevatten.",

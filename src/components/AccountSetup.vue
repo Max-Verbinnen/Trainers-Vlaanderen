@@ -26,7 +26,7 @@
           </div>
           <p class="errMsg">{{ loginData.errorMsg }}</p>
           <input type="submit" value="Login" class="btn">
-          <a href="#" class="forgot" @click="handleForgotPassword">Wachtwoord vergeten</a>
+          <a href="#" class="forgot" @click="showForgotPasswordModal = true">Wachtwoord vergeten</a>
         </form>
       </div>
       <div class="form signUpForm">
@@ -52,12 +52,29 @@
         </form>
       </div>
     </div>
+
+    <!-- Modal for when you forget your password -->
+    <ForgotPassword
+      v-if="showForgotPasswordModal"
+      @exitModal="showForgotPasswordModal = false"
+      :emailAlreadyPassedIn="loginData.email"
+    />
+
+    <!-- Show login modal if you came from "add training" page & not logged in -->
+    <Snackbar 
+      v-if="showSnackbar"
+      @closeSnackbar="showSnackbar = false"
+      text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
+    />
   </div>
 </template>
 
 <script>
 import { db, auth } from "../firebase"
 import { authErrors } from "../utils"
+
+import ForgotPassword from "./modals/ForgotPasswordModal.vue"
+import Snackbar from "./modals/Snackbar.vue"
 
 export default {
   data() {
@@ -73,6 +90,18 @@ export default {
         password: "",
         errorMsg: "",
       },
+      showForgotPasswordModal: false,
+      showSnackbar: false,
+    }
+  },
+  components: {
+    ForgotPassword,
+    Snackbar,
+  },
+  created() {
+    if (localStorage.getItem("addTrainingToAccountRoute")) {
+      this.showSnackbar = true;
+      localStorage.removeItem("addTrainingToAccountRoute");
     }
   },
   methods: {
@@ -93,17 +122,10 @@ export default {
           db.ref('Users/' + data.user.uid).set({
             name: this.signupData.name,
             email: data.user.email,
-            diploma: null,
-            premium: false,
           });
           this.signupData = {};
         })
         .catch(err => this.handleError(err, "signup"));
-    },
-    handleForgotPassword() {
-      auth.sendPasswordResetEmail(this.loginData.email)
-        .then(() => console.log('email sent'))
-        .catch(err => this.handleError(err));
     },
     handleError(error, state) {
       console.log(error.code, ' - ', error.message);

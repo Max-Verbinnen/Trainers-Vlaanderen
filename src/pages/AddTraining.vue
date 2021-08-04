@@ -7,10 +7,6 @@
           <label id="info">Titel*</label><br>
           <input id="fill" type="text" v-model="training.titel" required>
         </div>
-        <div class="input-group">
-          <label id="info">Trainer*</label><br>
-          <input id="fill" type="text" v-model="training.trainer" autocomplete="name" required>
-        </div>
         <div class="input-group diploma">
           <label id="info">Diploma</label><br>
           <select id="fill" v-model="training.diploma">
@@ -188,14 +184,13 @@
 </template>
 
 <script>
-import { db, storage } from "../firebase";
+import { db, storage, auth } from "../firebase";
 
 export default {
   data() {
     return {
       training: {
         titel: "",
-        trainer: "",
         diploma: "",
         categorie: [],
         spelers: 0,
@@ -211,11 +206,14 @@ export default {
         uitleg: "",
         variaties: "",
         doorschuifsysteem: "",
-        img: ""
+        img: "",
+
+        // Trainer reference
+        user: null,
       },
       file: null,
       gotURL: false,
-      submitted: false
+      submitted: false,
     }
   },
   methods: {
@@ -232,20 +230,44 @@ export default {
     },
     handleFile(e) {
       this.file = e.target.files[0];
-    }
+    },
+    updateDiploma() {
+      db.ref("Users/" + this.training.user.userID).update({ diploma: this.training.diploma });
+    },
+    getDiploma() {
+      db.ref("Users/" + this.training.user.userID).once("value", snapshot => {
+        const diploma = snapshot.val().diploma;
+        if (diploma) this.training.diploma = diploma;
+      });
+    },
   },
   watch: {
     gotURL() {
       // Store in real-time database
       if (this.gotURL) {
         db.ref("Trainings").push(this.training)
-        .then(() => this.submitted = true)
+        .then(() => {
+          this.submitted = true;
+          this.updateDiploma();
+        })
         .catch(err => console.log(err));
       }
     }
   },
+  beforeCreate() {
+    auth.onAuthStateChanged(user => {
+      if (!user) return;
+      db.ref('Users/' + user.uid).once("value", snapshot => {
+        // email, name & userID
+        this.training.user = {...snapshot.val(), userID: user.uid};
+
+        // Get diploma from db
+        this.getDiploma();
+      });
+    });
+  },
   created() {
-    document.title = "Trainers Vlaanderen | Deel je eigen trainingen"
+    document.title = "Trainers Vlaanderen | Deel je eigen trainingen";
   },
   mounted() {
     window.scrollTo(0, 0);

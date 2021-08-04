@@ -8,7 +8,7 @@
 </template>
 
 <script>
-// import { auth } from "./firebase"
+import { auth } from "./firebase"
 
 import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
@@ -20,11 +20,16 @@ export default {
     Footer,
     BackToTopArrow
   },
-  // beforeCreate() {
-  //   auth.onAuthStateChanged(user => {
-  //     if (user && this.$router.currentRoute.path === "/account") this.$router.push("/");
-  //   });
-  // },
+  watch: {
+    $route() {
+      auth.onAuthStateChanged(user => {
+        if (!user && this.$router.currentRoute.path === "/toevoegen") {
+          this.$router.push("/account");
+          localStorage.setItem("addTrainingToAccountRoute", "true");
+        }
+      });
+    },
+  },
 }
 
 </script>

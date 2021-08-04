@@ -19,7 +19,7 @@
         <li @click="handleMobileNavClick" class="account-link">
           <router-link to="/account" exact>
             <img src="../assets/img/user.svg">
-            <span>Account</span>
+            <span>{{ user ? user.name : "Account" }}</span>
           </router-link>
         </li>
       </ul>
@@ -28,13 +28,28 @@
 </template>
 
 <script>
+import { db, auth } from "../firebase";
 
 export default {
+  data() {
+    return {
+      user: null,
+    };
+  },
   methods: {
     handleMobileNavClick(e) {
       if (e.target.id === "nav-title" && !this.$refs.list.classList.contains("active")) return;
       this.$refs.list.classList.toggle("active");
     },
+  },
+  beforeCreate() {
+    auth.onAuthStateChanged(user => {
+      if (!user) return;
+      db.ref('Users/' + user.uid).once("value", snapshot => {
+        // email, name & userID
+        this.user = {...snapshot.val(), userID: user.uid};
+      });
+    });
   },
 }
 

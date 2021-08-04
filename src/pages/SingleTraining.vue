@@ -2,32 +2,33 @@
   <div id="single-training-page">
     <section id="training">
       <div id="print">
-        <h2>{{training.titel}}</h2>
-        <p class="trainer"><img src="../assets/img/user.svg" alt="trainer"> <span>{{training.trainer}} 
-          <span>({{training.diploma}})</span></span>
+        <h2>{{ training.titel }}</h2>
+        <p class="trainer">
+          <img src="../assets/img/user.svg" alt="trainer">
+          <span>{{ training.trainer || (training.user && training.user.name) }} <span>({{ training.diploma }})</span></span>
         </p>
         <div class="uitleg">
           <div>
             <p>{{training.uitleg}}</p>
-            <h4>Doelstellingen</h4>
+            <h4 v-if="training.doelstellingen">Doelstellingen</h4>
             <p>{{training.doelstellingen}}</p>
           </div>
           <img :src="training.img" alt="training afbeelding" class="training">
         </div>
       </div>
       <div class="details">
-        <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{training.categorie | destructure}}</p>
-        <p v-if="training.spelers"><span id="subtitle">Spelers</span>: {{training.spelers}}</p>
-        <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{training.keepers}}</p>
-        <p v-if="training.materiaal"><span id="subtitle">Materiaal</span>: {{training.materiaal}}</p>
-        <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{training.niveau}}</p>
-        <p v-if="training.duur"><span id="subtitle">Duur van de training</span>: {{training.duur}}</p>
-        <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{training.intensiteit}}</p>
-        <p v-if="training.onderdeel"><span id="subtitle">Onderdeel</span>: {{training.onderdeel}}</p>
-        <p v-if="training.hoofdthema"><span id="subtitle">Hoofdthema</span>: {{training.hoofdthema}}</p>
-        <p v-if="training.subthema"><span id="subtitle">Subthema</span>: {{training.subthema}}</p>
-        <p v-if="training.variaties"><span id="subtitle">Variaties</span>: {{training.variaties}}</p>
-        <p v-if="training.doorschuifsysteem"><span id="subtitle">Doorschuifsysteem</span>: {{training.doorschuifsysteem}}</p>
+        <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{ training.categorie | destructure }}</p>
+        <p v-if="training.spelers"><span id="subtitle">Spelers</span>: {{ training.spelers }}</p>
+        <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{ training.keepers }}</p>
+        <p v-if="training.materiaal"><span id="subtitle">Materiaal</span>: {{ training.materiaal }}</p>
+        <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{ training.niveau }}</p>
+        <p v-if="training.duur"><span id="subtitle">Duur van de training</span>: {{ training.duur }}</p>
+        <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{ training.intensiteit }}</p>
+        <p v-if="training.onderdeel"><span id="subtitle">Onderdeel</span>: {{ training.onderdeel }}</p>
+        <p v-if="training.hoofdthema"><span id="subtitle">Hoofdthema</span>: {{ training.hoofdthema }}</p>
+        <p v-if="training.subthema"><span id="subtitle">Subthema</span>: {{ training.subthema }}</p>
+        <p v-if="training.variaties"><span id="subtitle">Variaties</span>: {{ training.variaties }}</p>
+        <p v-if="training.doorschuifsysteem"><span id="subtitle">Doorschuifsysteem</span>: {{ training.doorschuifsysteem }}</p>
       </div>
       
       <div class="print">
