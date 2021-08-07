@@ -39,7 +39,7 @@ export default {
       themas: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Spelfases", "Keepertraining"],
       input: {
         url: "",
-        selectedThema: ""
+        selectedThema: "",
       },
       submitted: false,
       videos: []

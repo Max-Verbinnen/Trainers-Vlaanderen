@@ -6,12 +6,10 @@ import "./assets/css/style.css"
 
 // Libraries & Plugins
 import VueRouter from "vue-router"
-import VueResource from "vue-resource"
 import "./firebase"
 
 // Activate plugins
 Vue.use(VueRouter);
-Vue.use(VueResource);
 
 // Router
 import routes from "./routes"
@@ -20,10 +18,15 @@ const router = new VueRouter({
   mode: "history"
 });
 
+// Vuex store
+import "./store"
+import { store } from "./store"
+
 Vue.config.productionTip = false
 
 new Vue({
   el: "#app",
   render: h => h(App),
   router,
+  store,
 });

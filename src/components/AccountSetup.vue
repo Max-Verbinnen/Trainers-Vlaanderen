@@ -1,72 +1,76 @@
 <template>
-  <div class="container">
-    <div class="wrapper">
-      <div class="box signin">
-        <h2>Al een account?</h2>
-        <button class="signInBtn btn" @click="handleSignInClick">Login</button>
+  <section id="make-account">
+    <div class="container">
+      <div class="wrapper">
+        <div class="box signin">
+          <h2>Al een account?</h2>
+          <button class="signInBtn btn" @click="handleSignInClick">Login</button>
+        </div>
+        <div class="box signup">
+          <h2>Nog geen account?</h2>
+          <button class="signUpBtn btn" @click="handleSignUpClick">Registreer</button>
+        </div>
       </div>
-      <div class="box signup">
-        <h2>Nog geen account?</h2>
-        <button class="signUpBtn btn" @click="handleSignUpClick">Registreer</button>
+      <div class="formBx" ref="formBx">
+        <div class="form signInForm">
+          <form @submit.prevent="handleLoginSubmission">
+            <h3>Login</h3>
+            <div class="input-data">
+              <input type="email" autocomplete="email" required v-model="loginData.email">
+              <div class="underline"></div>
+              <label>Email</label>
+            </div>
+            <div class="input-data">
+              <input type="password" required v-model="loginData.password">
+              <div class="underline"></div>
+              <label>Wachtwoord</label>
+            </div>
+            <p class="errMsg">{{ loginData.errorMsg }}</p>
+            <input type="submit" value="Login" class="btn">
+            <a href="#" class="forgot" @click="showForgotPasswordModal = true">Wachtwoord vergeten</a>
+          </form>
+        </div>
+        <div class="form signUpForm">
+          <form @submit.prevent="handleSignupSubmission">
+            <h3>Registreer</h3>
+            <div class="input-data">
+              <input type="text" autocomplete="name" required v-model="signupData.name">
+              <div class="underline"></div>
+              <label>Volledige naam</label>
+            </div>
+            <div class="input-data">
+              <input type="email" autocomplete="email" required v-model="signupData.email">
+              <div class="underline"></div>
+              <label>Email</label>
+            </div>
+            <div class="input-data">
+              <input type="password" required v-model="signupData.password">
+              <div class="underline"></div>
+              <label>Wachtwoord</label>
+            </div>
+            <p class="errMsg">{{ signupData.errorMsg }}</p>
+            <input type="submit" value="Registreer" class="btn">
+          </form>
+        </div>
       </div>
-    </div>
-    <div class="formBx" ref="formBx">
-      <div class="form signInForm">
-        <form @submit.prevent="handleLoginSubmission">
-          <h3>Login</h3>
-          <div class="input-data">
-            <input type="email" autocomplete="email" required v-model="loginData.email">
-            <div class="underline"></div>
-            <label>Email</label>
-          </div>
-          <div class="input-data">
-            <input type="password" required v-model="loginData.password">
-            <div class="underline"></div>
-            <label>Wachtwoord</label>
-          </div>
-          <p class="errMsg">{{ loginData.errorMsg }}</p>
-          <input type="submit" value="Login" class="btn">
-          <a href="#" class="forgot" @click="showForgotPasswordModal = true">Wachtwoord vergeten</a>
-        </form>
-      </div>
-      <div class="form signUpForm">
-        <form @submit.prevent="handleSignupSubmission">
-          <h3>Registreer</h3>
-          <div class="input-data">
-            <input type="text" autocomplete="name" required v-model="signupData.name">
-            <div class="underline"></div>
-            <label>Volledige naam</label>
-          </div>
-          <div class="input-data">
-            <input type="email" autocomplete="email" required v-model="signupData.email">
-            <div class="underline"></div>
-            <label>Email</label>
-          </div>
-          <div class="input-data">
-            <input type="password" required v-model="signupData.password">
-            <div class="underline"></div>
-            <label>Wachtwoord</label>
-          </div>
-          <p class="errMsg">{{ signupData.errorMsg }}</p>
-          <input type="submit" value="Registreer" class="btn">
-        </form>
-      </div>
-    </div>
 
-    <!-- Modal for when you forget your password -->
-    <ForgotPassword
-      v-if="showForgotPasswordModal"
-      @exitModal="showForgotPasswordModal = false"
-      :emailAlreadyPassedIn="loginData.email"
-    />
+      <!-- Modal for when you forget your password -->
+      <ForgotPassword
+        v-if="showForgotPasswordModal"
+        @exitModal="showForgotPasswordModal = false"
+        :emailAlreadyPassedIn="loginData.email"
+      />
+    </div>
 
     <!-- Show login modal if you came from "add training" page & not logged in -->
-    <Snackbar 
-      v-if="showSnackbar"
-      @closeSnackbar="showSnackbar = false"
-      text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
-    />
-  </div>
+    <transition name="fade">
+      <Snackbar
+        v-if="showSnackbar"
+        @closeSnackbar="showSnackbar = false"
+        text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
+      />
+    </transition>
+  </section>
 </template>
 
 <script>
@@ -154,6 +158,12 @@ export default {
 </script>
 
 <style scoped>
+
+#make-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .container {
   position: relative;

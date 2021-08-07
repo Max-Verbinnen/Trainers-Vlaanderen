@@ -5,7 +5,8 @@
         <h2>{{ training.titel }}</h2>
         <p class="trainer">
           <img src="../assets/img/user.svg" alt="trainer">
-          <span>{{ training.trainer || (training.user && training.user.name) }} <span>({{ training.diploma }})</span></span>
+          <span>{{ training.trainer || (training.user && training.user.name) }}
+          <span>({{ (training.user && training.user.diploma) || training.diploma }})</span></span>
         </p>
         <div class="uitleg">
           <div>
@@ -42,7 +43,8 @@
 </template>
 
 <script>
-import {printPage} from "../utils"
+import { db } from "../firebase"
+import { printPage } from "../utils"
 
 export default {
   data() {
@@ -54,12 +56,10 @@ export default {
     printPage
   },
   created() {
-    this.$http.get("https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/Trainings/" + this.$route.params.id + ".json")
-      .then(data => data.json())
-      .then(data => {
-        this.training = data;
-        document.title = "Trainers Vlaanderen | " + this.training.titel;
-      });
+    db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
+      this.training = snapshot.val();
+      document.title = "Trainers Vlaanderen | " + this.training.titel;
+    });
   },
   mounted() {
     window.scrollTo(0, 0);

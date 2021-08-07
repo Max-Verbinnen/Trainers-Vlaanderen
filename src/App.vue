@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { auth } from "./firebase"
+import { db, auth } from "./firebase"
 
 import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
@@ -19,6 +19,25 @@ export default {
     Header,
     Footer,
     BackToTopArrow
+  },
+  async beforeCreate() {
+    auth.onAuthStateChanged(async user => {
+      if (!user) return;
+
+      let dbUser;
+      await db.ref('Users/' + user.uid).once("value", snapshot => {
+        dbUser = {
+          name: snapshot.val().name,
+          diploma: snapshot.val().diploma,
+        };
+      });
+
+      this.$store.commit("setUser", {
+        email: user.email,
+        userID: user.uid,
+        ...dbUser,
+      });
+    });
   },
   watch: {
     $route() {

@@ -39,7 +39,7 @@
               <div class="bottom-info">
                 <p class="trainer">
                   <img src="../assets/img/user.svg" alt="trainer">
-                  <span>{{ training.trainer || training.user.name }}</span></p>
+                  <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
                 <p class="tags">
                   <span v-if="training.categorie">{{training.categorie | destructure}}</span>
                   <span>{{training.spelers}} spelers</span>

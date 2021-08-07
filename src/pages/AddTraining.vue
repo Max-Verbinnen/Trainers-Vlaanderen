@@ -2,7 +2,7 @@
   <div id="add-training-page">
     <section id="add-training">
       <h2>Deel je trainingen door het formulier in te vullen</h2>
-      <form @submit.prevent="handleSubmit" v-if="!submitted">
+      <form @submit.prevent="handleSubmit">
         <div class="input-group">
           <label id="info">Titel*</label><br>
           <input id="fill" type="text" v-model="training.titel" required>
@@ -71,7 +71,7 @@
         </div>
         <div class="input-group duur">
           <label id="info">Duur (in minuten)*</label><br>
-          <input id="fill" type="number" required autocomplete="off">
+          <input id="fill" type="number" required autocomplete="off" v-model="training.duur">
         </div>
         <div class="input-group intensiteit">
           <label id="info">Intensiteit</label><br>
@@ -174,11 +174,6 @@
           <input id="fill" type="submit" value="Training toevoegen" class="btn">
         </div>
       </form>
-
-      <div class="success" v-if="submitted">
-        <h3>Bedankt om een training toe te voegen, deze komt zo snel mogelijk op de homepagina terecht!</h3>
-        <a href="" class="btn" @click="location.reload()">Voeg nog een training toe</a>
-      </div>
     </section>
   </div>
 </template>
@@ -197,7 +192,7 @@ export default {
         keepers: 0,
         materiaal: "",
         niveau: "",
-        duur: "",
+        duur: 0,
         intensiteit: "",
         onderdeel: "",
         hoofdthema: "",
@@ -213,7 +208,6 @@ export default {
       },
       file: null,
       gotURL: false,
-      submitted: false,
     }
   },
   methods: {
@@ -247,8 +241,9 @@ export default {
       if (this.gotURL) {
         db.ref("Trainings").push(this.training)
         .then(() => {
-          this.submitted = true;
           this.updateDiploma();
+          localStorage.setItem("trainingAdded", "true");
+          this.$router.push("/account");
         })
         .catch(err => console.log(err));
       }
