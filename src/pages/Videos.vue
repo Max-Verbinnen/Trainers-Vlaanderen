@@ -78,9 +78,6 @@ export default {
     document.title = "Trainers Vlaanderen | YouTube video's";
     this.getVideos();
   },
-  mounted() {
-    window.scrollTo(0, 0);
-  }
 }
 
 </script>

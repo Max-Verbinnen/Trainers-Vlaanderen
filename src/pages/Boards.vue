@@ -73,9 +73,6 @@ export default {
   created() {
     document.title = "Trainers Vlaanderen | Coaching Boards";
   },
-  mounted() {
-    window.scrollTo(0, 0);
-  }
 }
 
 </script>

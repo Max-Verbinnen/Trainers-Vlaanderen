@@ -61,9 +61,6 @@ export default {
       document.title = "Trainers Vlaanderen | " + this.training.titel;
     });
   },
-  mounted() {
-    window.scrollTo(0, 0);
-  },
   filters: {
     destructure(value) {
       return value.toString();

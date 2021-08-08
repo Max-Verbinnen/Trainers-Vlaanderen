@@ -27,8 +27,8 @@
           Pas de filters aan of 
           <span id="delete-filters" @click="deleteFilters">verwijder de filters</span>.
           </p>
-        <div class="container">
-          <div class="card" v-for="training in trainingsCopy" :key="training.id">
+        <div class="container" ref="container">
+          <div class="card" v-for="training in trainingsCopy" :key="training.id" :id="training.id">
             <router-link :to="'/training/' + training.id">
             <div class="imgBx">
               <img :src="training.img" alt="training foto" loading="lazy">
@@ -66,6 +66,9 @@ export default {
       trainingsCopy: [],
       isFilterOpen: false,
       reset: false,
+
+      lastValue: null,
+      lastKey: null,
     }
   },
   methods: {
@@ -81,29 +84,55 @@ export default {
       this.trainingsCopy = filtered;
     },
     deleteFilters() {
-      location.reload()
-    }
+      location.reload();
+    },
+    fetchMoreTrainings() { 
+      db.ref('Trainings')
+      .orderByChild("titel")
+      .startAfter(this.lastValue, this.lastKey)
+      .limitToFirst(9)
+      .once('value', snapshot => {
+        let trainingsArray = [];
+        snapshot.forEach(child => {
+          trainingsArray.push({
+            ...child.val(),
+            id: child.key,
+          });
+        });
+        
+        // If there are no more trainings left to fetch
+        if (trainingsArray.length === 0) return;
+
+        this.lastValue = trainingsArray[trainingsArray.length - 1].titel;
+        this.lastKey = trainingsArray[trainingsArray.length - 1].id;
+
+        this.trainings = [...this.trainings, ...trainingsArray];
+        this.trainingsCopy = [...this.trainings];
+      });
+    },
   },
   components: {
-    FilterModal: () => import("../components/modals/FilterModal.vue")
+    FilterModal: () => import("../components/modals/FilterModal.vue"),
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
 
-    db.ref('Trainings').once('value', snapshot => {
-      const data = snapshot.val();
-      let trainingsArray = [];
+    db.ref('Trainings')
+      .orderByChild("titel")
+      .once('value', snapshot => {
+        let trainingsArray = [];
+        snapshot.forEach(child => {
+          trainingsArray.push({
+            ...child.val(),
+            id: child.key,
+          });
+        });
+        this.lastValue = trainingsArray[trainingsArray.length - 1].titel;
+        this.lastKey = trainingsArray[trainingsArray.length - 1].id;
 
-      for (let key in data) {
-        data[key].id = key;
-        trainingsArray.push(data[key]);
-      }
-      this.trainings = trainingsArray;
-      this.trainingsCopy = [...this.trainings];
-    });
-  },
-  mounted() {
-    window.scrollTo(0, 0);
+        this.trainings = trainingsArray;
+        this.trainingsCopy = [...this.trainings];
+      });
   },
   filters: {
     shorten(value) {
@@ -207,8 +236,9 @@ button.filter {
 
 .container .card .imgBx img {
   border-radius: 0 0 0.5rem 0.5rem;
-  width: 16.25rem;
-  max-height: 12.5rem;
+  width: 260px;
+  height: 200px;
+  max-height: 200px;
   object-fit: cover;
 }
 

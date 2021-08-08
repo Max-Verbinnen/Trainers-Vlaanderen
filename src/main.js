@@ -15,6 +15,12 @@ Vue.use(VueRouter);
 import routes from "./routes"
 const router = new VueRouter({
   routes,
+  scrollBehavior (to, from, savedPosition) {
+    if (to.fullPath === "/" && from.fullPath.includes("/training/") && savedPosition) {
+      return savedPosition;
+    }
+    return { x: 0, y: 0 };
+  },
   mode: "history"
 });
 

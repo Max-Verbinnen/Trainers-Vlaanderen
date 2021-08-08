@@ -42,11 +42,13 @@
         />
       </transition>
     </div>
+
+    <button @click="handleLogout">Log out</button>
   </div>
 </template>
 
 <script>
-import { db } from "../firebase"
+import { db, auth } from "../firebase"
 
 import Snackbar from "./modals/Snackbar.vue"
 
@@ -61,6 +63,11 @@ export default {
     user() {
       return this.$store.state.user;
     },
+  },
+  methods: {
+    handleLogout() {
+      auth.signOut();
+    }
   },
   components: {
     Snackbar,
