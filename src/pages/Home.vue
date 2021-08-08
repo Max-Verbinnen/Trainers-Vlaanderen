@@ -6,6 +6,7 @@
       @exitModal="closeFilterModal"
       @filtered="filterTrainings"
       :trainings="trainings"
+      :clubs="clubs"
       />
     </keep-alive>
     
@@ -19,16 +20,24 @@
       </div>
       <div class="trainings">
         <h3>Bekijk de trainingen</h3>
-        <button class="filter" @click="openFilterModal">
-          <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen">
-        </button>
-        <p v-if="trainingsCopy == false" class="error-msg">
+
+        <div class="filter-wrapper">
+          <button class="filter" @click="openFilterModal">
+            <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen">
+          </button>
+          <div class="input-wrap">
+            <input type="text" v-model="search" placeholder="Zoek op titel...">
+            <img src="../assets/img/cross.svg" alt="" @click="search = ''">
+          </div>
+        </div>
+
+        <p v-if="filteredTrainings.length === 0" class="error-msg">
           Er zijn geen trainingen gevonden. 
           Pas de filters aan of 
           <span id="delete-filters" @click="deleteFilters">verwijder de filters</span>.
           </p>
         <div class="container" ref="container">
-          <div class="card" v-for="training in trainingsCopy" :key="training.id" :id="training.id">
+          <div class="card" v-for="training in filteredTrainings" :key="training.id" :id="training.id">
             <router-link :to="'/training/' + training.id">
             <div class="imgBx">
               <img :src="training.img" alt="training foto" loading="lazy">
@@ -63,9 +72,10 @@ export default {
   data() {
     return {
       trainings: [],
+      clubs: [],
       trainingsCopy: [],
       isFilterOpen: false,
-      reset: false,
+      search: "",
 
       lastValue: null,
       lastKey: null,
@@ -110,12 +120,31 @@ export default {
         this.trainingsCopy = [...this.trainings];
       });
     },
+    getClubs() {
+      let clubs = [];
+      db.ref('Clubs').once('value', snapshot => {
+        const data = snapshot.val();
+        for (let key in data) {
+          clubs.push(data[key]);
+        }
+      });
+
+      this.clubs = clubs;
+    },
   },
   components: {
     FilterModal: () => import("../components/modals/FilterModal.vue"),
   },
+  computed: {
+    filteredTrainings() {
+      return this.trainingsCopy.filter(training => {
+        return training.titel.toLowerCase().match(this.search);
+      });
+    },
+  },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
+    this.getClubs();
 
     db.ref('Trainings')
       .orderByChild("titel")
@@ -180,22 +209,53 @@ export default {
   text-align: center;
 }
 
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 button.filter {
   outline: none;
   border: none;
   background: initial;
   display: flex;
   align-items: center;
-  margin: 0 auto 4rem auto;
   cursor: pointer;
   font-size: 1rem;
   background: var(--primary-green);
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
+  margin-right: 1rem;
+}
+
+.filter-wrapper .input-wrap {
+  position: relative;
+}
+
+.filter-wrapper input {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(161, 161, 161);
+  width: 15rem;
+}
+
+.filter-wrapper input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-green);
+}
+
+.filter-wrapper .input-wrap img {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 .error-msg {
+  margin-top: 1.5rem;
   text-align: center;
 }
 
@@ -210,6 +270,7 @@ button.filter {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  margin-top: 4rem;
 }
 
 .container .card {

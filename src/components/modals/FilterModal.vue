@@ -7,7 +7,14 @@
             <h3>Trainer</h3>
             <div v-for="trainer in getTrainers" :key="trainer" class="input-group">
               <input type="checkbox" :value="trainer" v-model="filterTrainer">
-              <label>{{trainer}}</label>
+              <label>{{ trainer }}</label>
+            </div>
+          </div>
+          <div class="column club">
+            <h3>Club</h3>
+            <div v-for="club in clubs" :key="club" class="input-group">
+              <input type="checkbox" :value="club" v-model="filterClub">
+              <label>{{ club }}</label>
             </div>
           </div>
           <div class="column categorie">
@@ -27,25 +34,6 @@
             <div class="input-group">
               <input type="checkbox" value="A" v-model="filterCategorie">
               <label>A-ploeg</label>
-            </div>
-          </div>
-          <div class="column players">
-            <h3>Spelers</h3>
-            <div class="input-group">
-              <input type="radio" :value="['1', '2', '3', '4', '5']" v-model="filterSpelers">
-              <label>1-5</label>
-            </div>
-            <div class="input-group">
-              <input type="radio" :value="['6', '7', '8', '9', '10']" v-model="filterSpelers">
-              <label>6-10</label>
-            </div>
-            <div class="input-group">
-              <input type="radio" :value="['11', '12', '13', '14', '15']" v-model="filterSpelers">
-              <label>11-15</label>
-            </div>
-            <div class="input-group">
-              <input type="radio" :value="['16', '17', '18', '19', '20']" v-model="filterSpelers">
-              <label>16-20</label>
             </div>
           </div>
           <div class="column onderdeel">
@@ -81,15 +69,15 @@ export default {
   data() {
     return {
       filterTrainer: [],
+      filterClub: [],
       filterCategorie: [],
-      filterSpelers: [],
       filterHoofdthemas: [],
       filterOnderdelen: [],
       onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Keepertraining"],
       hoofdthemas: ["Techniek", "Speelwijze", "Fysiek", "Spelfases"],
     }
   },
-  props: ["trainings"],
+  props: ["trainings", "clubs"],
   methods: {
     exitModal(e) {
       if (e.target === this.$refs.modal) {
@@ -100,10 +88,19 @@ export default {
       let trainingsFilteredByTrainer;
       if (this.filterTrainer.length > 0) {
         trainingsFilteredByTrainer = this.trainings.filter(training => {
-          return this.filterTrainer.includes(training.trainer || training.user.name);
+          return this.filterTrainer.includes(training.trainer || training.user?.name);
         });
       } else {
         trainingsFilteredByTrainer = this.trainings;
+      }
+
+      let trainingsFilteredByClub;
+      if (this.filterClub.length > 0) {
+        trainingsFilteredByClub = this.trainings.filter(training => {
+          return this.filterClub.includes(training.club);
+        });
+      } else {
+        trainingsFilteredByClub = this.trainings;
       }
 
       let trainingsFilterdByCategorie;
@@ -113,15 +110,6 @@ export default {
         });
       } else {
         trainingsFilterdByCategorie = this.trainings;
-      }
-
-      let trainingsFilteredBySpelers;
-      if (this.filterSpelers.length > 0) {
-        trainingsFilteredBySpelers = this.trainings.filter(training => {
-          return this.filterSpelers.includes(training.spelers);
-        });
-      } else {
-        trainingsFilteredBySpelers = this.trainings;
       }
 
       let trainingsFilteredByHoofdthema;
@@ -143,7 +131,7 @@ export default {
       }
       
       // Get common elements of 5 arrays
-      const arrays = [trainingsFilteredByTrainer, trainingsFilterdByCategorie, trainingsFilteredBySpelers, trainingsFilteredByHoofdthema, trainingsFilteredByOnderdeel];
+      const arrays = [trainingsFilteredByTrainer, trainingsFilteredByClub, trainingsFilterdByCategorie, trainingsFilteredByHoofdthema, trainingsFilteredByOnderdeel];
       const merged = arrays.reduce((p,c) => p.filter(e => c.includes(e)));
       this.$emit("filtered", merged);
       this.$emit("exitModal");
@@ -153,11 +141,11 @@ export default {
     getTrainers() {
       let listOfTrainers = [];
       for (let training of this.trainings) {
-        if (!listOfTrainers.includes(training.trainer || training.user.name)) listOfTrainers.push(training.trainer || training.user.name);
+        if (!listOfTrainers.includes(training.trainer || training.user?.name)) listOfTrainers.push(training.trainer || training.user?.name);
       }
       return listOfTrainers;
-    }
-  }
+    },
+  },
 }
 
 </script>
@@ -199,7 +187,7 @@ h3 {
   margin-bottom: 0.25rem;
 }
 
-.column.categorie label, .column.trainer label, .column.players label, .column.onderdeel label {
+.column.categorie label, .column.trainer label, .column.club label, .column.onderdeel label {
   margin-left: 0.25rem;
 }
 

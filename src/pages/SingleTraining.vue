@@ -6,7 +6,7 @@
         <p class="trainer">
           <img src="../assets/img/user.svg" alt="trainer">
           <span>{{ training.trainer || (training.user && training.user.name) }}
-          <span>({{ (training.user && training.user.diploma) || training.diploma }})</span></span>
+          <span>({{ training.diploma }})</span></span>
         </p>
         <div class="uitleg">
           <div>

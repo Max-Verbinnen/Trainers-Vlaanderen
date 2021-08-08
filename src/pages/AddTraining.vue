@@ -23,6 +23,13 @@
             <option>UEFA Pro</option>
           </select>
         </div>
+        <div class="input-group">
+          <label id="info">Club*</label><br>
+          <input id="fill" type="text" v-model="training.club" required list="clubs" autocomplete="off">
+          <datalist id="clubs">
+            <option v-for="club in orderedClubs" :key="club" :value="club"></option>
+          </datalist>
+        </div>
         <div class="input-group category">
           <label id="info">Categorie</label><br>
           <div id="fill">
@@ -58,7 +65,7 @@
         </div>
         <div class="input-group">
           <label id="info">Materiaal</label><br>
-          <input type="text" id="fill" v-model="training.materiaal" autocomplete="off">
+          <textarea id="fill" v-model="training.materiaal" autocomplete="off"></textarea>
         </div>
         <div class="input-group niveau">
           <label id="info">Niveau van spelers</label><br>
@@ -160,7 +167,7 @@
         </div>
         <div class="input-group">
           <label id="info">Variaties</label><br>
-          <input id="fill" type="text" v-model="training.variaties">
+          <textarea id="fill" v-model="training.variaties" autocomplete="off"></textarea>
         </div>
         <div class="input-group">
           <label id="info">Doorschuifsysteem</label><br>
@@ -179,7 +186,7 @@
 </template>
 
 <script>
-import { db, storage, auth } from "../firebase";
+import { db, storage } from "../firebase";
 
 export default {
   data() {
@@ -187,12 +194,13 @@ export default {
       training: {
         titel: "",
         diploma: "",
+        club: "",
         categorie: [],
         spelers: 0,
         keepers: 0,
         materiaal: "",
         niveau: "",
-        duur: 0,
+        duur: "",
         intensiteit: "",
         onderdeel: "",
         hoofdthema: "",
@@ -208,7 +216,20 @@ export default {
       },
       file: null,
       gotURL: false,
+      clubsList: [],
     }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    orderedClubs() {
+      const clubs = [...this.clubsList];
+      return clubs.sort((a, b) => {
+        if (a.toLowerCase() < b.toLowerCase()) return -1;
+        if (a.toLowerCase() > b.toLowerCase()) return 1;
+      });
+    },
   },
   methods: {
     handleSubmit() {
@@ -226,13 +247,42 @@ export default {
       this.file = e.target.files[0];
     },
     updateDiploma() {
-      db.ref("Users/" + this.training.user.userID).update({ diploma: this.training.diploma });
+      db.ref("Users/" + this.user.userID).update({ diploma: this.training.diploma });
+    },
+    async updateClub() {
+      let newClub = true;
+
+      await db.ref('Clubs').once('value', snapshot => {
+        const data = snapshot.val();
+        for (let key in data) {
+          if (data[key].toLowerCase() === this.training.club.toLowerCase()) newClub = false; 
+        }
+      });
+      
+      // Store club in database if new
+      if (newClub) db.ref("Clubs").push(this.training.club);
+
+      // Update club in user profile
+      db.ref("Users/" + this.user.userID).update({ club: this.training.club });
     },
     getDiploma() {
-      db.ref("Users/" + this.training.user.userID).once("value", snapshot => {
+      db.ref("Users/" + this.user.userID).once("value", snapshot => {
         const diploma = snapshot.val().diploma;
         if (diploma) this.training.diploma = diploma;
       });
+    },
+    getClub() {
+      db.ref("Users/" + this.user.userID).once("value", snapshot => {
+        const club = snapshot.val().club;
+        if (club) this.training.club = club;
+      });
+    },
+    storeUser() {
+      this.training.user = {
+        email: this.user.email,
+        name: this.user.name,
+        userID: this.user.userID,
+      };
     },
   },
   watch: {
@@ -242,26 +292,38 @@ export default {
         db.ref("Trainings").push(this.training)
         .then(() => {
           this.updateDiploma();
+          this.updateClub();
+
           localStorage.setItem("trainingAdded", "true");
           this.$router.push("/account");
         })
         .catch(err => console.log(err));
       }
-    }
-  },
-  beforeCreate() {
-    auth.onAuthStateChanged(user => {
-      if (!user) return;
-      db.ref('Users/' + user.uid).once("value", snapshot => {
-        // email, name & userID
-        this.training.user = {...snapshot.val(), userID: user.uid};
+    },
+    user() {
+      // This runs as soon as the user info has been committed in App.vue
+      this.storeUser();
 
-        // Get diploma from db
-        this.getDiploma();
-      });
-    });
+      // Get diploma & club from db
+      this.getDiploma();
+      this.getClub();
+    },
   },
   created() {
+    db.ref('Clubs').once('value', snapshot => {
+      const data = snapshot.val();
+      for (let key in data) {
+        this.clubsList.push(data[key]);
+      }
+    });
+
+    // Get diploma & club from db
+    if (this.user) {
+      this.storeUser();
+      this.getDiploma();
+      this.getClub();
+    }
+
     document.title = "Trainers Vlaanderen | Deel je eigen trainingen";
   },
 }

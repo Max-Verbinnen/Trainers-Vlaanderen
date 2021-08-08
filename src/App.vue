@@ -29,6 +29,7 @@ export default {
         dbUser = {
           name: snapshot.val().name,
           diploma: snapshot.val().diploma,
+          club: snapshot.val().club,
         };
       });
 

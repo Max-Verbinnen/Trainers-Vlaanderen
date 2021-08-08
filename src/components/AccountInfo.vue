@@ -13,8 +13,8 @@
             <img :src="training.img" alt="training foto" loading="lazy">
           </div>
           <div class="content">
-            <h4>{{training.titel}}</h4>
-            <p>{{training.uitleg | shorten}}</p>
+            <h4>{{ training.titel }}</h4>
+            <p>{{ training.uitleg | shorten }}</p>
             <div class="bottom-info">
               <p class="trainer">
                 <img src="../assets/img/user.svg" alt="trainer">
