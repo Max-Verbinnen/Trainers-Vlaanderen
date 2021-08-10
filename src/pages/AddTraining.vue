@@ -95,66 +95,25 @@
           <label id="info">Onderdeel*</label><br>
           <select id="fill" v-model="training.onderdeel" required>
             <option disabled value="">Kies één onderdeel</option>
-            <option>Opwarming</option>
-            <option>Techniekvorm</option>
-            <option>Pasvorm</option>
-            <option>Afwerkvorm</option>
-            <option>Balbezitvorm / positiespel</option>
-            <option>Wedstrijdvorm</option>
-            <option>Spelvorm</option>
-            <option>Cooling down</option>
-            <option>Keepertraining</option>
+            <option v-for="onderdeel in onderdelen" :key="onderdeel">{{ onderdeel }}</option>
           </select>
         </div>
         <div class="input-group hoofdthema">
           <label id="info">Hoofdthema*</label><br>
           <select id="fill" v-model="training.hoofdthema" required>
             <option disabled value="">Kies één hoofdthema</option>
-            <option>Techniek</option>
-            <option>Speelwijze</option>
-            <option>Fysiek</option>
-            <option>Spelfases</option>
+            <option v-for="thema in themas" :key="thema.hoofd">{{ thema.hoofd }}</option>
           </select>
         </div>
-        <div class="input-group subthema" v-if="training.hoofdthema === 'Techniek'">
+        <div class="input-group subthema" v-if="training.hoofdthema">
           <label id="info">Subthema</label><br>
           <select id="fill" v-model="training.subthema">
             <option disabled value="">Kies één subthema</option>
-            <option>Frontaal</option>
-            <option>Schuin-frontaal</option>
-            <option>Zijwaarts</option>
-            <option>Achterwaarts</option>
-            <option>Gerichte aanname</option>
-          </select>
-        </div>
-        <div class="input-group subthema" v-if="training.hoofdthema === 'Speelwijze'">
-          <label id="info">Subthema</label><br>
-          <select id="fill" v-model="training.subthema">
-            <option disabled value="">Kies één subthema</option>
-            <option>Opbouw</option>
-            <option>Aanval via de flank</option>
-            <option>Aanval via centrum</option>
-            <option>Druk zetten</option>
-          </select>
-        </div>
-        <div class="input-group subthema" v-if="training.hoofdthema === 'Fysiek'">
-          <label id="info">Subthema</label><br>
-          <select id="fill" v-model="training.subthema">
-            <option disabled value="">Kies één subthema</option>
-            <option>Activatie</option>
-            <option>Aerobic</option>
-            <option>Anaerobic</option>
-            <option>Sterkte</option>
-            <option>SAQ (Speed, Agility + Quickness)</option>
-          </select>
-        </div>
-        <div class="input-group subthema" v-if="training.hoofdthema === 'Spelfases'">
-          <label id="info">Subthema</label><br>
-          <select id="fill" v-model="training.subthema">
-            <option disabled value="">Kies één subthema</option>
-            <option>Vrije trappen (B+, B-)</option>
-            <option>Penalty's</option>
-            <option>Corners (B+, B-)</option>
+            <template v-for="thema in themas">
+              <template v-if="thema.hoofd === training.hoofdthema">
+                <option v-for="sub in thema.sub" :key="sub">{{ sub }}</option>
+              </template>
+            </template>
           </select>
         </div>
         <div class="input-group">
@@ -229,6 +188,12 @@ export default {
         if (a.toLowerCase() < b.toLowerCase()) return -1;
         if (a.toLowerCase() > b.toLowerCase()) return 1;
       });
+    },
+    themas() {
+      return this.$store.state.themas;
+    },
+    onderdelen() {
+      return this.$store.state.onderdelen;
     },
   },
   methods: {

@@ -21,7 +21,7 @@
             <h3>Categorie</h3>
             <div v-for="n in 14" :key="n" class="input-group">
               <input type="checkbox" :value="'U' + (n+5)" v-model="filterCategorie">
-              <label>U{{n + 5}}</label>
+              <label>U{{ n + 5 }}</label>
             </div>
             <div class="input-group">
               <input type="checkbox" value="21" v-model="filterCategorie">
@@ -38,16 +38,31 @@
           </div>
           <div class="column onderdeel">
             <h3>Hoofdthema</h3>
-            <div class="input-group" v-for="hoofdthema in hoofdthemas" :key="hoofdthema">
-              <input type="checkbox" :value="hoofdthema" v-model="filterHoofdthemas">
-              <label>{{hoofdthema}}</label>
+            <div class="input-group" v-for="thema in themas" :key="thema.hoofdthema">
+              <div
+                class="hoofdthema"
+                :style="filterHoofdthemas.includes(thema.hoofd) ? 'margin-bottom: 0.5rem' : ''"
+              >
+                <input type="checkbox" :value="thema.hoofd" v-model="filterHoofdthemas">
+                <label>{{ thema.hoofd }}</label>
+              </div>
+              <div
+                class="subthema input-group"
+                v-for="sub in thema.sub"
+                :key="sub"
+              >
+                <template v-if="filterHoofdthemas.includes(thema.hoofd)">
+                  <input type="checkbox" :value="sub" v-model="filterSubthemas">
+                  <label>{{ sub }}</label>
+                </template>
+              </div>
             </div>
           </div>
           <div class="column onderdeel">
             <h3>Onderdeel</h3>
             <div class="input-group" v-for="onderdeel in onderdelen" :key="onderdeel">
               <input type="checkbox" :value="onderdeel" v-model="filterOnderdelen">
-              <label>{{onderdeel}}</label>
+              <label>{{ onderdeel }}</label>
             </div>
           </div>
         </form>
@@ -72,9 +87,8 @@ export default {
       filterClub: [],
       filterCategorie: [],
       filterHoofdthemas: [],
+      filterSubthemas: [],
       filterOnderdelen: [],
-      onderdelen: ["Opwarming", "Techniekvorm", "Pasvorm", "Afwerkvorm", "Balbezitvorm / positiespel", "Wedstrijdvorm", "Spelvorm", "Cooling down", "Keepertraining"],
-      hoofdthemas: ["Techniek", "Speelwijze", "Fysiek", "Spelfases"],
     }
   },
   props: ["trainings", "clubs"],
@@ -115,7 +129,11 @@ export default {
       let trainingsFilteredByHoofdthema;
       if (this.filterHoofdthemas.length > 0) {
         trainingsFilteredByHoofdthema = this.trainings.filter(training => {
-          return this.filterHoofdthemas.includes(training.hoofdthema);
+          return (
+            this.filterHoofdthemas.includes(training.hoofdthema)
+            && 
+            (this.filterSubthemas.length > 0 ? this.filterSubthemas.includes(training.subthema) : true)
+          );
         });
       } else {
         trainingsFilteredByHoofdthema = this.trainings;
@@ -130,12 +148,29 @@ export default {
         trainingsFilteredByOnderdeel = this.trainings;
       }
       
-      // Get common elements of 5 arrays
-      const arrays = [trainingsFilteredByTrainer, trainingsFilteredByClub, trainingsFilterdByCategorie, trainingsFilteredByHoofdthema, trainingsFilteredByOnderdeel];
+      // Get common elements of arrays
+      const arrays = [
+        trainingsFilteredByTrainer,
+        trainingsFilteredByClub,
+        trainingsFilterdByCategorie,
+        trainingsFilteredByHoofdthema,
+        trainingsFilteredByOnderdeel,
+      ];
+
       const merged = arrays.reduce((p,c) => p.filter(e => c.includes(e)));
       this.$emit("filtered", merged);
       this.$emit("exitModal");
     }
+  },
+  watch: {
+    filterHoofdthemas() {
+      let subThemas = [];
+      this.filterHoofdthemas.forEach(hoofd => {
+        const subs = this.themas.filter(thema => thema.hoofd === hoofd)[0].sub;
+        subThemas = [...subThemas, ...subs];
+      });
+      this.filterSubthemas = subThemas;
+    },
   },
   computed: {
     getTrainers() {
@@ -144,6 +179,12 @@ export default {
         if (!listOfTrainers.includes(training.trainer || training.user?.name)) listOfTrainers.push(training.trainer || training.user?.name);
       }
       return listOfTrainers;
+    },
+    themas() {
+      return this.$store.state.themas;
+    },
+    onderdelen() {
+      return this.$store.state.onderdelen;
     },
   },
 }
@@ -189,6 +230,10 @@ h3 {
 
 .column.categorie label, .column.trainer label, .column.club label, .column.onderdeel label {
   margin-left: 0.25rem;
+}
+
+.subthema {
+  margin-left: 1.5rem;
 }
 
 .close-modal {
