@@ -33,22 +33,14 @@
         <div class="input-group category">
           <label id="info">Categorie</label><br>
           <div id="fill">
-            <div v-for="n in 14" :key="n">
-              <input type="checkbox" :value="'U' + (n+5)" v-model="training.categorie">
-              <label>U{{n + 5}}</label>
-            </div>
-            <div>
-              <input type="checkbox" value="U21" v-model="training.categorie">
-              <label>U21</label>
-            </div>
-            <div>
-              <input type="checkbox" value="B" v-model="training.categorie">
-              <label>B-ploeg / beloften</label>
-            </div>
-            <div>
-              <input type="checkbox" value="A" v-model="training.categorie">
-              <label>A-ploeg</label>
-            </div>
+            <input type="checkbox" value="Onderbouw" v-model="training.categorie">
+            <label>Onderbouw (U6 - U9)</label><br>
+            <input type="checkbox" value="Middenbouw" v-model="training.categorie">
+            <label>Middenbouw (U10 - U13)</label><br>
+            <input type="checkbox" value="Bovenbouw" v-model="training.categorie">
+            <label>Bovenbouw (U14 - U21)</label><br>
+            <input type="checkbox" value="Volwassen" v-model="training.categorie">
+            <label>Volwassen ploegen</label>
           </div>
         </div>
         <div class="input-group players">

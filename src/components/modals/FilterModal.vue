@@ -19,21 +19,21 @@
           </div>
           <div class="column categorie">
             <h3>Categorie</h3>
-            <div v-for="n in 14" :key="n" class="input-group">
-              <input type="checkbox" :value="'U' + (n+5)" v-model="filterCategorie">
-              <label>U{{ n + 5 }}</label>
+            <div class="input-group">
+              <input type="checkbox" value="Onderbouw" v-model="filterCategorie">
+              <label>Onderbouw (U6 - U9)</label>
             </div>
             <div class="input-group">
-              <input type="checkbox" value="21" v-model="filterCategorie">
-              <label>U21</label>
+              <input type="checkbox" value="Middenbouw" v-model="filterCategorie">
+              <label>Middenbouw (U10 - U13)</label>
             </div>
             <div class="input-group">
-              <input type="checkbox" value="B" v-model="filterCategorie">
-              <label>B-ploeg / beloften</label>
+              <input type="checkbox" value="Bovenbouw" v-model="filterCategorie">
+              <label>Bovenbouw (U14 - U21)</label>
             </div>
             <div class="input-group">
-              <input type="checkbox" value="A" v-model="filterCategorie">
-              <label>A-ploeg</label>
+              <input type="checkbox" value="Volwassen" v-model="filterCategorie">
+              <label>Volwassen ploegen</label>
             </div>
           </div>
           <div class="column onderdeel">
@@ -120,7 +120,23 @@ export default {
       let trainingsFilterdByCategorie;
       if (this.filterCategorie.length > 0) {
         trainingsFilterdByCategorie = this.trainings.filter(training => {
-          return training.categorie.some(item => this.filterCategorie.includes(item));
+          const opts = ["Onderbouw", "Middenbouw", "Bovenbouw", "Volwassen"];
+          const rels = {
+            Onderbouw: ["U6", "U7", "U8", "U9"],
+            Middenbouw: ["U10", "U11", "U12", "U13"],
+            Bovenbouw: ["U14", "U15", "U16", "U17", "U18", "U19", "U20", "U21"],
+            Volwassen: ["A", "B"],
+          };
+
+          if (training.categorie && !training.categorie.some(item => opts.includes(item))) {
+            let Us = [];
+            this.filterCategorie.forEach(ctg => {
+              rels[ctg].forEach(u => Us.push(u));
+            });
+            return training.categorie.some(item => Us.includes(item));
+          } else if (training.categorie) {
+            return training.categorie.some(item => this.filterCategorie.includes(item));
+          }
         });
       } else {
         trainingsFilterdByCategorie = this.trainings;
