@@ -43,7 +43,7 @@
       </transition>
     </div>
 
-    <button @click="handleLogout">Log out</button>
+    <!-- <button @click="handleLogout">Log out</button> -->
   </div>
 </template>
 

@@ -48,6 +48,10 @@
               <div class="underline"></div>
               <label>Wachtwoord</label>
             </div>
+            <div class="privacy">
+              <input type="checkbox" required>
+              <label>Ik ga akkoord met de <router-link to="/privacy-policy">privacyverklaring</router-link></label>
+            </div>
             <p class="errMsg">{{ signupData.errorMsg }}</p>
             <input type="submit" value="Registreer" class="btn">
           </form>
@@ -167,7 +171,7 @@ export default {
 
 .container {
   position: relative;
-  width: 50em;
+  width: 51em;
   height: 31.25em;
   margin: 1.25rem;
 }
@@ -316,6 +320,18 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active {
  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.privacy {
+  margin-bottom: 0.25rem;
+}
+
+.privacy input[type="checkbox"] {
+  margin-right: 0.25rem;
+}
+
+.privacy a {
+  color: initial;
 }
 
 .signInBtn, .signUpBtn, input[type="submit"] {
