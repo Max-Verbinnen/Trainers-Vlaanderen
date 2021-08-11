@@ -14,7 +14,7 @@
       <div class="intro">
         <h2>Waar alle voetbaltrainingen samenkomen</h2>
         <h4>
-          Trainers Vlaanderen is een site waar voetbalcoaches gemakkelijk en gratis trainingsideeën kunnen delen en ontdekken. De site bestaat uit 3 ruimtes: een ruimte om voetbaltrainingen uit te schrijven, eentje om sessies vanuit YouTube te delen en eentje met handige tips voor het digitaal uitschrijven van oefeningen.
+          Welkom bij Trainers Vlaanderen, een platform waar voetbalcoaches inspiratie uit kunnen halen om hun trainingen een niveau op te krikken of om een andere aanpak te ontdekken.
         </h4>
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
