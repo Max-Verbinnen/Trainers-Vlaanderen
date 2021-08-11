@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
     user: null,
     themas: [
       { hoofd: "Techniek", sub: ["Frontaal", "Schuin-frontaal", "Zijwaarts", "Achterwaarts", "Aanname"] },
-      { hoofd: "Speelwijze", sub: ["B+ (balbezit)", "B- (balverlies)-frontaal", "Omschakeling"] },
+      { hoofd: "Speelwijze", sub: ["B+ (balbezit)", "B- (balverlies)", "Omschakeling"] },
       { hoofd: "Fysiek", sub: ["Activatie", "Aerobic", "Anaerobic", "Sterkte", "SAQ (Speed, Agility + Quickness)"] },
       { hoofd: "Spelfases", sub: ["Vrije trappen (B+, B-)", "Penalty's", "Corners (B+, B-)"] },
     ],

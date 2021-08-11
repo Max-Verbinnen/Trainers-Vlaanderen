@@ -50,6 +50,25 @@ export default {
       });
     },
   },
+  async created() {
+    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Tijl Verbesselt").once("value", snapshot => {
+    //   let trainingsArray = [];
+    //   snapshot.forEach(child => {
+    //     trainingsArray.push({
+    //       ...child.val(),
+    //       id: child.key,
+    //     });
+    //   });
+
+    //   trainingsArray.forEach(training => {
+    //     db.ref("Trainings/" + training.id).update({ user: {
+    //       email: "tijl.verbesselt@icloud.com",
+    //       name: "Tijl Verbesselt",
+    //       userID: "9sORBkrOLAORJcTrOpelEfAKGjK2",
+    //     } });
+    //   });
+    // });
+  },
 }
 
 </script>
