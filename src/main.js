@@ -6,10 +6,13 @@ import "./assets/css/style.css"
 
 // Libraries & Plugins
 import VueRouter from "vue-router"
+import VueTippy, { TippyComponent } from "vue-tippy";
 import "./firebase"
 
 // Activate plugins
 Vue.use(VueRouter);
+Vue.use(VueTippy);
+Vue.component("tippy", TippyComponent);
 
 // Router
 import routes from "./routes"
