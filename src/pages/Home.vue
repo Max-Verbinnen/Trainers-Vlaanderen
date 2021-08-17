@@ -2,11 +2,11 @@
   <div id="home-page">
     <keep-alive>
       <FilterModal
-      v-if="isFilterOpen"
-      @exitModal="closeFilterModal"
-      @filtered="filterTrainings"
-      :trainings="trainings"
-      :clubs="clubs"
+        v-if="isFilterOpen"
+        @exitModal="closeFilterModal"
+        @filtered="filterTrainings"
+        :trainings="trainings"
+        :clubs="clubs"
       />
     </keep-alive>
     
@@ -39,24 +39,24 @@
         <div class="container" ref="container">
           <div class="card" v-for="training in filteredTrainings" :key="training.id" :id="training.id">
             <router-link :to="'/training/' + training.id">
-            <div class="imgBx">
-              <img :src="training.img" alt="training foto" loading="lazy">
-            </div>
-            <div class="content">
-              <h4>{{training.titel}}</h4>
-              <p>{{training.uitleg | shorten}}</p>
-              <div class="bottom-info">
-                <p class="trainer">
-                  <img src="../assets/img/user.svg" alt="trainer">
-                  <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
-                <p class="tags">
-                  <span v-if="training.categorie">{{training.categorie | destructure}}</span>
-                  <span>{{training.spelers}} spelers</span>
-                  <span>{{training.onderdeel}}</span>
-                  <span>{{training.hoofdthema}}</span>
-                </p>
+              <div class="imgBx">
+                <img :src="training.img" alt="training foto" loading="lazy">
               </div>
-            </div>
+              <div class="content">
+                <h4>{{training.titel}}</h4>
+                <p>{{training.uitleg | shorten}}</p>
+                <div class="bottom-info">
+                  <p class="trainer">
+                    <img src="../assets/img/user.svg" alt="trainer">
+                    <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
+                  <p class="tags">
+                    <span v-if="training.categorie">{{training.categorie | destructure}}</span>
+                    <span>{{training.spelers}} spelers</span>
+                    <span>{{training.onderdeel}}</span>
+                    <span>{{training.hoofdthema}}</span>
+                  </p>
+                </div>
+              </div>
             </router-link>
           </div>
         </div>

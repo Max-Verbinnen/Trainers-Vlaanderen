@@ -8,6 +8,14 @@
           <span>{{ training.trainer || (training.user && training.user.name) }}
           <span>({{ training.diploma }})</span></span>
         </p>
+        <p
+          class="views"
+          v-tippy="{ placement : 'right' }"
+          :content="`Deze training is ${training.views ? training.views : 0} keer bekeken.`"
+        >
+          <img src="../assets/img/eye.svg" alt="views">
+          <span>{{ training.views ? training.views : 0 }}</span>
+        </p>
         <div class="uitleg">
           <div>
             <p>{{training.uitleg}}</p>
@@ -52,14 +60,37 @@ export default {
       training: {}
     }
   },
-  methods: {
-    printPage
-  },
   created() {
     db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
       this.training = snapshot.val();
       document.title = "Trainers Vlaanderen | " + this.training.titel;
     });
+
+    // Track page visits
+    this.handleVisitedTraining();
+  },
+  methods: {
+    printPage,
+    async handleVisitedTraining() {
+      let visitedTrainings = JSON.parse(localStorage.getItem("visitedTrainings"));
+      const trainingID = this.$route.params.id;
+
+      if (visitedTrainings && visitedTrainings.includes(trainingID)) return;
+      if (!visitedTrainings) visitedTrainings = [];
+
+      visitedTrainings.push(trainingID);
+      localStorage.setItem("visitedTrainings", JSON.stringify(visitedTrainings));
+
+      // Get views from db
+      let views = 0;
+      await db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
+        if (snapshot.val().views) views = snapshot.val().views;
+        views += 1;
+      });
+      // Update views in db
+      await db.ref(`Trainings/${this.$route.params.id}`)
+        .update({ views })
+    },
   },
   filters: {
     destructure(value) {
@@ -83,10 +114,16 @@ export default {
 .trainer {
   display: flex;
   font-weight: 500;
-  margin: 1rem 0 2rem 0;
+  margin-top: 1rem;
 }
 
-.trainer img {
+.views {
+  display: inline-flex;
+  font-weight: 500;
+  margin-top: 0.5rem;
+}
+
+.trainer img, .views img {
   margin-right: 0.25rem;
 }
 
@@ -97,7 +134,7 @@ img.training {
 .uitleg {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4rem;
+  margin: 2rem 0 4rem 0;
 }
 
 .uitleg h4 {
