@@ -22,13 +22,11 @@ footer {
 }
 
 .copyright {
-  /* background: rgb(250, 250, 250); */
   padding: 0.5rem 0;
 }
 
 .collab {
   padding: 1rem 0;
-  /* background: rgb(246, 253, 243); */
 }
 
 footer a {
