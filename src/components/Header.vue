@@ -135,9 +135,9 @@ a.router-link-active:not(h1 a)::before {
     flex-direction: row;
   }
   ul {
-    position: absolute;
+    position: fixed;
     top: 0;
-    right: -50rem;
+    right: -26rem;
     width: 100%;
     display: flex;
     flex-direction: column;
