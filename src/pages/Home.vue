@@ -19,7 +19,7 @@
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
       <div class="trainings">
-        <h3>Bekijk de trainingen</h3>
+        <h3>Bekijk de {{ filteredTrainings.length > 0 ? filteredTrainings.length : "" }} trainingen</h3>
 
         <div class="filter-wrapper">
           <button class="filter" @click="openFilterModal">
