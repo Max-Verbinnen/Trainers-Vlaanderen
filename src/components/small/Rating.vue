@@ -16,7 +16,20 @@
 import { db } from "../../firebase";
 
 export default {
-  props: ['grade', 'maxStars', 'hasCounter'],
+  props: {
+    grade: {
+      type: Number,
+      required: true,
+    },
+    maxStars: {
+      type: Number,
+      required: true,
+    },
+    hasCounter: {
+      type: Boolean,
+      default: true,
+    },
+  },
   data() {
     return {
       stars: this.grade,

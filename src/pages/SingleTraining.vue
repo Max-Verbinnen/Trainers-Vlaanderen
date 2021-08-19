@@ -5,8 +5,14 @@
         <h2>{{ training.titel }}</h2>
         <p class="trainer">
           <img src="../assets/img/user.svg" alt="trainer">
-          <span>{{ training.trainer || (training.user && training.user.name) }}
-          <span>({{ training.diploma }})</span></span>
+          <span>
+            {{ training.trainer || (training.user && training.user.name) }}
+            ({{ training.diploma }})
+          </span>
+        </p><br>
+        <p class="club" v-if="training.club">
+          <img src="../assets/img/club.svg" alt="club">
+          <span>{{ training.club }}</span>
         </p><br>
         <p
           class="views"
@@ -196,7 +202,7 @@ export default {
   min-height: 110vh;
 }
 
-.trainer, .views, .rating-p {
+.trainer, .club, .views, .rating-p {
   display: inline-flex;
   align-items: center;
   font-weight: 500;
@@ -206,7 +212,7 @@ export default {
   margin-top: 1rem;
 }
 
-.trainer img, .views img, .rating-p img {
+.trainer img, .club img, .views img, .rating-p img {
   margin-right: 0.25rem;
 }
 

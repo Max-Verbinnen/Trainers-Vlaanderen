@@ -8,7 +8,6 @@
       <Rating
         :grade="0"
         :maxStars="5"
-        :hasCounter="true"
         @rating="$emit('exitModal'); $emit('ratingGiven', $event)"
         @alreadyRated="rating = $event"
       />
