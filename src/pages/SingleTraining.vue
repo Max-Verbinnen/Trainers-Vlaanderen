@@ -7,7 +7,7 @@
           <img src="../assets/img/user.svg" alt="trainer">
           <span>{{ training.trainer || (training.user && training.user.name) }}
           <span>({{ training.diploma }})</span></span>
-        </p>
+        </p><br>
         <p
           class="views"
           v-tippy="{ placement : 'right' }"
@@ -15,12 +15,30 @@
         >
           <img src="../assets/img/eye.svg" alt="views">
           <span>{{ training.views ? training.views : 0 }}</span>
+        </p><br>
+        <p
+          class="rating-p"
+          v-tippy="{ placement : 'right' }"
+          :content="`${training.rating >= 0
+            ? 'Deze training heeft een rating van ' + training.rating + ' / 5.'
+            : 'Deze training is nog niet beoordeeld.'
+          }`"
+        >
+          <img src="../assets/img/star.svg" alt="rating">
+          <span v-if="training.rating >= 0">{{ training.rating }} / 5</span>
+          <span v-else>... / 5</span>
         </p>
         <div class="uitleg">
           <div>
-            <p>{{training.uitleg}}</p>
+            <p>{{ training.uitleg }}</p>
+            <h4 v-if="training.variaties">Variaties</h4>
+            <p>{{ training.variaties }}</p>
             <h4 v-if="training.doelstellingen">Doelstellingen</h4>
-            <p>{{training.doelstellingen}}</p>
+            <p>{{ training.doelstellingen }}</p>
+            <h4 v-if="training.doorschuifsysteem">Doorschuifsysteem</h4>
+            <p>{{ training.doorschuifsysteem }}</p>
+            <h4 v-if="training.materiaal">Materiaal</h4>
+            <p>{{ training.materiaal }}</p>
           </div>
           <img :src="training.img" alt="training afbeelding" class="training">
         </div>
@@ -29,24 +47,45 @@
         <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{ training.categorie | destructure }}</p>
         <p v-if="training.spelers"><span id="subtitle">Spelers</span>: {{ training.spelers }}</p>
         <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{ training.keepers }}</p>
-        <p v-if="training.materiaal"><span id="subtitle">Materiaal</span>: {{ training.materiaal }}</p>
         <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{ training.niveau }}</p>
         <p v-if="training.duur"><span id="subtitle">Duur van de training</span>: {{ training.duur }}</p>
         <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{ training.intensiteit }}</p>
         <p v-if="training.onderdeel"><span id="subtitle">Onderdeel</span>: {{ training.onderdeel }}</p>
-        <p v-if="training.hoofdthema"><span id="subtitle">Hoofdthema</span>: {{ training.hoofdthema }}</p>
-        <p v-if="training.subthema"><span id="subtitle">Subthema</span>: {{ training.subthema }}</p>
-        <p v-if="training.variaties"><span id="subtitle">Variaties</span>: {{ training.variaties }}</p>
-        <p v-if="training.doorschuifsysteem"><span id="subtitle">Doorschuifsysteem</span>: {{ training.doorschuifsysteem }}</p>
+        <p v-if="training.hoofdthema"><span id="subtitle">Thema</span>:
+          {{ training.hoofdthema }}
+          {{ training.subthema ? ' / ' : '' }}
+          {{ training.subthema }}
+        </p>
       </div>
       
-      <div class="print">
-        <button @click="printPage">
-          <span>Print deze pagina</span>
+      <div class="action-btns">
+        <button @click="openRatingModal" class="rating">
+          <img src="../assets/img/star.svg" alt="Print deze pagina">
+          <span>Geef deze training een rating</span>
+        </button>
+        <button @click="printPage" class="print">
           <img src="../assets/img/printer.svg" alt="Print deze pagina">
+          <span>Print deze pagina</span>
         </button>
       </div>
     </section>
+
+    <RatingModal
+      v-if="showRatingModal"
+      @exitModal="showRatingModal = false"
+      @ratingGiven="ratingGiven($event)"
+    />
+
+    <!-- Show snackbar when training has been rated -->
+    <div style="display: flex; justify-content: center;">
+      <transition name="fade">
+        <Snackbar
+          v-if="showSnackbar"
+          @closeSnackbar="showSnackbar = false"
+          :text="`Je hebt deze training een rating van ${rating} / 5 gegeven.`"
+        />
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -54,23 +93,46 @@
 import { db } from "../firebase"
 import { printPage } from "../utils"
 
+import Snackbar from "../components/modals/Snackbar.vue";
+import RatingModal from "../components/modals/RatingModal.vue";
+
 export default {
   data() {
     return {
-      training: {}
+      training: {},
+      showRatingModal: false,
+      showSnackbar: false,
+      rating: null,
+      avgRating: null,
     }
   },
-  created() {
-    db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
-      this.training = snapshot.val();
-      document.title = "Trainers Vlaanderen | " + this.training.titel;
-    });
+  components: {
+    RatingModal,
+    Snackbar,
+  },
+  async created() {
+    await this.getTraining();
+    await this.handleVisitedTraining();
 
-    // Track page visits
-    this.handleVisitedTraining();
+    document.title = "Trainers Vlaanderen | " + this.training.titel;
   },
   methods: {
     printPage,
+    openRatingModal() {
+      // Go to login page if not signed in
+      if (!this.$store.state.user) {
+        localStorage.setItem("ratingToAccountRoute", "true");
+        this.$router.push("/account");
+        return;
+      }
+
+      this.showRatingModal = true;
+    },
+    async getTraining() {
+      await db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
+        this.training = snapshot.val();
+      });
+    },
     async handleVisitedTraining() {
       let visitedTrainings = JSON.parse(localStorage.getItem("visitedTrainings"));
       const trainingID = this.$route.params.id;
@@ -87,9 +149,36 @@ export default {
         if (snapshot.val().views) views = snapshot.val().views;
         views += 1;
       });
+
       // Update views in db
       await db.ref(`Trainings/${this.$route.params.id}`)
-        .update({ views })
+        .update({ views });
+    },
+    ratingGiven(rating) {
+      this.showSnackbar = true;
+      this.rating = rating;
+      this.calculateRating();
+      this.getTraining();
+    },
+    async calculateRating() {
+      await db.ref('Ratings')
+        .orderByChild('trainingID')
+        .equalTo(this.$route.params.id)
+        .once('value', snapshot => {
+          let ratings = [];
+          snapshot.forEach(child => {
+            ratings.push(child.val());
+          });
+          if (!ratings.length) return;
+          
+          // Calculate average rating
+          const sum = ratings.reduce((rating, { score }) => rating + score, 0);
+          this.avgRating = (sum / ratings.length).toFixed(1);
+      });
+
+      // Update rating in db
+      await db.ref(`Trainings/${this.$route.params.id}`)
+        .update({ rating: this.rating ? this.avgRating : null });
     },
   },
   filters: {
@@ -107,23 +196,17 @@ export default {
   min-height: 110vh;
 }
 
-#training {
-  margin-bottom: 4.5rem;
+.trainer, .views, .rating-p {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
 }
 
 .trainer {
-  display: flex;
-  font-weight: 500;
   margin-top: 1rem;
 }
 
-.views {
-  display: inline-flex;
-  font-weight: 500;
-  margin-top: 0.5rem;
-}
-
-.trainer img, .views img {
+.trainer img, .views img, .rating-p img {
   margin-right: 0.25rem;
 }
 
@@ -138,7 +221,7 @@ img.training {
 }
 
 .uitleg h4 {
-  margin: 1rem 0 0.25rem 0;
+  margin: 0.75rem 0 0.25rem 0;
 }
 
 .uitleg p {
@@ -151,21 +234,23 @@ img.training {
 }
 
 #subtitle {
-  font-weight: 700;
-}
-
-.details p {
-  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .details {
-  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom: 3rem;
+}
+
+.details p {
+  padding: 0.75rem;
+  border: 1px solid rgb(211, 211, 211);
 }
 
 @media screen and (max-width: 1200px) {
   .uitleg {
     flex-direction: column;
-    margin: 0;
   }
   .uitleg img {
     align-self: flex-start;
@@ -177,21 +262,34 @@ img.training {
   .uitleg img {
     width: 280px;
   }
+  .details {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.print button {
+.action-btns {
+  display: flex;
+  margin: -5px -10px;
+}
+
+.action-btns button {
+  margin: 5px 10px;
   outline: none;
   border: none;
-  background: rgb(243, 243, 243);
+  background: rgb(236, 236, 236);
+  font-size: 1rem;
   padding: 0.6rem 1rem;
-  font-size: initial;
-  display: flex;
   cursor: pointer;
   border-radius: 0.5rem;
 }
 
-.print button img {
-  margin-left: 0.5rem;
+.action-btns button img {
+  display: block;
+  margin: 0 auto 0.5rem auto;
+}
+
+.action-btns button.rating {
+  background: #ffffb2;
 }
 
 </style>

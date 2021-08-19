@@ -253,8 +253,7 @@ export default {
 
           localStorage.setItem("trainingAdded", "true");
           this.$router.push("/account");
-        })
-        .catch(err => console.log(err));
+        });
       }
     },
     user() {
