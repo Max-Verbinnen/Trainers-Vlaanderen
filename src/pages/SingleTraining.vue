@@ -22,17 +22,19 @@
           <img src="../assets/img/eye.svg" alt="views">
           <span>{{ training.views ? training.views : 0 }}</span>
         </p><br>
-        <p
-          class="rating-p"
-          v-tippy="{ placement : 'right' }"
-          :content="`${training.rating >= 0
-            ? 'Deze training heeft een rating van ' + training.rating + ' / 5.'
-            : 'Deze training is nog niet beoordeeld.'
-          }`"
-        >
-          <img src="../assets/img/star.svg" alt="rating">
-          <span v-if="training.rating >= 0">{{ training.rating }} / 5</span>
-          <span v-else>... / 5</span>
+        <p class="rating-p">
+          <ReadRating
+            v-if="training.rating"
+            v-tippy="{ placement: 'right' }"
+            :content="`Deze training heeft een rating van ${training.rating} / 5.`"
+            :rating="parseInt(training.rating, 10)"
+          />
+          <ReadRating
+            v-else
+            v-tippy="{ placement: 'right' }"
+            content="Deze training is nog niet beoordeeld."
+            :rating="0"
+          />
         </p>
         <div class="uitleg">
           <div>
@@ -99,6 +101,7 @@
 import { db } from "../firebase"
 import { printPage } from "../utils"
 
+import ReadRating from "../components/small/ReadRating.vue";
 import Snackbar from "../components/modals/Snackbar.vue";
 import RatingModal from "../components/modals/RatingModal.vue";
 
@@ -113,6 +116,7 @@ export default {
     }
   },
   components: {
+    ReadRating,
     RatingModal,
     Snackbar,
   },

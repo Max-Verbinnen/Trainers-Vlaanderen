@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Rating from "../../components/small/Rating.vue"
+import Rating from "../small/GiveRating.vue"
 
 export default {
   data() {

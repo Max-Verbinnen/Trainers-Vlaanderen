@@ -14,6 +14,7 @@
 </template>
 <script>
 import { db } from "../../firebase";
+import { currentDate } from "../../utils";
 
 export default {
   props: {
@@ -73,6 +74,7 @@ export default {
           userID: this.$store.state.user.userID,
           trainingID: this.$route.params.id,
           score: this.stars,
+          date: currentDate(),
         });
       } else {
         await db.ref('Ratings/' + this.rating.id)
@@ -103,7 +105,7 @@ export default {
 }
 
 .rating .list:hover .star {
-  color: #ffe100;
+  color: var(--star-yellow);
 }
 
 .rating .list .star {
@@ -122,7 +124,7 @@ export default {
 }
 
 .rating .list .star.active {
-  color: #ffe100;
+  color: var(--star-yellow);
 }
 
 .rating .info {
