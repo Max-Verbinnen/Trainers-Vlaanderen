@@ -29,6 +29,14 @@
             <input type="text" v-model="search" placeholder="Zoek op titel...">
             <img src="../assets/img/cross.svg" alt="" @click="search = ''">
           </div>
+          <div class="select-group">
+            <select v-model="sortBy">
+              <option disabled value="">Sorteer op</option>
+              <option>Recentste</option>
+              <option>Weergaven</option>
+              <option>Beoordeling</option>
+            </select>
+          </div>
         </div>
 
         <p v-if="filteredTrainings.length === 0" class="error-msg">
@@ -43,17 +51,17 @@
                 <img :src="training.img" alt="training foto" loading="lazy">
               </div>
               <div class="content">
-                <h4>{{training.titel}}</h4>
-                <p>{{training.uitleg | shorten}}</p>
+                <h4>{{ training.titel }}</h4>
+                <p>{{ training.uitleg | shorten }}</p>
                 <div class="bottom-info">
                   <p class="trainer">
                     <img src="../assets/img/user.svg" alt="trainer">
                     <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
                   <p class="tags">
                     <span v-if="training.categorie">{{training.categorie | destructure}}</span>
-                    <span>{{training.spelers}} spelers</span>
-                    <span>{{training.onderdeel}}</span>
-                    <span>{{training.hoofdthema}}</span>
+                    <span>{{ training.spelers }} spelers</span>
+                    <span>{{ training.onderdeel }}</span>
+                    <span>{{ training.hoofdthema }}</span>
                   </p>
                 </div>
               </div>
@@ -75,11 +83,17 @@ export default {
       clubs: [],
       trainingsCopy: [],
       isFilterOpen: false,
-      search: "",
 
-      lastValue: null,
-      lastKey: null,
+      search: "",
+      sortBy: "Weergaven",
     }
+  },
+  created() {
+    document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
+    if (localStorage.getItem("sortBy")) this.sortBy = localStorage.getItem("sortBy");
+
+    this.getTrainings();
+    this.getClubs();
   },
   methods: {
     openFilterModal() {
@@ -96,29 +110,34 @@ export default {
     deleteFilters() {
       location.reload();
     },
-    fetchMoreTrainings() { 
-      db.ref('Trainings')
-      .orderByChild("titel")
-      .startAfter(this.lastValue, this.lastKey)
-      .limitToFirst(9)
-      .once('value', snapshot => {
-        let trainingsArray = [];
-        snapshot.forEach(child => {
-          trainingsArray.push({
-            ...child.val(),
-            id: child.key,
+    getTrainings() {
+      const sortByOption = this.sortByNaming[this.sortBy];
+
+      if (sortByOption) {
+        db.ref('Trainings')
+          .orderByChild(sortByOption)
+          .once('value', snapshot => {
+            this.handleSnapshot(snapshot);
           });
+      } else {
+        db.ref('Trainings')
+          .once('value', snapshot => {
+            this.handleSnapshot(snapshot);
+          });
+      }
+    },
+    handleSnapshot(snapshot) {
+      let trainingsArray = [];
+      snapshot.forEach(child => {
+        trainingsArray.push({
+          ...child.val(),
+          id: child.key,
         });
-        
-        // If there are no more trainings left to fetch
-        if (trainingsArray.length === 0) return;
-
-        this.lastValue = trainingsArray[trainingsArray.length - 1].titel;
-        this.lastKey = trainingsArray[trainingsArray.length - 1].id;
-
-        this.trainings = [...this.trainings, ...trainingsArray];
-        this.trainingsCopy = [...this.trainings];
       });
+
+      trainingsArray.reverse();
+      this.trainings = trainingsArray;
+      this.trainingsCopy = [...this.trainings];
     },
     getClubs() {
       let clubs = [];
@@ -141,27 +160,19 @@ export default {
         return training.titel.toLowerCase().match(this.search);
       });
     },
+    sortByNaming() {
+      return {
+        "Recentste": null,
+        "Weergaven": "views",
+        "Beoordeling": "rating",
+      };
+    },
   },
-  created() {
-    document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
-    this.getClubs();
-
-    db.ref('Trainings')
-      .orderByChild("titel")
-      .once('value', snapshot => {
-        let trainingsArray = [];
-        snapshot.forEach(child => {
-          trainingsArray.push({
-            ...child.val(),
-            id: child.key,
-          });
-        });
-        this.lastValue = trainingsArray[trainingsArray.length - 1].titel;
-        this.lastKey = trainingsArray[trainingsArray.length - 1].id;
-
-        this.trainings = trainingsArray;
-        this.trainingsCopy = [...this.trainings];
-      });
+  watch: {
+    sortBy() {
+      localStorage.setItem("sortBy", this.sortBy);
+      this.getTrainings();
+    },
   },
   filters: {
     shorten(value) {
@@ -212,6 +223,7 @@ export default {
 .filter-wrapper {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 button.filter {
@@ -233,7 +245,7 @@ button.filter {
   position: relative;
 }
 
-.filter-wrapper input {
+.filter-wrapper input, .filter-wrapper select {
   font-size: 1rem;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
@@ -241,7 +253,15 @@ button.filter {
   width: 15rem;
 }
 
-.filter-wrapper input:focus {
+.filter-wrapper .select-group {
+  margin-left: 1rem;
+}
+
+.filter-wrapper .select-group select {
+  max-width: 10rem;
+}
+
+.filter-wrapper input:focus, .filter-wrapper select:focus {
   outline: none;
   box-shadow: 0 0 0 2px var(--primary-green);
 }
@@ -342,6 +362,19 @@ button.filter {
   padding: 0.25rem 0.5rem;
   border-radius: 5rem;
   margin: 0 0.25rem 0.25rem 0;
+}
+
+@media screen and (max-width: 620px) {
+  .filter-wrapper {
+    flex-direction: column;
+    margin-left: 2rem;
+  }
+  .filter-wrapper .button, .filter-wrapper .select-group {
+    margin: 0;
+  }
+  .filter-wrapper .input-wrap {
+    margin: 0.5rem 0;
+  }
 }
 
 </style>
