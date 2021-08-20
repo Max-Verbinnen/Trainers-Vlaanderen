@@ -88,7 +88,7 @@
 
 <script>
 import { db, auth } from "../firebase"
-import { authErrors } from "../utils"
+import { authErrors, currentDate } from "../utils"
 
 import ForgotPassword from "./modals/ForgotPasswordModal.vue"
 import Snackbar from "./modals/Snackbar.vue"
@@ -143,6 +143,7 @@ export default {
           db.ref('Users/' + data.user.uid).set({
             name: this.signupData.name,
             email: data.user.email,
+            date: currentDate(),
           });
           this.signupData = {};
         })
