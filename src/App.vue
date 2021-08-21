@@ -70,6 +70,26 @@ export default {
     //     db.ref("Trainings/" + training.id).update({ rating: null });
     //   });
     // });
+
+    // await db.ref('Trainings/').once("value", snapshot => {
+    //   let trainingsArray = [];
+    //   snapshot.forEach(child => {
+    //     trainingsArray.push({
+    //       ...child.val(),
+    //       id: child.key,
+    //     });
+    //   });
+
+    //   trainingsArray.forEach(training => {
+    //     db.ref("Trainings/" + training.id).update({ user: {
+    //       email: "tijl.verbesselt@icloud.com",
+    //       name: "Tijl Verbesselt",
+    //       userID: "9sORBkrOLAORJcTrOpelEfAKGjK2",
+    //       club: "KHO Bierbeek",
+    //     } });
+    //     db.ref("Trainings/" + training.id).update({ rating: -1 });
+    //   });
+    // });
   },
 }
 

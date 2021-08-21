@@ -52,17 +52,17 @@ export default {
         const ratings = snapshot.val();
         if (!ratings) return;
 
-        for (let key in ratings) {
+        for (let [key, rating] of Object.entries(ratings)) {
           // If userID or trainingID are not the current ones
-          if (ratings[key].userID !== this.$store.state.user.userID || ratings[key].trainingID !== this.$route.params.id) return;
+          if (rating.userID !== this.$store.state.user.userID || rating.trainingID !== this.$route.params.id) continue;
 
           // Set id on rating object
-          ratings[key] = {
-            ...ratings[key],
+          rating = {
+            ...rating,
             id: key,
           };
 
-          this.rating = ratings[key];
+          this.rating = rating;
           this.stars = this.rating.score;
           this.$emit("alreadyRated", this.stars);
         }

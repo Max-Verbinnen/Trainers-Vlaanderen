@@ -69,8 +69,8 @@
     <!-- Show login snackbar if you came from "add training" page & not logged in -->
     <transition name="fade">
       <Snackbar
-        v-if="showTrainingSnackbar"
-        @closeSnackbar="showTrainingSnackbar = false"
+        v-if="showAddTrainingSnackbar"
+        @closeSnackbar="showAddTrainingSnackbar = false"
         text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
       />
     </transition>
@@ -81,6 +81,15 @@
         v-if="showRatingSnackbar"
         @closeSnackbar="showRatingSnackbar = false"
         text="Je moet ingelogd zijn om een training een rating te kunnen geven."
+      />
+    </transition>
+
+    <!-- Show login snackbar if you wanted to see all trainings & not logged in -->
+    <transition name="fade">
+      <Snackbar
+        v-if="showLoadTrainingsSnackbar"
+        @closeSnackbar="showLoadTrainingsSnackbar = false"
+        text="Je moet ingelogd zijn om alle trainingen te bekijken."
       />
     </transition>
   </section>
@@ -108,8 +117,9 @@ export default {
         errorMsg: "",
       },
       showForgotPasswordModal: false,
-      showTrainingSnackbar: false,
+      showAddTrainingSnackbar: false,
       showRatingSnackbar: false,
+      showLoadTrainingsSnackbar: false,
     }
   },
   components: {
@@ -118,11 +128,14 @@ export default {
   },
   created() {
     if (localStorage.getItem("addTrainingToAccountRoute")) {
-      this.showTrainingSnackbar = true;
+      this.showAddTrainingSnackbar = true;
       localStorage.removeItem("addTrainingToAccountRoute");
     } else if (localStorage.getItem("ratingToAccountRoute")) {
       this.showRatingSnackbar = true;
       localStorage.removeItem("ratingToAccountRoute");
+    } else if (localStorage.getItem("loadTrainingsToAccountRoute")) {
+      this.showLoadTrainingsSnackbar = true;
+      localStorage.removeItem("loadTrainingsToAccountRoute");
     }
   },
   methods: {

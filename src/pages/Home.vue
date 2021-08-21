@@ -19,7 +19,7 @@
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
       <div class="trainings">
-        <h3>Bekijk de {{ filteredTrainings.length > 0 ? filteredTrainings.length : "" }} trainingen</h3>
+        <h3>Bekijk de {{ trainings.length }} trainingen</h3>
 
         <div class="filter-wrapper">
           <button class="filter" @click="openFilterModal">
@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <p v-if="filteredTrainings.length === 0" class="error-msg">
+        <p v-if="filteredTrainings.length === 0 && !loading" class="error-msg">
           Er zijn geen trainingen gevonden. 
           Pas de filters aan of 
           <span id="delete-filters" @click="deleteFilters">verwijder de filters</span>.
@@ -51,12 +51,24 @@
                 <img :src="training.img" alt="training foto" loading="lazy">
               </div>
               <div class="content">
-                <h4>{{ training.titel }}</h4>
-                <p>{{ training.uitleg | shorten }}</p>
+                <h4>{{ training.titel | shorten(6) }}</h4>
+                <p>{{ training.uitleg | shorten(8) }}</p>
                 <div class="bottom-info">
                   <p class="trainer">
                     <img src="../assets/img/user.svg" alt="trainer">
-                    <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
+                    <span>{{ training.trainer || (training.user && training.user.name) }}</span>
+                  </p>
+                  <div class="views-rating">
+                    <div class="views">
+                      <img src="../assets/img/eye.svg" alt="views">
+                      <span>{{ training.views ? training.views : 0 }}</span>
+                    </div>
+                    <span v-if="training.rating >= 0" style="margin: 0 0.5rem;"> | </span>
+                    <ReadRating
+                      v-if="training.rating >= 0"
+                      :rating="parseFloat(training.rating, 10)"
+                    />
+                  </div>
                   <p class="tags">
                     <span v-if="training.categorie">{{training.categorie | destructure}}</span>
                     <span>{{ training.spelers }} spelers</span>
@@ -68,13 +80,18 @@
             </router-link>
           </div>
         </div>
+        <div class="more-trainings" v-if="!$store.state.user && !loading" @click="loadMoreTrainings">
+          <button>Laad meer trainingen</button>
+        </div>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-import { db } from "../firebase"
+import { db } from "../firebase";
+
+import ReadRating from "../components/small/ReadRating.vue";
 
 export default {
   data() {
@@ -83,6 +100,7 @@ export default {
       clubs: [],
       trainingsCopy: [],
       isFilterOpen: false,
+      loading: true,
 
       search: "",
       sortBy: "Weergaven",
@@ -90,7 +108,7 @@ export default {
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
-    if (localStorage.getItem("sortBy")) this.sortBy = localStorage.getItem("sortBy");
+    if (sessionStorage.getItem("sortBy")) this.sortBy = sessionStorage.getItem("sortBy");
 
     this.getTrainings();
     this.getClubs();
@@ -138,6 +156,7 @@ export default {
       trainingsArray.reverse();
       this.trainings = trainingsArray;
       this.trainingsCopy = [...this.trainings];
+      this.loading = false;
     },
     getClubs() {
       let clubs = [];
@@ -150,15 +169,24 @@ export default {
 
       this.clubs = clubs;
     },
+    loadMoreTrainings() {
+      // User is not logged in
+      localStorage.setItem("loadTrainingsToAccountRoute", "true");
+      this.$router.push("/account");
+    },
   },
   components: {
     FilterModal: () => import("../components/modals/FilterModal.vue"),
+    ReadRating,
   },
   computed: {
     filteredTrainings() {
-      return this.trainingsCopy.filter(training => {
-        return training.titel.toLowerCase().match(this.search);
-      });
+      const trainings = this.trainingsCopy.filter(training => training.titel.toLowerCase().match(this.search));
+
+      if (!this.$store.state.user) {
+        return trainings.slice(0, 9);
+      }
+      return trainings;
     },
     sortByNaming() {
       return {
@@ -170,18 +198,17 @@ export default {
   },
   watch: {
     sortBy() {
-      localStorage.setItem("sortBy", this.sortBy);
+      sessionStorage.setItem("sortBy", this.sortBy);
       this.getTrainings();
     },
   },
   filters: {
-    shorten(value) {
+    shorten(value, n) {
       let textArray = value.split(" ");
-      let n = 8;
       if (textArray.length > n) {
         textArray = textArray.slice(0, n);
       }
-      return textArray.join(" ") + "...";
+      return textArray.join(" ") + (value.split(" ").length > n ? "..." : "");
     },
     destructure(value) {
       if (!value) return;
@@ -226,7 +253,7 @@ export default {
   align-items: flex-start;
 }
 
-button.filter {
+button.filter, .more-trainings button {
   outline: none;
   border: none;
   background: initial;
@@ -295,8 +322,8 @@ button.filter {
 
 .container .card {
   position: relative;
-  width: 20rem;
-  height: 26.25rem;
+  width: 320px;
+  height: 440px;
   background: rgb(246, 253, 243);
   margin: 3.5rem 1.25rem;
   display: flex;
@@ -309,9 +336,10 @@ button.filter {
 }
 
 .container .card .imgBx {
+  display: flex;
+  justify-content: center;
   position: relative;
-  top: -3.75rem;
-  left: 1.875rem;
+  top: -60px;
   z-index: 1;
 }
 
@@ -342,17 +370,33 @@ button.filter {
 
 .trainer {
   display: flex;
+  align-items: center;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.15rem;
 }
 
-.trainer img {
+.trainer img, .views img {
   margin-right: 0.25rem;
+}
+
+.views-rating {
+  display: flex;
+  align-items: center;
+}
+
+.views {
+  display: flex;
+  align-items: center;
+}
+
+.vue-star-rating {
+  margin-top: 0.15rem;
 }
 
 .tags {
   font-size: 0.8rem;
   padding-right: 1.5rem;
+  margin-top: 0.65rem;
 }
 
 .tags span {
@@ -362,6 +406,16 @@ button.filter {
   padding: 0.25rem 0.5rem;
   border-radius: 5rem;
   margin: 0 0.25rem 0.25rem 0;
+}
+
+.more-trainings {
+  font-size: 1.1rem;
+  display: grid;
+  place-items: center;
+}
+
+.more-trainings button {
+  padding: 0.75rem 1.25rem;
 }
 
 @media screen and (max-width: 620px) {
@@ -376,5 +430,4 @@ button.filter {
     margin: 0.5rem 0;
   }
 }
-
 </style>

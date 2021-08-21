@@ -24,10 +24,10 @@
         </p><br>
         <p class="rating-p">
           <ReadRating
-            v-if="training.rating"
+            v-if="training.rating >= 0"
             v-tippy="{ placement: 'right' }"
             :content="`Deze training heeft een rating van ${training.rating} / 5.`"
-            :rating="parseInt(training.rating, 10)"
+            :rating="parseFloat(training.rating, 10)"
           />
           <ReadRating
             v-else
@@ -188,7 +188,7 @@ export default {
 
       // Update rating in db
       await db.ref(`Trainings/${this.$route.params.id}`)
-        .update({ rating: this.rating ? this.avgRating : null });
+        .update({ rating: this.rating ? this.avgRating : -1 });
     },
   },
   filters: {
