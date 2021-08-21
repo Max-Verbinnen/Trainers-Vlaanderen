@@ -5,14 +5,14 @@ import 'firebase/auth'
 import 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD6qMKWZTbPTGzAVdVaTZ8gIG9Tl5xb73o",
-  authDomain: "trainers-vlaanderen-51280.firebaseapp.com",
-  databaseURL: "https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/",
-  projectId: "trainers-vlaanderen-51280",
-  storageBucket: "trainers-vlaanderen-51280.appspot.com",
-  messagingSenderId: "45370909626",
-  appId: "1:45370909626:web:cb12d14819cd4d28587383",
-  measurementId: "G-GX1MLSS2R8"
+  apiKey: process.env.VUE_APP_API_KEY,
+  authDomain: process.env.VUE_APP_AUTH_DOMAIN,
+  databaseURL: process.env.VUE_APP_DATABASE_URL,
+  projectId: process.env.VUE_APP_PROJECT_ID,
+  storageBucket: process.env.VUE_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.VUE_APP_APP_ID,
+  measurementId: process.env.VUE_APP_MEASUREMENT_ID
 };
 
 firebase.initializeApp(firebaseConfig);
