@@ -6,7 +6,7 @@ import 'firebase/storage'
 
 // This info may be public, as firebase rules serve as protection
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_API_KEY,
+  apiKey: "AIzaSyD6qMKWZTbPTGzAVdVaTZ8gIG9Tl5xb73o",
   authDomain: "trainers-vlaanderen-51280.firebaseapp.com",
   databaseURL: "https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/",
   projectId: "trainers-vlaanderen-51280",
