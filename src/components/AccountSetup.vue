@@ -66,12 +66,30 @@
       />
     </div>
 
-    <!-- Show login modal if you came from "add training" page & not logged in -->
+    <!-- Show login snackbar if you came from "add training" page & not logged in -->
     <transition name="fade">
       <Snackbar
-        v-if="showSnackbar"
-        @closeSnackbar="showSnackbar = false"
+        v-if="showAddTrainingSnackbar"
+        @closeSnackbar="showAddTrainingSnackbar = false"
         text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
+      />
+    </transition>
+
+    <!-- Show login snackbar if you wanted to give a rating & not logged in -->
+    <transition name="fade">
+      <Snackbar
+        v-if="showRatingSnackbar"
+        @closeSnackbar="showRatingSnackbar = false"
+        text="Je moet ingelogd zijn om een training een rating te kunnen geven."
+      />
+    </transition>
+
+    <!-- Show login snackbar if you wanted to see all trainings & not logged in -->
+    <transition name="fade">
+      <Snackbar
+        v-if="showLoadTrainingsSnackbar"
+        @closeSnackbar="showLoadTrainingsSnackbar = false"
+        text="Je moet ingelogd zijn om alle trainingen te bekijken."
       />
     </transition>
   </section>
@@ -79,7 +97,7 @@
 
 <script>
 import { db, auth } from "../firebase"
-import { authErrors } from "../utils"
+import { authErrors, currentDate } from "../utils"
 
 import ForgotPassword from "./modals/ForgotPasswordModal.vue"
 import Snackbar from "./modals/Snackbar.vue"
@@ -99,7 +117,9 @@ export default {
         errorMsg: "",
       },
       showForgotPasswordModal: false,
-      showSnackbar: false,
+      showAddTrainingSnackbar: false,
+      showRatingSnackbar: false,
+      showLoadTrainingsSnackbar: false,
     }
   },
   components: {
@@ -108,8 +128,14 @@ export default {
   },
   created() {
     if (localStorage.getItem("addTrainingToAccountRoute")) {
-      this.showSnackbar = true;
+      this.showAddTrainingSnackbar = true;
       localStorage.removeItem("addTrainingToAccountRoute");
+    } else if (localStorage.getItem("ratingToAccountRoute")) {
+      this.showRatingSnackbar = true;
+      localStorage.removeItem("ratingToAccountRoute");
+    } else if (localStorage.getItem("loadTrainingsToAccountRoute")) {
+      this.showLoadTrainingsSnackbar = true;
+      localStorage.removeItem("loadTrainingsToAccountRoute");
     }
   },
   methods: {
@@ -130,6 +156,7 @@ export default {
           db.ref('Users/' + data.user.uid).set({
             name: this.signupData.name,
             email: data.user.email,
+            date: currentDate(),
           });
           this.signupData = {};
         })

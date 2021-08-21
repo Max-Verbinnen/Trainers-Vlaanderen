@@ -7,6 +7,7 @@
   --light-green: rgb(246, 253, 243);
   --error-red: #ff0033;
   --disabled-grey: rgba(0, 0, 0, 0.2);
+  --star-yellow: #ffe100;
 }
 
 * {
@@ -60,9 +61,6 @@ section h2 {
   }
   section {
     width: 90%;
-  }
-  .container .card .imgBx {
-    left: 0 !important;
   }
 }
 

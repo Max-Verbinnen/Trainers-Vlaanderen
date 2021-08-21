@@ -81,6 +81,16 @@
 <script>
 
 export default {
+  props: {
+    trainings: {
+      type: Array,
+      required: true,
+    },
+    clubs: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       filterTrainer: [],
@@ -91,7 +101,6 @@ export default {
       filterOnderdelen: [],
     }
   },
-  props: ["trainings", "clubs"],
   methods: {
     exitModal(e) {
       if (e.target === this.$refs.modal) {

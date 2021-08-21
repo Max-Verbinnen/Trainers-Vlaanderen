@@ -138,11 +138,13 @@
 
 <script>
 import { db, storage } from "../firebase";
+import { currentDate } from "../utils";
 
 export default {
   data() {
     return {
       training: {
+        // Training info
         titel: "",
         diploma: "",
         club: "",
@@ -161,6 +163,7 @@ export default {
         variaties: "",
         doorschuifsysteem: "",
         img: "",
+        date: currentDate(),
 
         // Trainer reference
         user: null,
@@ -253,8 +256,7 @@ export default {
 
           localStorage.setItem("trainingAdded", "true");
           this.$router.push("/account");
-        })
-        .catch(err => console.log(err));
+        });
       }
     },
     user() {

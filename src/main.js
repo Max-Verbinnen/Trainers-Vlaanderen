@@ -1,13 +1,13 @@
-import Vue from 'vue'
+import Vue from 'vue';
 
 // Components & Styles
-import App from './App.vue'
-import "./assets/css/style.css"
+import App from './App.vue';
+import "./assets/css/style.css";
 
 // Libraries & Plugins
-import VueRouter from "vue-router"
+import VueRouter from "vue-router";
 import VueTippy, { TippyComponent } from "vue-tippy";
-import "./firebase"
+import "./firebase";
 
 // Activate plugins
 Vue.use(VueRouter);
@@ -15,7 +15,7 @@ Vue.use(VueTippy);
 Vue.component("tippy", TippyComponent);
 
 // Router
-import routes from "./routes"
+import routes from "./routes";
 const router = new VueRouter({
   routes,
   scrollBehavior (to, from, savedPosition) {

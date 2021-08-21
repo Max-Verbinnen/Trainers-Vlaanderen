@@ -60,3 +60,8 @@ export const authErrors = () => {
     "web-storage-unsupported": "Wij supporten deze browser of besturingssysteem jammer genoeg niet.",
   }
 }
+
+export const currentDate = () => {
+  const now = new Date();
+  return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
+}
