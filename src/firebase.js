@@ -7,13 +7,13 @@ import 'firebase/storage'
 // This info may be public, as firebase rules serve as protection
 const firebaseConfig = {
   apiKey: process.env.VUE_APP_API_KEY,
-  authDomain: "trainers-vlaanderen-51280.firebaseapp.com",
-  databaseURL: "https://trainers-vlaanderen-51280-default-rtdb.firebaseio.com/",
-  projectId: "trainers-vlaanderen-51280",
-  storageBucket: "trainers-vlaanderen-51280.appspot.com",
-  messagingSenderId: "45370909626",
-  appId: "1:45370909626:web:cb12d14819cd4d28587383",
-  measurementId: "G-GX1MLSS2R8"
+  authDomain: process.env.VUE_APP_API_KEY,
+  databaseURL: process.env.VUE_APP_API_KEY,
+  projectId: process.env.VUE_APP_API_KEY,
+  storageBucket: process.env.VUE_APP_API_KEY,
+  messagingSenderId: process.env.VUE_APP_API_KEY,
+  appId: process.env.VUE_APP_API_KEY,
+  measurementId: process.env.VUE_APP_API_KEY
 };
 
 firebase.initializeApp(firebaseConfig);
