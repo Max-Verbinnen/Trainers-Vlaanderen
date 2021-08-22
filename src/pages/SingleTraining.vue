@@ -255,7 +255,7 @@ img.training {
 
 .details p {
   padding: 0.75rem;
-  border: 1px solid rgb(211, 211, 211);
+  border: 1px solid var(--grey-border);
 }
 
 @media screen and (max-width: 1200px) {

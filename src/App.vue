@@ -9,6 +9,7 @@
 
 <script>
 import { db, auth } from "./firebase"
+import { currentDate } from "./utils";
 
 import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
@@ -24,12 +25,17 @@ export default {
     auth.onAuthStateChanged(async user => {
       if (!user) return;
 
+      // Keep track of user's last login
+      await db.ref('Users/' + user.uid).update({ lastLoginDate: currentDate() });
+
       let dbUser;
       await db.ref('Users/' + user.uid).once("value", snapshot => {
         dbUser = {
           name: snapshot.val().name,
           diploma: snapshot.val().diploma,
           club: snapshot.val().club,
+          date: snapshot.val().date,
+          lastLoginDate: snapshot.val().lastLoginDate,
         };
       });
 

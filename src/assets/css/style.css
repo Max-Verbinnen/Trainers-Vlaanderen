@@ -8,6 +8,7 @@
   --error-red: #ff0033;
   --disabled-grey: rgba(0, 0, 0, 0.2);
   --star-yellow: #ffe100;
+  --grey-border: rgb(211, 211, 211);
 }
 
 * {

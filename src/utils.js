@@ -63,5 +63,8 @@ export const authErrors = () => {
 
 export const currentDate = () => {
   const now = new Date();
-  return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}`;
+  let minutes = now.getMinutes();
+  if (minutes < 10) minutes = "0" + minutes; 
+
+  return `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} ${now.getHours()}:${minutes}`;
 }

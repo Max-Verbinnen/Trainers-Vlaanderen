@@ -1,15 +1,26 @@
 <template>
   <div id="users-admin-page" v-if="isAdmin">
     <section id="users">
-      <h2>Lijst van alle trainers</h2>
+      <h2>Lijst van alle trainers ({{ users.length }})</h2>
       <ul>
-        <li v-for="user in users" :key="user.email" style="margin-bottom: 0.5rem;">
-          <span
-            v-tippy="{ placement : 'right', interactive: true, allowHTML: true }"
-            :content="user.email"
-          >
-            {{ user.name }}
-          </span>
+        <!-- Headings -->
+        <li class="user"> 
+          <div><strong>Naam</strong></div>
+          <div><strong>Laatste keer ingelogd</strong></div>
+        </li>
+        <!-- Users -->
+        <li v-for="user in users" :key="user.email" class="user">
+          <div>
+            <span
+              v-tippy="{ placement : 'right', interactive: true }"
+              :content="user.email"
+            >
+              {{ user.name }}
+            </span>
+          </div>
+          <div>
+            {{ user.lastLoginDate ? user.lastLoginDate : "/"}}
+          </div>
         </li>
       </ul>
     </section>
@@ -65,6 +76,16 @@ export default {
 
 h2 {
   margin-bottom: 2rem;
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.user div {
+  padding: 0.75rem;
+  border: 1px solid var(--grey-border);
 }
 
 </style>
