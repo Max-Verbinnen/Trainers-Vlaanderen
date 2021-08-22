@@ -84,6 +84,16 @@
           <button>Laad meer trainingen</button>
         </div>
       </div>
+
+      <!-- Show 404 snackbar when page not found -->
+      <transition name="fade">
+        <Snackbar
+          v-if="show404Snackbar"
+          @closeSnackbar="show404Snackbar = false"
+          text="Deze pagina bestaat niet (meer)."
+          id="snackbar"
+        />
+      </transition>
     </section>
   </div>
 </template>
@@ -92,6 +102,7 @@
 import { db } from "../firebase";
 
 import ReadRating from "../components/small/ReadRating.vue";
+import Snackbar from "../components/modals/Snackbar.vue";
 
 export default {
   data() {
@@ -104,11 +115,17 @@ export default {
 
       search: "",
       sortBy: "Weergaven",
+
+      show404Snackbar: false,
     }
   },
   created() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
     if (sessionStorage.getItem("sortBy")) this.sortBy = sessionStorage.getItem("sortBy");
+    if (localStorage.getItem("404")) {
+      this.show404Snackbar = true;
+      localStorage.removeItem("404");
+    }
 
     this.getTrainings();
     this.getClubs();
@@ -178,6 +195,7 @@ export default {
   components: {
     FilterModal: () => import("../components/modals/FilterModal.vue"),
     ReadRating,
+    Snackbar,
   },
   computed: {
     filteredTrainings() {
@@ -223,6 +241,11 @@ export default {
 
 #home-page {
   min-height: 110vh;
+}
+
+#snackbar {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .intro h2 {
@@ -430,4 +453,5 @@ button.filter, .more-trainings button {
     margin: 0.5rem 0;
   }
 }
+
 </style>

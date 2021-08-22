@@ -9,6 +9,10 @@ export default [
   { path: "/training/:id", component: () => import("./pages/SingleTraining.vue") },
 
   // Hidden from nav bar
-  { path: "/algemene-voorwaarden", component: () => import("./pages/hidden/TermsOfService.vue")},
-  { path: "/privacy-policy", component: () => import("./pages/hidden/PrivacyPolicy.vue")},
+  { path: "/admin", component: () => import("./pages/hidden/Users.vue") },
+  { path: "/algemene-voorwaarden", component: () => import("./pages/hidden/TermsOfService.vue") },
+  { path: "/privacy-policy", component: () => import("./pages/hidden/PrivacyPolicy.vue") },
+
+  // 404
+  { path: "*", component: () => import("./pages/hidden/404.vue") },
 ]

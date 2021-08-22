@@ -5,11 +5,13 @@ import App from './App.vue';
 import "./assets/css/style.css";
 
 // Libraries & Plugins
+import moment from "moment";
 import VueRouter from "vue-router";
 import VueTippy, { TippyComponent } from "vue-tippy";
 import "./firebase";
 
 // Activate plugins
+Vue.prototype.moment = moment;
 Vue.use(VueRouter);
 Vue.use(VueTippy);
 Vue.component("tippy", TippyComponent);
