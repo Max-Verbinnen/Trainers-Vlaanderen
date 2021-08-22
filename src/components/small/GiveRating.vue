@@ -94,7 +94,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 50px;
+  padding-top: 50px;
   color: #b7b7b7;
   border-radius: 8px;
 }
@@ -142,6 +142,15 @@ export default {
 .score-max {
   font-size: 30px;
   vertical-align: sub;
+}
+
+@media screen and (max-width: 580px) {
+  .rating {
+    padding-top: 30px;
+  }
+  .rating .list .star {
+    font-size: 30px;
+  }
 }
 
 </style>

@@ -91,4 +91,10 @@ h3 {
   margin-bottom: 1.25rem;
 }
 
+@media screen and (max-width: 580px) {
+  .modal {
+    width: 300px;
+  }
+}
+
 </style>

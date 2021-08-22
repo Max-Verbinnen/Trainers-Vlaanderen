@@ -57,7 +57,7 @@ export default {
     },
   },
   async created() {
-    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Tijl Verbesselt").once("value", snapshot => {
+    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Pepijn Caluwaerts").once("value", snapshot => {
     //   let trainingsArray = [];
     //   snapshot.forEach(child => {
     //     trainingsArray.push({
@@ -68,10 +68,9 @@ export default {
 
     //   trainingsArray.forEach(training => {
     //     db.ref("Trainings/" + training.id).update({ user: {
-    //       email: "tijl.verbesselt@icloud.com",
-    //       name: "Tijl Verbesselt",
-    //       userID: "9sORBkrOLAORJcTrOpelEfAKGjK2",
-    //       club: "KHO Bierbeek",
+    //       email: "pepijn1caluwaerts@gmail.com",
+    //       name: "Pepijn Caluwaerts",
+    //       userID: "30RIJvEmtCafKZhUVt0i6sZwvJ13",
     //     } });
     //     db.ref("Trainings/" + training.id).update({ rating: null });
     //   });
