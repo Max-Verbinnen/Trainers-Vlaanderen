@@ -36,9 +36,7 @@
       <!-- Show snackbar when training has been added -->
       <transition name="fade">
         <Snackbar
-          v-if="showSnackbar"
-          @closeSnackbar="showSnackbar = false"
-          text="De training is ook succesvol toegevoegd aan de homepage."
+          ref="snackbar"
         />
       </transition>
     </div>
@@ -54,7 +52,6 @@ export default {
   data() {
     return {
       trainings: [],
-      showSnackbar: false,
     };
   },
   computed: {
@@ -65,7 +62,7 @@ export default {
   components: {
     Snackbar,
   },
-  created() {
+  mounted() {
     db.ref('Trainings').orderByChild("user/userID").equalTo(this.user.userID).once("value", snapshot => {
       const data = snapshot.val();
       let trainingsArray = [];
@@ -79,7 +76,7 @@ export default {
 
     // Listen whether training has been added
     if (localStorage.getItem("trainingAdded")) {
-      this.showSnackbar = true;
+      this.$refs.snackbar.show("De training is ook succesvol toegevoegd aan de homepage.");
       localStorage.removeItem("trainingAdded");
     }
   },

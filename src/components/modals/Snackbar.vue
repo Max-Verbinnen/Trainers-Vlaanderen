@@ -1,23 +1,28 @@
 <template>
-  <div id="snackbar">
+  <div id="snackbar" v-if="visible">
     <p>{{ text }}</p>
 
     <!-- Close snackbar -->
-    <button @click="$emit('closeSnackbar')"><img src="../../assets/img/close.svg" alt="sluiten"></button>
+    <button @click="visible = false"><img src="../../assets/img/close.svg" alt="sluiten"></button>
   </div>
 </template>
 
 <script>
 
 export default {
-  props: {
-    text: {
-      type: String,
-      required: true,
-    }
+  data() {
+    return {
+      visible: false,
+
+      text: null,
+    };
   },
-  created() {
-    setTimeout(() => this.$emit("closeSnackbar"), 4000);
+  methods: {
+    show(text) {
+      this.visible = true;
+      this.text = text;
+      setTimeout(() => this.visible = false, 4000);
+    },
   },
 }
 

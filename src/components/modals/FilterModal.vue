@@ -1,5 +1,5 @@
 <template>
-  <div id="filter-modal" @click="exitModal" ref="modal">
+  <div id="filter-modal" @click="close" ref="modal" v-if="visible">
     <div class="modal">
       <div class="modal-wrap">
         <form ref="form">
@@ -69,7 +69,7 @@
       </div>
 
       <div class="close-modal">
-        <button @click="$emit('exitModal')"><img src="../../assets/img/close.svg" alt="sluiten"></button>
+        <button @click="close"><img src="../../assets/img/close.svg" alt="sluiten"></button>
       </div>
       <div class="apply-filters">
         <button class="btn" @click="filterTrainings">Pas filters toe</button>
@@ -81,18 +81,13 @@
 <script>
 
 export default {
-  props: {
-    trainings: {
-      type: Array,
-      required: true,
-    },
-    clubs: {
-      type: Array,
-      required: true,
-    },
-  },
   data() {
     return {
+      visible: false,
+
+      trainings: null,
+      clubs: null,
+
       filterTrainer: [],
       filterClub: [],
       filterCategorie: [],
@@ -102,10 +97,19 @@ export default {
     }
   },
   methods: {
-    exitModal(e) {
-      if (e.target === this.$refs.modal) {
-        this.$emit("exitModal");
-      }
+    show(trainings, clubs) {
+      this.visible = true;
+      document.body.classList.add("modal-open");
+
+      this.trainings = trainings;
+      this.clubs = clubs;
+    },
+    close() {
+      this.visible = false;
+      document.body.classList.remove("modal-open");
+    },
+    shouldExit(e) {
+      if (e.target === this.$refs.modal) this.close();
     },
     filterTrainings() {
       let trainingsFilteredByTrainer;
@@ -184,7 +188,7 @@ export default {
 
       const merged = arrays.reduce((p,c) => p.filter(e => c.includes(e)));
       this.$emit("filtered", merged);
-      this.$emit("exitModal");
+      this.close();
     }
   },
   watch: {

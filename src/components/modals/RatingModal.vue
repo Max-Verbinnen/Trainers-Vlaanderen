@@ -1,5 +1,5 @@
 <template>
-  <div id="rating-modal" @click="exitModal" ref="modal">
+  <div id="rating-modal" @click="shouldExit" ref="modal" v-if="visible">
     <div class="modal">
       <h3>Beoordeel deze training</h3>
       <p v-if="!rating">Hoeveel sterren verdient deze training volgens jou?</p>
@@ -8,13 +8,13 @@
       <Rating
         :grade="0"
         :maxStars="5"
-        @rating="$emit('exitModal'); $emit('ratingGiven', $event)"
+        @rating="$emit('ratingGiven', $event); close();"
         @alreadyRated="rating = $event"
       />
 
       <!-- Close modal -->
       <div class="close-modal">
-        <button @click="$emit('exitModal')"><img src="../../assets/img/close.svg" alt="sluiten"></button>
+        <button @click="close"><img src="../../assets/img/close.svg" alt="sluiten"></button>
       </div>
     </div>
   </div>
@@ -26,6 +26,8 @@ import Rating from "../small/GiveRating.vue"
 export default {
   data() {
     return {
+      visible: false,
+
       rating: null,
     };
   },
@@ -33,11 +35,16 @@ export default {
     Rating,
   },
   methods: {
-    exitModal(e) {
-      if (e.target === this.$refs.modal) {
-        this.$emit("exitModal");
-        document.body.classList.remove("modal-open");
-      }
+    show() {
+      this.visible = true;
+      document.body.classList.add("modal-open");
+    },
+    close() {
+      this.visible = false;
+      document.body.classList.remove("modal-open");
+    },
+    shouldExit(e) {
+      if (e.target === this.$refs.modal) this.close();
     },
   },
 }

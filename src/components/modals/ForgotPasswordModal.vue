@@ -1,5 +1,5 @@
 <template>
-  <div id="forgot-password-modal" @click="exitModal" ref="modal">
+  <div id="forgot-password-modal" @click="shouldExit" ref="modal" v-if="visible">
     <div class="modal">
       <h3>Wachtwoord vergeten?</h3>
       <p>{{ emailSent ? `Er is een e-mail verzonden naar ${email}` : "Er wordt een mail gestuurd" }} waarin een link staat om je wachtwoord te veranderen. Kijk zeker ook eens in je spam of junk folder indien de mail niet direct aankomt.</p>
@@ -12,7 +12,7 @@
           v-model="email"
         >
         <div class="underline"></div>
-        <label v-show="!emailSent">Email</label>
+        <label v-visible="!emailSent">Email</label>
       </div>
 
       <p class="errMsg">{{ forgotPasswordErrorMsg }}</p>
@@ -28,7 +28,7 @@
 
       <!-- Close modal -->
       <div class="close-modal">
-        <button @click="$emit('exitModal')"><img src="../../assets/img/close.svg" alt="sluiten"></button>
+        <button @click="close"><img src="../../assets/img/close.svg" alt="sluiten"></button>
       </div>
     </div>
   </div>
@@ -39,26 +39,28 @@ import { auth } from "../../firebase"
 import { authErrors } from "../../utils"
 
 export default {
-  props: {
-    emailAlreadyPassedIn: {
-      type: String,
-    },
-  },
-  created() {
-    this.email = this.emailAlreadyPassedIn;
-  },
   data() {
     return {
+      visible: false,
+      
       forgotPasswordErrorMsg: "",
       email: "",
       emailSent: false,
     };
   },
   methods: {
-    exitModal(e) {
-      if (e.target === this.$refs.modal) {
-        this.$emit("exitModal");
-      }
+    show(email) {
+      this.visible = true;
+      document.body.classList.add("modal-open");
+
+      this.email = email;
+    },
+    close() {
+      this.visible = false;
+      document.body.classList.remove("modal-open");
+    },
+    shouldExit(e) {
+      if (e.target === this.$refs.modal) this.close();
     },
     handleForgotPassword() {
       auth.sendPasswordResetEmail(this.email, { url: "https://www.trainersvlaanderen.be/account" })

@@ -27,7 +27,7 @@
             </div>
             <p class="errMsg">{{ loginData.errorMsg }}</p>
             <input type="submit" value="Login" class="btn">
-            <a href="#" class="forgot" @click="showForgotPasswordModal = true">Wachtwoord vergeten</a>
+            <a href="#" class="forgot" @click="$refs.forgotPassword.show(loginData.email)">Wachtwoord vergeten</a>
           </form>
         </div>
         <div class="form signUpForm">
@@ -60,36 +60,28 @@
 
       <!-- Modal for when you forget your password -->
       <ForgotPassword
-        v-if="showForgotPasswordModal"
-        @exitModal="showForgotPasswordModal = false"
-        :emailAlreadyPassedIn="loginData.email"
+        ref="forgotPassword"
       />
     </div>
 
     <!-- Show login snackbar if you came from "add training" page & not logged in -->
     <transition name="fade">
       <Snackbar
-        v-if="showAddTrainingSnackbar"
-        @closeSnackbar="showAddTrainingSnackbar = false"
-        text="Je moet ingelogd zijn om trainingen te kunnen toevoegen."
+        ref="addTrainingSnackbar"
       />
     </transition>
 
     <!-- Show login snackbar if you wanted to give a rating & not logged in -->
     <transition name="fade">
       <Snackbar
-        v-if="showRatingSnackbar"
-        @closeSnackbar="showRatingSnackbar = false"
-        text="Je moet ingelogd zijn om een training een rating te kunnen geven."
+        ref="ratingSnackbar"
       />
     </transition>
 
     <!-- Show login snackbar if you wanted to see all trainings & not logged in -->
     <transition name="fade">
       <Snackbar
-        v-if="showLoadTrainingsSnackbar"
-        @closeSnackbar="showLoadTrainingsSnackbar = false"
-        text="Je moet ingelogd zijn om alle trainingen te bekijken."
+        ref="loadTrainingsSnackbar"
       />
     </transition>
   </section>
@@ -116,25 +108,21 @@ export default {
         password: "",
         errorMsg: "",
       },
-      showForgotPasswordModal: false,
-      showAddTrainingSnackbar: false,
-      showRatingSnackbar: false,
-      showLoadTrainingsSnackbar: false,
     }
   },
   components: {
     ForgotPassword,
     Snackbar,
   },
-  created() {
+  mounted() {
     if (localStorage.getItem("addTrainingToAccountRoute")) {
-      this.showAddTrainingSnackbar = true;
+      this.$refs.addTrainingSnackbar.show("Je moet ingelogd zijn om trainingen te kunnen toevoegen.");
       localStorage.removeItem("addTrainingToAccountRoute");
     } else if (localStorage.getItem("ratingToAccountRoute")) {
-      this.showRatingSnackbar = true;
+      this.$refs.ratingSnackbar.show("Je moet ingelogd zijn om een training een rating te kunnen geven.");
       localStorage.removeItem("ratingToAccountRoute");
     } else if (localStorage.getItem("loadTrainingsToAccountRoute")) {
-      this.showLoadTrainingsSnackbar = true;
+      this.$refs.loadTrainingsSnackbar.show("Je moet ingelogd zijn om alle trainingen te bekijken.");
       localStorage.removeItem("loadTrainingsToAccountRoute");
     }
   },

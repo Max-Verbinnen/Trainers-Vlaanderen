@@ -1,15 +1,5 @@
 <template>
-  <div id="home-page">
-    <keep-alive>
-      <FilterModal
-        v-if="isFilterOpen"
-        @exitModal="closeFilterModal"
-        @filtered="filterTrainings"
-        :trainings="trainings"
-        :clubs="clubs"
-      />
-    </keep-alive>
-    
+  <div id="home-page">    
     <section id="home">
       <div class="intro">
         <h2>Waar alle voetbaltrainingen samenkomen</h2>
@@ -22,7 +12,7 @@
         <h3>Bekijk de trainingen ({{ trainings.length }})</h3>
 
         <div class="filter-wrapper">
-          <button class="filter" @click="openFilterModal">
+          <button class="filter" @click="$refs.filterModal.show(trainings, clubs);">
             <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen">
           </button>
           <div class="input-wrap">
@@ -88,12 +78,17 @@
       <!-- Show 404 snackbar when page not found -->
       <transition name="fade">
         <Snackbar
-          v-if="show404Snackbar"
-          @closeSnackbar="show404Snackbar = false"
-          text="Deze pagina bestaat niet (meer)."
+          ref="snackbar"
           id="snackbar"
         />
       </transition>
+
+      <keep-alive>
+        <FilterModal
+          @filtered="filterTrainings"
+          ref="filterModal"
+        />
+      </keep-alive>
     </section>
   </div>
 </template>
@@ -110,20 +105,17 @@ export default {
       trainings: [],
       clubs: [],
       trainingsCopy: [],
-      isFilterOpen: false,
       loading: true,
 
       search: "",
       sortBy: "Weergaven",
-
-      show404Snackbar: false,
     }
   },
-  created() {
+  mounted() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
     if (sessionStorage.getItem("sortBy")) this.sortBy = sessionStorage.getItem("sortBy");
     if (localStorage.getItem("404")) {
-      this.show404Snackbar = true;
+      this.$refs.snackbar.show("Deze pagina bestaat niet (meer).");
       localStorage.removeItem("404");
     }
 
@@ -136,14 +128,6 @@ export default {
     Snackbar,
   },
   methods: {
-    openFilterModal() {
-      this.isFilterOpen = true;
-      document.body.classList.add("modal-open");
-    },
-    closeFilterModal() {
-      this.isFilterOpen = false;
-      document.body.classList.remove("modal-open");
-    },
     filterTrainings(filtered) {
       this.trainingsCopy = filtered;
     },

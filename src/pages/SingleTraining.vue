@@ -79,8 +79,7 @@
     </section>
 
     <RatingModal
-      v-if="showRatingModal"
-      @exitModal="showRatingModal = false"
+      ref="ratingModal"
       @ratingGiven="ratingGiven($event)"
     />
 
@@ -88,9 +87,7 @@
     <div style="display: flex; justify-content: center;">
       <transition name="fade">
         <Snackbar
-          v-if="showSnackbar"
-          @closeSnackbar="showSnackbar = false"
-          :text="`Je hebt deze training een rating van ${rating} / 5 gegeven.`"
+          ref="snackbar"
         />
       </transition>
     </div>
@@ -110,7 +107,6 @@ export default {
     return {
       training: {},
       showRatingModal: false,
-      showSnackbar: false,
       rating: null,
       avgRating: null,
     }
@@ -136,7 +132,7 @@ export default {
         return;
       }
 
-      this.showRatingModal = true;
+      this.$refs.ratingModal.show();
     },
     async getTraining() {
       await db.ref(`Trainings/${this.$route.params.id}`).once('value', snapshot => {
@@ -165,7 +161,7 @@ export default {
         .update({ views });
     },
     ratingGiven(rating) {
-      this.showSnackbar = true;
+      this.$refs.snackbar.show(`Je hebt deze training een rating van ${rating} / 5 gegeven.`);
       this.rating = rating;
       this.calculateRating();
       this.getTraining();
