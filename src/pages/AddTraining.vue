@@ -7,6 +7,7 @@
           <label id="info">Titel*</label><br>
           <input id="fill" type="text" v-model="training.titel" required>
         </div>
+
         <div class="input-group diploma">
           <label id="info">Diploma</label><br>
           <select id="fill" v-model="training.diploma">
@@ -23,6 +24,7 @@
             <option>UEFA Pro</option>
           </select>
         </div>
+
         <div class="input-group">
           <label id="info">Club*</label><br>
           <input id="fill" type="text" v-model="training.club" required list="clubs" autocomplete="off">
@@ -30,6 +32,7 @@
             <option v-for="club in orderedClubs" :key="club" :value="club"></option>
           </datalist>
         </div>
+
         <div class="input-group category">
           <label id="info">Categorie</label><br>
           <div id="fill">
@@ -43,22 +46,26 @@
             <label>Volwassen ploegen</label>
           </div>
         </div>
+
         <div class="input-group players">
           <label id="info">Spelers*</label><br>
           <select id="fill" v-model="training.spelers" required>
             <option v-for="n in 23" :key="n">{{n - 1}}</option>
           </select>
         </div>
+
         <div class="input-group keepers">
           <label id="info">Keepers*</label><br>
           <select id="fill" v-model="training.keepers" required>
             <option v-for="n in 6" :key="n">{{n - 1}}</option>
           </select>
         </div>
+
         <div class="input-group">
           <label id="info">Materiaal</label><br>
           <textarea id="fill" v-model="training.materiaal" autocomplete="off"></textarea>
         </div>
+
         <div class="input-group niveau">
           <label id="info">Niveau van spelers</label><br>
           <div id="fill">
@@ -68,10 +75,12 @@
             <div><input type="radio" value="Uitstekend" v-model="training.niveau"><label>Uitstekend</label></div>
           </div>
         </div>
+
         <div class="input-group duur">
           <label id="info">Duur (in minuten)*</label><br>
           <input id="fill" type="number" required autocomplete="off" v-model="training.duur">
         </div>
+
         <div class="input-group intensiteit">
           <label id="info">Intensiteit</label><br>
           <select id="fill" v-model="training.intensiteit">
@@ -83,6 +92,7 @@
             <option>Rustsessie</option>
           </select>
         </div>
+
         <div class="input-group onderdeel">
           <label id="info">Onderdeel*</label><br>
           <select id="fill" v-model="training.onderdeel" required>
@@ -90,6 +100,7 @@
             <option v-for="onderdeel in onderdelen" :key="onderdeel">{{ onderdeel }}</option>
           </select>
         </div>
+
         <div class="input-group hoofdthema">
           <label id="info">Hoofdthema*</label><br>
           <select id="fill" v-model="training.hoofdthema" required>
@@ -97,6 +108,7 @@
             <option v-for="thema in themas" :key="thema.hoofd">{{ thema.hoofd }}</option>
           </select>
         </div>
+
         <div class="input-group subthema" v-if="training.hoofdthema">
           <label id="info">Subthema</label><br>
           <select id="fill" v-model="training.subthema">
@@ -108,26 +120,36 @@
             </template>
           </select>
         </div>
+
         <div class="input-group">
           <label id="info">Doelstellingen</label><br>
           <textarea id="fill" v-model="training.doelstellingen" placeholder="Wat wil je bereiken met deze vorm?"></textarea>
         </div>
+
         <div class="input-group">
           <label id="info">Uitleg van de training*</label><br>
           <textarea id="fill" v-model="training.uitleg" required></textarea>
         </div>
+
         <div class="input-group">
           <label id="info">Variaties</label><br>
           <textarea id="fill" v-model="training.variaties" autocomplete="off"></textarea>
         </div>
+
         <div class="input-group">
           <label id="info">Doorschuifsysteem</label><br>
           <input id="fill" type="text" v-model="training.doorschuifsysteem">
         </div>
+
         <div class="input-group">
           <label id="info">Afbeelding* (.jpg / .png / .gif)</label><br>
           <input id="fill" type="file" @change="handleFile" accept="image/*" required>
         </div>
+
+        <p class="error-group">
+          {{ error }}
+        </p>
+
         <div class="input-group submit">
           <input id="fill" type="submit" value="Training toevoegen" class="btn">
         </div>
@@ -170,7 +192,11 @@ export default {
       },
       file: null,
       gotURL: false,
+
       clubsList: [],
+
+      error: "",
+      hasError: false,
     }
   },
   computed: {
@@ -193,18 +219,37 @@ export default {
   },
   methods: {
     handleSubmit() {
+      // Handle error
+      if (this.hasError || this.error.length > 0 || !this.file) return;
+
       // Store image in firebase storage
       const storageRef = storage.ref(`${this.file.name}`).put(this.file);
-      storageRef.on(`state_changed`, () => {
-        storageRef.snapshot.ref.getDownloadURL().then(url => {
+      storageRef.on(`state_changed`, async () => {
+        await storageRef.snapshot.ref.getDownloadURL().then(url => {
           this.training.img = url;
           this.gotURL = true;
-          // Store this in database - view gotURL watch
+          // Store this in database - view gotURL watch property
         });
       });
     },
     handleFile(e) {
-      this.file = e.target.files[0];
+      const file = e.target.files[0];
+      if (!file) return;
+      const fileSize = (file.size / (1024 * 1024)).toFixed(2); // in MB
+
+      const correctFileType = file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/gif";
+      const correctFileSize = parseFloat(fileSize, 10) < 1;
+
+      if (correctFileType && correctFileSize) {
+        this.file = file;
+        this.hasError = false;
+        this.error = "";
+      } else {
+        this.file = null;
+        this.hasError = true;
+        if (!correctFileType) this.error = "Je kan enkel afbeeldingen uploaden van het type jpg, png of gif.";
+        if (!correctFileSize) this.error = "De maximale toegestane grootte voor afbeeldingen is 1 MB.";
+      }
     },
     updateDiploma() {
       db.ref("Users/" + this.user.userID).update({ diploma: this.training.diploma });
@@ -290,12 +335,17 @@ export default {
 </script>
 
 <style scoped>
+
 h2 {
   margin-bottom: 2rem;
 }
 
-.input-group {
+.input-group, .error-group {
   margin: 1rem 0;
+}
+
+.error-group {
+  color: var(--error-red);
 }
 
 #info {
@@ -358,4 +408,5 @@ input[type="submit"] {
   font-weight: 600;
   margin-bottom: 2rem;
 }
+
 </style>
