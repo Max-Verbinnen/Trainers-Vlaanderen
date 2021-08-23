@@ -70,7 +70,7 @@
                     />
                   </div>
                   <p class="tags">
-                    <span v-if="training.categorie">{{training.categorie | destructure}}</span>
+                    <span v-if="training.categorie">{{ training.categorie | destructure }}</span>
                     <span>{{ training.spelers }} spelers</span>
                     <span>{{ training.onderdeel }}</span>
                     <span>{{ training.hoofdthema }}</span>
@@ -129,6 +129,11 @@ export default {
 
     this.getTrainings();
     this.getClubs();
+  },
+  components: {
+    FilterModal: () => import("../components/modals/FilterModal.vue"),
+    ReadRating,
+    Snackbar,
   },
   methods: {
     openFilterModal() {
@@ -191,11 +196,6 @@ export default {
       localStorage.setItem("loadTrainingsToAccountRoute", "true");
       this.$router.push("/account");
     },
-  },
-  components: {
-    FilterModal: () => import("../components/modals/FilterModal.vue"),
-    ReadRating,
-    Snackbar,
   },
   computed: {
     filteredTrainings() {

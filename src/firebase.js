@@ -1,8 +1,8 @@
-import firebase from 'firebase/app'
-import 'firebase/database'
-import 'firebase/analytics'
-import 'firebase/auth'
-import 'firebase/storage'
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/analytics';
+import 'firebase/auth';
+import 'firebase/storage';
 
 // This info may be public, as firebase rules serve as protection
 const firebaseConfig = {

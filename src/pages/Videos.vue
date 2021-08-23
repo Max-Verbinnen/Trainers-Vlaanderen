@@ -6,20 +6,20 @@
         <input type="url" v-model.trim="input.url" placeholder="Plak hier de URL naar de YouTube video" required>
         <select v-model="input.selectedThema" required>
           <option disabled value="">Kies één thema</option>
-          <option v-for="thema in themas" :key="thema">{{thema}}</option>
+          <option v-for="thema in themas" :key="thema">{{ thema }}</option>
         </select>
         <input type="submit" value="Voeg toe" class="btn">
         <p v-if="submitted">De video is toegevoegd bij het juiste thema.</p>
       </form>
       <div class="links">
         <a v-for="thema in themas" :href="'#' + thema" :key="thema">
-          {{thema}}
+          {{ thema }}
         </a>
       </div>
       <div class="videos-categories">
         <div class="themas">
           <div class="thema" v-for="thema in themas" :key="thema" :id="thema">
-            <h3>{{thema}}</h3>
+            <h3>{{ thema }}</h3>
             <template v-for="video in videos">
               <iframe v-if="video.selectedThema === thema" :key="video.id" :src="'https://www.youtube-nocookie.com/embed/' + getVideoID(video)" allowfullscreen frameborder="0"></iframe>
             </template>

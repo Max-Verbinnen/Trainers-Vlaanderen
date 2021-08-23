@@ -19,7 +19,7 @@
             </span>
           </div>
           <div>
-            {{ user.lastLoginDate ? user.lastLoginDate : "/"}}
+            {{ user.lastLoginDate ? user.lastLoginDate : "/" }}
           </div>
         </li>
       </ul>
