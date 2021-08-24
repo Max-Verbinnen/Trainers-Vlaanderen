@@ -57,7 +57,11 @@ export default {
     },
   },
   async created() {
-    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Pepijn Caluwaerts").once("value", snapshot => {
+    /*
+      This is the place for database migrations :)
+    */
+
+    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Walter Van der Auwera").once("value", snapshot => {
     //   let trainingsArray = [];
     //   snapshot.forEach(child => {
     //     trainingsArray.push({
@@ -68,9 +72,9 @@ export default {
 
     //   trainingsArray.forEach(training => {
     //     db.ref("Trainings/" + training.id).update({ user: {
-    //       email: "pepijn1caluwaerts@gmail.com",
-    //       name: "Pepijn Caluwaerts",
-    //       userID: "30RIJvEmtCafKZhUVt0i6sZwvJ13",
+    //       email: "walter.van.der.auwera@telenet.be",
+    //       name: "Walter Van der Auwera",
+    //       userID: "Kv1m3TLWYxYUVrS5mVNQIeTs4Ny1",
     //     } });
     //     db.ref("Trainings/" + training.id).update({ rating: null });
     //   });
