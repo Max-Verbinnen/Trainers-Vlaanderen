@@ -1,5 +1,5 @@
 <template>
-  <div id="filter-modal" @click="close" ref="modal" v-if="visible">
+  <div id="filter-modal" @click="shouldExit" ref="modal" v-if="visible">
     <div class="modal">
       <div class="modal-wrap">
         <form ref="form">
