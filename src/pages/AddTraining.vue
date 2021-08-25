@@ -143,7 +143,23 @@
 
         <div class="input-group">
           <label id="info">Afbeelding* (.jpg / .png / .gif)</label><br>
-          <input id="fill" type="file" @change="handleFile" accept="image/*" required>
+          <label
+            id="fill"
+            class="custom-file-upload"
+            ref="dropZone"
+            @dragover.prevent="$refs.dropZone.classList.add('adding-file')"
+            @dragenter.prevent="$refs.dropZone.classList.add('adding-file')"
+            @dragleave.prevent="$refs.dropZone.classList.remove('adding-file')"
+            @drop.prevent="handleDropFile"
+          >
+            <img src="../assets/img/picture.svg" alt="">
+            <span v-if="!fileInformation">Upload hier een afbeelding van de training</span>
+            <span v-else>{{ fileInformation.name }} - {{ fileInformation.size }} MB</span>
+            <!-- This file input field is hidden -->
+            <input type="file" @change="handleFile" accept="image/*" ref="fileInput">
+          </label><br>
+          <!-- Preview image -->
+          <img v-if="fileInformation" :src="fileInformation.blob" alt="training afbeelding" class="preview-img">
         </div>
 
         <p class="error-group">
@@ -191,6 +207,8 @@ export default {
         user: null,
       },
       file: null,
+      fileInformation: null,
+      droppedFile: null,
       gotURL: false,
 
       clubsList: [],
@@ -220,7 +238,8 @@ export default {
   methods: {
     handleSubmit() {
       // Handle error
-      if (this.hasError || this.error.length > 0 || !this.file) return;
+      this.validate();
+      if (this.hasError || this.error.length > 0) return;
 
       // Store image in firebase storage
       const storageRef = storage.ref(`${this.file.name}`).put(this.file);
@@ -232,10 +251,23 @@ export default {
         });
       });
     },
+    handleDropFile(e) {
+      this.$refs.dropZone.classList.remove('adding-file')
+      this.droppedFile = e.dataTransfer.files[0];
+      this.$refs.fileInput.dispatchEvent(new Event('change'));
+    },
     handleFile(e) {
-      const file = e.target.files[0];
+      const file = this.droppedFile || e.target.files[0];
       if (!file) return;
+
       const fileSize = (file.size / (1024 * 1024)).toFixed(2); // in MB
+
+      // Store info for image preview & feedback
+      this.fileInformation = {
+        blob: URL.createObjectURL(file),
+        name: file.name,
+        size: fileSize,
+      }
 
       const correctFileType = file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/gif";
       const correctFileSize = parseFloat(fileSize, 10) < 1;
@@ -249,6 +281,12 @@ export default {
         this.hasError = true;
         if (!correctFileType) this.error = "Je kan enkel afbeeldingen uploaden van het type jpg, png of gif.";
         if (!correctFileSize) this.error = "De maximale toegestane grootte voor afbeeldingen is 1 MB.";
+      }
+    },
+    validate() {
+      if (!this.file) {
+        this.hasError = true;
+        this.error = "Je hebt nog geen afbeelding geüpload."
       }
     },
     updateDiploma() {
@@ -396,6 +434,36 @@ textarea {
 input[type="submit"] {
   cursor: pointer;
   font-size: 1.1rem;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  display: inline-flex;
+  flex-direction: column;
+  width: 20rem;
+  border: 2px dotted rgb(161, 161, 161);
+  padding: 2rem 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-file-upload.adding-file {
+  border: 4px dotted rgb(161, 161, 161);
+}
+
+.custom-file-upload img {
+  width: 2rem;
+  align-self: center;
+  margin-bottom: 1rem;
+}
+
+img.preview-img {
+  width: 20rem;
+  object-fit: cover;
+  margin-top: 1rem;
 }
 
 .input-group.submit a {
