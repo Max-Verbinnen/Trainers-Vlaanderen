@@ -1,6 +1,13 @@
 <template>
   <div id="single-training-page">
-    <section id="training">
+    <Loading
+      :active.sync="isLoading"
+      :is-full-page="true"
+      color="var(--primary-green)"
+      :width="50"
+      :height="50"
+    />
+    <section id="training" v-if="!isLoading">
       <div id="print">
         <h2>{{ training.titel }}</h2>
         <p class="trainer">
@@ -101,10 +108,14 @@ import { printPage } from "../utils"
 import ReadRating from "../components/small/ReadRating.vue";
 import Snackbar from "../components/modals/Snackbar.vue";
 import RatingModal from "../components/modals/RatingModal.vue";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
     return {
+      isLoading: false,
+
       training: {},
       showRatingModal: false,
       rating: null,
@@ -115,12 +126,15 @@ export default {
     ReadRating,
     RatingModal,
     Snackbar,
+    Loading,
   },
   async created() {
+    this.isLoading = true;
     await this.getTraining();
     await this.handleVisitedTraining();
 
     document.title = "Trainers Vlaanderen | " + this.training.titel;
+    this.isLoading = false;
   },
   methods: {
     printPage,
