@@ -8,7 +8,15 @@
         </h4>
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
-      <div class="trainings">
+
+      <Loading
+        :active.sync="isLoading"
+        color="var(--primary-green)"
+        :width="50"
+        :height="50"
+      />
+
+      <div class="trainings" v-if="!isLoading">
         <h3>Bekijk de trainingen ({{ trainings.length }})</h3>
 
         <div class="filter-wrapper">
@@ -98,10 +106,14 @@ import { db } from "../firebase";
 
 import ReadRating from "../components/small/ReadRating.vue";
 import Snackbar from "../components/modals/Snackbar.vue";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 export default {
   data() {
     return {
+      isLoading: false,
+
       trainings: [],
       clubs: [],
       trainingsCopy: [],
@@ -111,7 +123,7 @@ export default {
       sortBy: "Weergaven",
     }
   },
-  mounted() {
+  async mounted() {
     document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
     if (sessionStorage.getItem("sortBy")) this.sortBy = sessionStorage.getItem("sortBy");
     if (localStorage.getItem("404")) {
@@ -119,13 +131,16 @@ export default {
       localStorage.removeItem("404");
     }
 
-    this.getTrainings();
-    this.getClubs();
+    this.isLoading = true;
+    await this.getTrainings();
+    await this.getClubs();
+    this.isLoading = false;
   },
   components: {
     FilterModal: () => import("../components/modals/FilterModal.vue"),
     ReadRating,
     Snackbar,
+    Loading,
   },
   methods: {
     filterTrainings(filtered) {
@@ -134,17 +149,17 @@ export default {
     deleteFilters() {
       location.reload();
     },
-    getTrainings() {
+    async getTrainings() {
       const sortByOption = this.sortByNaming[this.sortBy];
 
       if (sortByOption) {
-        db.ref('Trainings')
+        await db.ref('Trainings')
           .orderByChild(sortByOption)
           .once('value', snapshot => {
             this.handleSnapshot(snapshot);
           });
       } else {
-        db.ref('Trainings')
+        await db.ref('Trainings')
           .once('value', snapshot => {
             this.handleSnapshot(snapshot);
           });
@@ -164,9 +179,9 @@ export default {
       this.trainingsCopy = [...this.trainings];
       this.loading = false;
     },
-    getClubs() {
+    async getClubs() {
       let clubs = [];
-      db.ref('Clubs').once('value', snapshot => {
+      await db.ref('Clubs').once('value', snapshot => {
         const data = snapshot.val();
         for (let key in data) {
           clubs.push(data[key]);
