@@ -152,9 +152,12 @@
             @dragleave.prevent="$refs.dropZone.classList.remove('adding-file')"
             @drop.prevent="handleDropFile"
           >
-            <img src="../assets/img/picture.svg" alt="">
+            <img class="img-icon" src="../assets/img/picture.svg" alt="">
             <span v-if="!fileInformation">Upload hier een afbeelding van de training</span>
-            <span v-else>{{ fileInformation.name }} - {{ fileInformation.size }} MB</span>
+            <div v-else class="file-info">
+              <p>{{ fileInformation.name }} - {{ fileInformation.size }} MB</p>
+              <img class="delete-file" src="../assets/img/trash.svg" alt="Verwijder afbeelding" @click.prevent="deleteFile">
+            </div>
             <!-- This file input field is hidden -->
             <input type="file" @change="handleFile" accept="image/*" ref="fileInput">
           </label><br>
@@ -282,6 +285,12 @@ export default {
         if (!correctFileType) this.error = "Je kan enkel afbeeldingen uploaden van het type jpg, png of gif.";
         if (!correctFileSize) this.error = "De maximale toegestane grootte voor afbeeldingen is 1 MB.";
       }
+    },
+    deleteFile() {
+      this.$refs.fileInput.value = "";
+      this.file = null;
+      this.fileInformation = null;
+      this.droppedFile = null;
     },
     validate() {
       if (!this.file) {
@@ -454,7 +463,7 @@ input[type="file"] {
   border: 4px dotted rgb(161, 161, 161);
 }
 
-.custom-file-upload img {
+.custom-file-upload .img-icon {
   width: 2rem;
   align-self: center;
   margin-bottom: 1rem;
@@ -464,6 +473,20 @@ img.preview-img {
   width: 20rem;
   object-fit: cover;
   margin-top: 1rem;
+}
+
+.file-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+img.delete-file {
+  margin-left: 0.5rem;
+  position: relative;
+  align-self: center;
+  cursor: pointer;
+  z-index: 100;
 }
 
 .input-group.submit a {
