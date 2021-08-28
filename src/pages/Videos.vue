@@ -20,9 +20,27 @@
         <div class="themas">
           <div class="thema" v-for="thema in themas" :key="thema" :id="thema">
             <h3>{{ thema }}</h3>
-            <template v-for="video in videos">
-              <iframe v-if="video.selectedThema === thema" :key="video.id" :src="'https://www.youtube-nocookie.com/embed/' + getVideoID(video)" allowfullscreen frameborder="0"></iframe>
-            </template>
+            <div class="videos-wrapper">
+              <template v-for="video in videos">
+                <div
+                  v-if="video.selectedThema === thema && !video.play"
+                  :key="'img' + video.id"
+                  class="video-overlay"
+                >
+                  <img :src="getThumbnail(video)" alt="video thumbnail" class="thumbnail">
+                  <div class="play-btn" @click="video.play = true"></div>
+                </div>
+                <iframe
+                  v-if="video.selectedThema === thema && video.play"
+                  :src="`https://www.youtube-nocookie.com/embed/${getVideoID(video)}?autoplay=1`"
+                  :key="'iframe' + video.id"
+                  allowfullscreen
+                  allow="autoplay"
+                  frameborder="0"
+                >
+                </iframe>
+              </template>
+            </div>
           </div>
         </div>
       </div>
@@ -42,7 +60,7 @@ export default {
         selectedThema: "",
       },
       submitted: false,
-      videos: []
+      videos: [],
     }
   },
   methods: {
@@ -61,22 +79,26 @@ export default {
       const match = video.url.match(regex);
       return (match && match[1].length == 11) ? match[1] : false;
     },
-    getVideos() {
-      db.ref('Videos').once('value', snapshot => {
+    getThumbnail(video) {  
+      return `https://img.youtube.com/vi/${this.getVideoID(video)}/mqdefault.jpg`;
+    },
+    async getVideos() {
+      await db.ref('Videos').once('value', snapshot => {
         const data = snapshot.val();
         let videosArray = [];
 
         for (let key in data) {
           data[key].id = key;
+          data[key].play = false;
           videosArray.push(data[key]);
         }
         this.videos = videosArray;
       });
-    }
+    },
   },
-  created() {
+  async created() {
     document.title = "Trainers Vlaanderen | YouTube video's";
-    this.getVideos();
+    await this.getVideos();
   },
 }
 
@@ -110,8 +132,37 @@ h3 {
   margin-bottom: 4rem;
 }
 
-iframe {
+.videos-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+iframe, .video-overlay {
+  width: 300px;
+  height: 150px;
   margin: 0 1rem 1rem 0;
+}
+
+.video-overlay {
+  position: relative;
+}
+
+.video-overlay img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0.6);
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  background: var(--primary-green);
+  cursor: pointer;
+  clip-path: polygon(100% 50%, 0 0, 0 100%);
 }
 
 input[type="url"] {
