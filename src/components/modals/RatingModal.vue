@@ -14,7 +14,9 @@
 
       <!-- Close modal -->
       <div class="close-modal">
-        <button @click="close"><img src="../../assets/img/close.svg" alt="sluiten"></button>
+        <button @click="close">
+          <img src="../../assets/img/close.svg" alt="sluiten" width="21" height="21">
+        </button>
       </div>
     </div>
   </div>

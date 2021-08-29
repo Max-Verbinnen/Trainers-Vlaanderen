@@ -16,7 +16,7 @@
               <p><strong>Prijs:</strong> 1x €70</p>
             </div>
             <div class="imgBx">
-              <img src="../assets/img/board-one.png" alt="">
+              <img src="../assets/img/board-one.png" alt="Tactics manager">
             </div>
           </div>
         </li>
@@ -31,7 +31,7 @@
               <p><strong>Prijs:</strong> 1x €9,99</p>
             </div>
             <div class="imgBx">
-              <img src="../assets/img/board-two.png" alt="">
+              <img src="../assets/img/board-two.png" alt="Tactisch bord">
             </div>
           </div>
         </li>
@@ -44,7 +44,7 @@
               <p><strong>Prijs:</strong>€53,04 per jaar</p>
             </div>
             <div class="imgBx">
-              <img src="../assets/img/board-three.jpg" alt="">
+              <img src="../assets/img/board-three.jpg" alt="TacticalPad">
             </div>
           </div>
         </li>
@@ -57,7 +57,7 @@
               <p><strong>Prijs:</strong>€0</p>
             </div>
             <div class="imgBx">
-              <img src="../assets/img/board-four.png" alt="">
+              <img src="../assets/img/board-four.png" alt="Powerpoint">
             </div>
           </div>
         </li>

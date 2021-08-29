@@ -2,7 +2,14 @@
   <div class="rating">
     <ul class="list">
       <li @click="rate(star)" v-for="star in maxStars" :class="{ 'active': star <= stars }" :key="star.stars" class="star">
-      <i :class="star <= stars ? 'fas fa-star' : 'far fa-star'"></i> 
+        <FontAwesomeIcon
+          v-if="star <= stars"
+          :icon="['fas', 'star']"
+        />
+        <FontAwesomeIcon
+          v-else
+          :icon="['far', 'star']"
+        />
       </li>
     </ul>
     <div v-if="hasCounter" class="info counter">

@@ -152,11 +152,11 @@
             @dragleave.prevent="$refs.dropZone.classList.remove('adding-file')"
             @drop.prevent="handleDropFile"
           >
-            <img class="img-icon" src="../assets/img/picture.svg" alt="">
+            <img class="img-icon" src="../assets/img/picture.svg" alt="media icoon">
             <span v-if="!fileInformation">Upload hier een afbeelding van de training</span>
             <div v-else class="file-info">
               <p>{{ fileInformation.name }} - {{ fileInformation.size }} MB</p>
-              <img class="delete-file" src="../assets/img/trash.svg" alt="Verwijder afbeelding" @click.prevent="deleteFile">
+              <img class="delete-file" src="../assets/img/trash.svg" alt="Verwijder afbeelding" @click.prevent="deleteFile" width="21" height="21">
             </div>
             <!-- This file input field is hidden -->
             <input type="file" @change="handleFile" accept="image/*" ref="fileInput">

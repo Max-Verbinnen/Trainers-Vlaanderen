@@ -3,7 +3,9 @@
     <section id="account">
       <h2>Mijn trainingen</h2>
       <template v-if="trainings.length === 0">
-        <p id="no-training">Je hebt nog geen trainingen toegevoegd. Eens je dat gedaan hebt, komen ze in deze bibliotheek terecht.</p>
+        <p id="no-training">
+          Bedankt om een account te maken op Trainers Vlaanderen! Je kan zelf trainingen uploaden en dan komen ze hier in je eigen privébibliotheek terecht.
+        </p>
         <router-link to="/toevoegen" class="btn">Voeg een training toe</router-link>
       </template>
       <div class="container">
@@ -17,13 +19,13 @@
             <p>{{ training.uitleg | shorten }}</p>
             <div class="bottom-info">
               <p class="trainer">
-                <img src="../assets/img/user.svg" alt="trainer">
+                <img src="../assets/img/user.svg" alt="trainer" width="21" height="21">
                 <span>{{ training.trainer || (training.user && training.user.name) }}</span></p>
               <p class="tags">
                 <span v-if="training.categorie">{{training.categorie | destructure}}</span>
-                <span>{{training.spelers}} spelers</span>
-                <span>{{training.onderdeel}}</span>
-                <span>{{training.hoofdthema}}</span>
+                <span>{{ training.spelers }} spelers</span>
+                <span>{{ training.onderdeel }}</span>
+                <span>{{ training.hoofdthema }}</span>
               </p>
             </div>
           </div>
@@ -106,6 +108,7 @@ export default {
 
 #account p#no-training {
   margin-bottom: 2rem;
+  max-width: 50rem;
 }
 
 .container {

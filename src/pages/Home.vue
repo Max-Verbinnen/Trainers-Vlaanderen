@@ -3,9 +3,9 @@
     <section id="home">
       <div class="intro">
         <h2>Waar alle voetbaltrainingen samenkomen</h2>
-        <h4>
+        <h3>
           Welkom bij Trainers Vlaanderen, een platform waar voetbalcoaches inspiratie uit kunnen halen om hun trainingen een niveau op te krikken of om een andere aanpak te ontdekken.
-        </h4>
+        </h3>
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>
 
@@ -21,11 +21,11 @@
 
         <div class="filter-wrapper">
           <button class="filter" @click="$refs.filterModal.show(trainings, clubs);">
-            <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen">
+            <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen" width="21" height="21">
           </button>
           <div class="input-wrap">
             <input type="text" v-model="search" placeholder="Zoek op titel...">
-            <img src="../assets/img/cross.svg" alt="" @click="search = ''">
+            <img src="../assets/img/cross.svg" alt="verwijder tekst" @click="search = ''" width="21" height="21">
           </div>
           <div class="select-group">
             <select v-model="sortBy">
@@ -53,12 +53,12 @@
                 <p>{{ training.uitleg | shorten(8) }}</p>
                 <div class="bottom-info">
                   <p class="trainer">
-                    <img src="../assets/img/user.svg" alt="trainer">
+                    <img src="../assets/img/user.svg" alt="trainer" width="21" height="21">
                     <span>{{ training.trainer || (training.user && training.user.name) }}</span>
                   </p>
                   <div class="views-rating">
                     <div class="views">
-                      <img src="../assets/img/eye.svg" alt="views">
+                      <img src="../assets/img/eye.svg" width="21" height="21" alt="weergaven">
                       <span>{{ training.views ? training.views : 0 }}</span>
                     </div>
                     <span v-if="training.rating >= 0" style="margin: 0 0.5rem;"> | </span>
@@ -251,7 +251,7 @@ export default {
   max-width: 40rem;
 }
 
-.intro h4 {
+.intro h3 {
   font-weight: 300;
   font-size: 1.1rem;
   margin: 1.5rem 0 2rem 0;

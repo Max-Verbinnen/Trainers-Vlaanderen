@@ -11,14 +11,14 @@
       <div id="print">
         <h2>{{ training.titel }}</h2>
         <p class="trainer">
-          <img src="../assets/img/user.svg" alt="trainer">
+          <img src="../assets/img/user.svg" alt="trainer" width="21" height="21">
           <span>
             {{ training.trainer || (training.user && training.user.name) }}
             ({{ training.diploma }})
           </span>
         </p><br>
         <p class="club" v-if="training.club">
-          <img src="../assets/img/club.svg" alt="club">
+          <img src="../assets/img/club.svg" alt="club" width="21" height="21">
           <span>{{ training.club }}</span>
         </p><br>
         <p
@@ -26,7 +26,7 @@
           v-tippy="{ placement : 'right' }"
           :content="`Deze training is ${training.views ? training.views : 0} keer bekeken.`"
         >
-          <img src="../assets/img/eye.svg" alt="views">
+          <img src="../assets/img/eye.svg" alt="weergaven" width="21" height="21">
           <span>{{ training.views ? training.views : 0 }}</span>
         </p><br>
         <p class="rating-p">
@@ -75,11 +75,11 @@
       
       <div class="action-btns">
         <button @click="openRatingModal" class="rating">
-          <img src="../assets/img/star.svg" alt="Print deze pagina">
+          <img src="../assets/img/star.svg" alt="Print deze pagina" width="21" height="21">
           <span>Geef deze training een rating</span>
         </button>
         <button @click="printPage" class="print">
-          <img src="../assets/img/printer.svg" alt="Print deze pagina">
+          <img src="../assets/img/printer.svg" alt="Print deze pagina" width="21" height="21">
           <span>Print deze pagina</span>
         </button>
       </div>

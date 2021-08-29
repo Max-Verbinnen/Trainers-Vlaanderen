@@ -5,7 +5,7 @@
         <img src="../assets/img/logo.svg" alt="Logo" id="nav-title">
         <span id="nav-title">Trainers Vlaanderen</span>
       </router-link></h1>
-      <img class="hamburger-menu" src="../assets/img/menu.svg" @click="handleMobileNavClick">
+      <img class="hamburger-menu" src="../assets/img/menu.svg" alt="navigatie icoon" @click="handleMobileNavClick">
       <ul ref="list">
         <li @click="handleMobileNavClick">
           <router-link to="/toevoegen" exact>Voeg je eigen training toe
@@ -18,7 +18,7 @@
         </router-link></li>
         <li @click="handleMobileNavClick" class="account-link">
           <router-link to="/account" exact>
-            <img src="../assets/img/user.svg">
+            <img src="../assets/img/user.svg" alt="account" width="21" height="21">
             <span>{{ user ? user.name : "Account" }}</span>
           </router-link>
         </li>
