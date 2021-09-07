@@ -20,7 +20,7 @@
         <p class="club" v-if="training.club">
           <img src="../assets/img/club.svg" alt="club" width="21" height="21">
           <span>{{ training.club }}</span>
-        </p><br>
+        </p><br v-if="training.club">
         <p
           class="views"
           v-tippy="{ placement : 'right' }"
@@ -49,13 +49,13 @@
             <h4 v-if="training.variaties">Variaties</h4>
             <p>{{ training.variaties }}</p>
             <h4 v-if="training.doelstellingen">Doelstellingen</h4>
-            <p>{{ training.doelstellingen }}</p>
+            <p>{{ training.doelstellingen.trim() }}</p>
             <h4 v-if="training.doorschuifsysteem">Doorschuifsysteem</h4>
             <p>{{ training.doorschuifsysteem }}</p>
             <h4 v-if="training.materiaal">Materiaal</h4>
             <p>{{ training.materiaal }}</p>
           </div>
-          <img :src="training.img" alt="training afbeelding" class="training">
+          <img :src="training.img" :alt="'Trainers Vlaanderen | ' + training.titel" class="training">
         </div>
       </div>
       <div class="details">
@@ -102,8 +102,8 @@
 </template>
 
 <script>
-import { db } from "../firebase"
-import { printPage } from "../utils"
+import { db } from "../firebase";
+import { printPage } from "../utils";
 
 import ReadRating from "../components/small/ReadRating.vue";
 import Snackbar from "../components/modals/Snackbar.vue";

@@ -44,7 +44,7 @@
           </p>
         <div class="container" ref="container">
           <div class="card" v-for="training in filteredTrainings" :key="training.id" :id="training.id">
-            <router-link :to="'/training/' + training.id">
+            <router-link :to="`/training/${training.id}/${training.titel.replace(/\W+/g, '-').toLowerCase()}`">
               <div class="imgBx">
                 <img :src="training.img" alt="training foto" loading="lazy">
               </div>
@@ -230,7 +230,7 @@ export default {
     destructure(value) {
       if (!value) return;
       return value.toString();
-    }
+    },
   },
 }
 

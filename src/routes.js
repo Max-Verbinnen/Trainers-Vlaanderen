@@ -7,6 +7,7 @@ export default [
   { path: "/boards", component: () => import("./pages/Boards.vue") },
   { path: "/account", component: () => import("./pages/Account.vue") },
   { path: "/training/:id", component: () => import("./pages/SingleTraining.vue") },
+  { path: "/training/:id/:name", component: () => import("./pages/SingleTraining.vue") },
 
   // Hidden from nav bar
   { path: "/admin", component: () => import("./pages/hidden/Users.vue") },
