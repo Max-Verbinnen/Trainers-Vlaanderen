@@ -239,18 +239,16 @@ export default {
     },
   },
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       // Handle error
       this.validate();
       if (this.hasError || this.error.length > 0) return;
 
       // Store image in firebase storage
-      const storageRef = storage.ref(`${this.file.name}`).put(this.file);
-      storageRef.on(`state_changed`, async () => {
-        await storageRef.snapshot.ref.getDownloadURL().then(url => {
+      storage.ref(`${this.file.name}`).put(this.file).then(data => {
+        data.ref.getDownloadURL().then(url => {
           this.training.img = url;
-          this.gotURL = true;
-          // Store this in database - view gotURL watch property
+          this.gotURL = true; // -> watch
         });
       });
     },
