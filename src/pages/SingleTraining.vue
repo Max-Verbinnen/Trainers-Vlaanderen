@@ -43,7 +43,7 @@
             :rating="0"
           />
         </p>
-        <div class="uitleg">
+        <div class="uitleg" ref="uitleg">
           <div>
             <p>{{ training.uitleg }}</p>
             <template v-if="training.variaties">
@@ -151,8 +151,11 @@ export default {
   },
   methods: {
     printPage,
-    exportAsPDF() {
-      html2pdf()
+    async exportAsPDF() {
+      // Alter css styles
+      this.$refs.uitleg.classList.add("uitleg-pdf");
+
+      await html2pdf()
         .set({
           margin: 10,
           html2canvas: {
@@ -163,6 +166,8 @@ export default {
         })
         .from(document.querySelector("#print"))
         .save(this.training.titel);
+
+      this.$refs.uitleg.classList.remove("uitleg-pdf");
     },
     openRatingModal() {
       // Go to login page if not signed in
@@ -277,6 +282,15 @@ img.training {
 
 .uitleg img {
   align-self: center;
+}
+
+.uitleg-pdf {
+  flex-direction: column;
+  margin: 0;
+}
+.uitleg-pdf img {
+  align-self: flex-start;
+  margin: 3rem 0;
 }
 
 #subtitle {
