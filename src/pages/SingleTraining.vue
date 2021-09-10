@@ -46,14 +46,22 @@
         <div class="uitleg">
           <div>
             <p>{{ training.uitleg }}</p>
-            <h4 v-if="training.variaties">Variaties</h4>
-            <p>{{ training.variaties }}</p>
-            <h4 v-if="training.doelstellingen">Doelstellingen</h4>
-            <p>{{ training.doelstellingen.trim() }}</p>
-            <h4 v-if="training.doorschuifsysteem">Doorschuifsysteem</h4>
-            <p>{{ training.doorschuifsysteem }}</p>
-            <h4 v-if="training.materiaal">Materiaal</h4>
-            <p>{{ training.materiaal }}</p>
+            <template v-if="training.variaties">
+              <h4 v-if="training.variaties">Variaties</h4>
+              <p>{{ training.variaties }}</p>
+            </template>
+            <template v-if="training.doelstellingen">
+              <h4>Doelstellingen</h4>
+              <p>{{ training.doelstellingen.trim() }}</p>
+            </template>
+            <template v-if="training.doorschuifsysteem">
+              <h4 v-if="training.doorschuifsysteem">Doorschuifsysteem</h4>
+              <p>{{ training.doorschuifsysteem }}</p>
+            </template>
+            <template v-if="training.materiaal">
+              <h4 v-if="training.materiaal">Materiaal</h4>
+              <p>{{ training.materiaal }}</p>
+            </template>
           </div>
           <img :src="training.img" :alt="'Trainers Vlaanderen | ' + training.titel" class="training">
         </div>
@@ -82,6 +90,10 @@
           <img src="../assets/img/printer.svg" alt="Print deze pagina" width="21" height="21">
           <span>Print deze pagina</span>
         </button>
+        <button @click="exportAsPDF">
+          <img src="../assets/img/download.svg" alt="Print deze pagina" width="21" height="21">
+          <span>Exporteer als PDF</span>
+        </button>
       </div>
     </section>
 
@@ -104,6 +116,7 @@
 <script>
 import { db } from "../firebase";
 import { printPage } from "../utils";
+import html2pdf from "html2pdf.js";
 
 import ReadRating from "../components/small/ReadRating.vue";
 import Snackbar from "../components/modals/Snackbar.vue";
@@ -138,6 +151,19 @@ export default {
   },
   methods: {
     printPage,
+    exportAsPDF() {
+      html2pdf()
+        .set({
+          margin: 10,
+          html2canvas: {
+            dpi: 300,
+            letterRendering: true,
+            useCORS: true,
+          },
+        })
+        .from(document.querySelector("#print"))
+        .save(this.training.titel);
+    },
     openRatingModal() {
       // Go to login page if not signed in
       if (!this.$store.state.user) {

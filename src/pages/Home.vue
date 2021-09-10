@@ -120,7 +120,7 @@ export default {
       loading: true,
 
       search: "",
-      sortBy: "Weergaven",
+      sortBy: "Recentste",
     }
   },
   async mounted() {
