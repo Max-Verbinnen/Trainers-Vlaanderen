@@ -8,12 +8,12 @@
 </template>
 
 <script>
-import { db, auth } from "./firebase"
+import { db, auth } from "./firebase";
 import { currentDate } from "./utils";
 
-import Header from "./components/Header.vue"
-import Footer from "./components/Footer.vue"
-import BackToTopArrow from "./components/BackToTopArrow.vue"
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
+import BackToTopArrow from "./components/BackToTopArrow.vue";
 
 export default {
   components: {
@@ -61,7 +61,7 @@ export default {
       This is the place for database migrations :)
     */
 
-    // await db.ref('Trainings/').orderByChild("trainer").equalTo("Walter Van der Auwera").once("value", snapshot => {
+    // await db.ref('Trainings/').orderByChild("trainer").equalTo("x").once("value", snapshot => {
     //   let trainingsArray = [];
     //   snapshot.forEach(child => {
     //     trainingsArray.push({
@@ -72,9 +72,9 @@ export default {
 
     //   trainingsArray.forEach(training => {
     //     db.ref("Trainings/" + training.id).update({ user: {
-    //       email: "walter.van.der.auwera@telenet.be",
-    //       name: "Walter Van der Auwera",
-    //       userID: "Kv1m3TLWYxYUVrS5mVNQIeTs4Ny1",
+    //       email: "x",
+    //       name: "x",
+    //       userID: "x",
     //     } });
     //     db.ref("Trainings/" + training.id).update({ rating: null });
     //   });
@@ -91,10 +91,10 @@ export default {
 
     //   trainingsArray.forEach(training => {
     //     db.ref("Trainings/" + training.id).update({ user: {
-    //       email: "tijl.verbesselt@icloud.com",
-    //       name: "Tijl Verbesselt",
-    //       userID: "9sORBkrOLAORJcTrOpelEfAKGjK2",
-    //       club: "KHO Bierbeek",
+    //       email: "x",
+    //       name: "x",
+    //       userID: "x",
+    //       club: "x",
     //     } });
     //     db.ref("Trainings/" + training.id).update({ rating: -1 });
     //   });

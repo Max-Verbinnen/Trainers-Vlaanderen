@@ -38,10 +38,10 @@ const router = new VueRouter({
 });
 
 // Vuex store
-import "./store"
-import { store } from "./store"
+import "./store";
+import { store } from "./store";
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 new Vue({
   el: "#app",

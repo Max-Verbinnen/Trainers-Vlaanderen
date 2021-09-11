@@ -88,11 +88,11 @@
 </template>
 
 <script>
-import { db, auth } from "../firebase"
-import { authErrors, currentDate } from "../utils"
+import { db, auth } from "../firebase";
+import { authErrors, currentDate } from "../utils";
 
-import ForgotPassword from "./modals/ForgotPasswordModal.vue"
-import Snackbar from "./modals/Snackbar.vue"
+import ForgotPassword from "./modals/ForgotPasswordModal.vue";
+import Snackbar from "./modals/Snackbar.vue";
 
 export default {
   data() {

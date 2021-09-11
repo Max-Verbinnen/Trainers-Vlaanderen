@@ -46,9 +46,9 @@
 </template>
 
 <script>
-import { db } from "../firebase"
+import { db } from "../firebase";
 
-import Snackbar from "./modals/Snackbar.vue"
+import Snackbar from "./modals/Snackbar.vue";
 
 export default {
   data() {
