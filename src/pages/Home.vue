@@ -49,7 +49,7 @@
                 <img :src="training.img" alt="training foto" loading="lazy">
               </div>
               <div class="content">
-                <h4>{{ training.titel | shorten(6) }}</h4>
+                <h4>{{ training.titel | shorten(5) }}</h4>
                 <p>{{ training.uitleg | shorten(8) }}</p>
                 <div class="bottom-info">
                   <p class="trainer">
