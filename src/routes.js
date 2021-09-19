@@ -1,6 +1,7 @@
 import Home from "./pages/Home.vue";
 
 export default [
+  // Main pages
   { path: "/", component: Home },
   { path: "/toevoegen", component: () => import("./pages/AddTraining.vue") },
   { path: "/videos", component: () => import("./pages/Videos.vue") },

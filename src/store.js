@@ -5,7 +5,11 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
+    // Dynamic data
     user: null,
+    trainings: null,
+
+    // Static options
     themas: [
       { hoofd: "Techniek", sub: ["Frontaal", "Schuin-frontaal", "Zijwaarts", "Achterwaarts", "Aanname"] },
       { hoofd: "Speelwijze", sub: ["B+ (balbezit)", "B- (balverlies)", "Omschakeling"] },
@@ -28,5 +32,8 @@ export const store = new Vuex.Store({
     setUser(state, userObj) {
       state.user = userObj;
     },
+    setTrainings(state, trainings) {
+      state.trainings = trainings;
+    }
   },
 });
