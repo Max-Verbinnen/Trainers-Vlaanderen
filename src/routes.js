@@ -11,7 +11,7 @@ export default [
   { path: "/training/:id/:name", component: () => import("./pages/SingleTraining.vue") },
 
   // Hidden from nav bar
-  { path: "/admin", component: () => import("./pages/hidden/Users.vue") },
+  { path: "/admin", component: () => import("./pages/hidden/Admin.vue") },
   { path: "/algemene-voorwaarden", component: () => import("./pages/hidden/TermsOfService.vue") },
   { path: "/privacy-policy", component: () => import("./pages/hidden/PrivacyPolicy.vue") },
 

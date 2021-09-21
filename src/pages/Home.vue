@@ -124,7 +124,8 @@ export default {
     }
   },
   async mounted() {
-    document.title = "Trainers Vlaanderen | Deel & bekijk trainingen!";
+    document.title = "Trainers Vlaanderen | Deel & bekijk oefeningen!";
+
     if (sessionStorage.getItem("sortBy")) this.sortBy = sessionStorage.getItem("sortBy");
     if (localStorage.getItem("404")) {
       this.$refs.snackbar.show("Deze pagina bestaat niet (meer).");

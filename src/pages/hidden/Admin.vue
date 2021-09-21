@@ -2,7 +2,7 @@
   <div id="users-admin-page" v-if="isAdmin">
     <section id="users">
       <h2>Lijst van alle trainers ({{ users.length }})</h2>
-      <ul>
+      <ul class="section-content">
         <!-- Headings -->
         <li class="user"> 
           <div><strong>Naam</strong></div>
@@ -23,6 +23,13 @@
           </div>
         </li>
       </ul>
+    </section>
+
+    <section id="users">
+      <h2>Alle e-mails</h2>
+      <p class="section-content">
+        {{ users.map(user => user.email).join(", ") }}
+      </p>
     </section>
   </div>
 </template>
@@ -76,6 +83,10 @@ export default {
 
 h2 {
   margin-bottom: 2rem;
+}
+
+.section-content {
+  margin-bottom: 3rem;
 }
 
 .user {

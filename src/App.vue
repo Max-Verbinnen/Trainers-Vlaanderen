@@ -33,9 +33,9 @@ export default {
   },
   async created() {
     this.storeUser();
-    await this.storeTrainings();
-    this.askNotificationPermission();
-    this.listenForNewTrainings();
+    // await this.storeTrainings();
+    // this.askNotificationPermission();
+    // this.listenForNewTrainings();
   },
   methods: {
     storeUser() {
