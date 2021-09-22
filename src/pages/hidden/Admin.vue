@@ -26,9 +26,9 @@
     </section>
 
     <section id="users">
-      <h2>Alle e-mails</h2>
+      <h2>Alle e-mails ({{ emails.length }})</h2>
       <p class="section-content">
-        {{ users.map(user => user.email).join(", ") }}
+        {{ emails.join(", ") }}
       </p>
     </section>
   </div>
@@ -60,6 +60,11 @@ export default {
       // Tijl & Max are admins
       const email = this.$store.state.user?.email;
       return email === process.env.VUE_APP_ADMIN_ONE || email === process.env.VUE_APP_ADMIN_TWO;
+    },
+    emails() {
+      return this.users
+        .filter(user => !user.unsubscribed)
+        .map(user => user.email);
     },
   },
   methods: {

@@ -14,6 +14,7 @@ export default [
   { path: "/admin", component: () => import("./pages/hidden/Admin.vue") },
   { path: "/algemene-voorwaarden", component: () => import("./pages/hidden/TermsOfService.vue") },
   { path: "/privacy-policy", component: () => import("./pages/hidden/PrivacyPolicy.vue") },
+  { path: "/unsubscribe", component: () => import("./pages/hidden/Unsubscribe.vue") },
 
   // 404
   { path: "*", component: () => import("./pages/hidden/404.vue") },
