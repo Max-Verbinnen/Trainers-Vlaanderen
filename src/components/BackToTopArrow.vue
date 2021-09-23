@@ -1,12 +1,7 @@
 <template>
   <div :class="classObj" ref="scroll" id="scroll">
     <button @click="scrollToTop">
-      <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg">
-      <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(6 6)">
-        <path stroke="white" stroke-width="1.8" d="m.5 8.5 4-4 4 4"/>
-        <path stroke="white" stroke-width="1.8" d="m.5 4.5 4-4 4 4"/>
-      </g>
-      </svg>
+      <img src="../assets/img/up.svg" alt="scroll naar boven">
     </button>
   </div>
 </template>

@@ -4,6 +4,7 @@
     <router-view></router-view>
     <Footer />
     <BackToTopArrow />
+    <EnableNotifications />
   </div>
 </template>
 
@@ -14,12 +15,19 @@ import { currentDate } from "./utils";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import BackToTopArrow from "./components/BackToTopArrow.vue";
+import EnableNotifications from "./components/EnableNotifications.vue";
 
 export default {
   components: {
     Header,
     Footer,
     BackToTopArrow,
+    EnableNotifications,
+  },
+  data() {
+    return {
+      notificationTrainings: [],
+    };
   },
   watch: {
     $route() {
@@ -33,9 +41,9 @@ export default {
   },
   async created() {
     this.storeUser();
-    // await this.storeTrainings();
-    // this.askNotificationPermission();
-    // this.listenForNewTrainings();
+
+    await this.storeTrainings();
+    this.listenForNewTrainings();
   },
   methods: {
     storeUser() {
@@ -76,10 +84,6 @@ export default {
         this.$store.commit("setTrainings", trainingsArray);
       });
     },
-    askNotificationPermission() {
-      if (!("Notification" in window)) return;
-      if (Notification.permission === "default") Notification.requestPermission();
-    },
     async listenForNewTrainings() {
       const trainings = this.$store.state.trainings;
       db.ref('Trainings').on('value', async snapshot => {
@@ -91,19 +95,22 @@ export default {
           });
         });
 
-        if (trainings.length > 0 && trainingsArray.length > trainings.length && Notification.permission === "granted") {
-          const newTraining = trainingsArray[trainingsArray.length - 1];
+        const newTraining = trainingsArray[trainingsArray.length - 1];
+
+        if (trainings.length > 0 && trainingsArray.length > trainings.length && !this.notificationTrainings.includes(newTraining.img) && Notification.permission === "granted") {
+          this.notificationTrainings.push(newTraining.img);
+          this.$store.commit("setTrainings", trainingsArray);
+
           const notification = new Notification(newTraining.titel, {
             body: "Nieuwe training toegevoegd op Trainers Vlaanderen!",
             icon: "/favicon",
             image: newTraining.img,
           });
 
-          await this.$store.commit("setTrainings", trainingsArray);
-
-          notification.addEventListener("click", () => {
-            this.$router.push(`/training/${newTraining.id}/${newTraining.titel.replace(/\W+/g, '-').toLowerCase()}`);
-          });
+          notification.onclick = () => {
+            const URL = `https://www.trainersvlaanderen.be/training/${newTraining.id}/${newTraining.titel.replace(/\W+/g, '-').toLowerCase()}`;
+            window.open(URL, "_blank");
+          }
         }
       })
     }
