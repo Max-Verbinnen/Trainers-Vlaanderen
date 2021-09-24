@@ -50,7 +50,10 @@
             </div>
             <div class="privacy">
               <input type="checkbox" required>
-              <label>Ik ga akkoord met de <router-link to="/privacy-policy">privacyverklaring</router-link></label>
+              <label>
+                Ik ga akkoord met de
+                <router-link to="/privacy-policy" target="_blank">privacyverklaring</router-link>
+              </label>
             </div>
             <p class="errMsg">{{ signupData.errorMsg }}</p>
             <input type="submit" value="Registreer" class="btn">
@@ -142,13 +145,26 @@ export default {
       auth.createUserWithEmailAndPassword(this.signupData.email, this.signupData.password)
         .then(data => {
           db.ref('Users/' + data.user.uid).set({
-            name: this.signupData.name,
+            name: this.formatFullName(this.signupData.name),
             email: data.user.email,
             date: currentDate(),
           });
           this.signupData = {};
         })
         .catch(err => this.handleError(err, "signup"));
+    },
+    formatFullName(name) {
+      if (!name) return "";
+
+      const nameArray = name.trim().split(" ");
+      const casing = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      if (nameArray.length === 1) return casing(nameArray[0]);
+
+      // Name consists of 2 or more parts (only uppercase first and last part => i.e. not "de")
+      nameArray.forEach((part, index) => nameArray[index] = part.charAt(0) + part.slice(1).toLowerCase());
+      nameArray[0] = casing(nameArray[0]);
+      nameArray[nameArray.length - 1] = casing(nameArray[nameArray.length - 1]);
+      return nameArray.join(" ");
     },
     handleError(error, state) {
       if (process.env.NODE_ENV === "development") console.log(error.code, ' - ', error.message);
@@ -167,9 +183,6 @@ export default {
         this.loginData.errorMsg = "";
         this.signupData.errorMsg = "";
       }, 5000);
-    },
-    handleLogout() {
-      auth.signOut();
     },
   },
 }

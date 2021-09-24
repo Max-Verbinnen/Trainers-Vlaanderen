@@ -4,7 +4,7 @@
     ref="notification"
     v-tippy="{ placement : 'left' }"
     :content="notificationExplanation"
-    v-if="active"
+    v-if="active && notificationsAreCompatible"
   >
     <button @click="askNotificationPermission">
       <img :src="notificationIcon" alt="meldingen">
@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     askNotificationPermission() {
-      if (!("Notification" in window)) return;
+      if (!this.notificationsAreCompatible) return;
 
       if (this.permission === "default") {
         Notification
@@ -40,6 +40,9 @@ export default {
     },
   },
   computed: {
+    notificationsAreCompatible() {
+      return ("Notification" in window);
+    },
     notificationIcon() {
       return require(`../assets/img/notification${this.permission === "denied" ? "-disabled": ""}.svg`);
     },

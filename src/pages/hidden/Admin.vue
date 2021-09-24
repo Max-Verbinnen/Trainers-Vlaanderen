@@ -13,7 +13,7 @@
           <div>
             <span
               v-tippy="{ placement : 'right', interactive: true }"
-              :content="user.email"
+              :content="user.userID"
             >
               {{ user.name }}
             </span>
@@ -70,8 +70,8 @@ export default {
   methods: {
     async getAllUsers() {
       await db.ref("Users").once("value", snapshot => {
-        for (let [, value] of Object.entries(snapshot.val())) {
-          this.users.push(value);
+        for (let [id, value] of Object.entries(snapshot.val())) {
+          this.users.push({ ...value, userID: id });
         }
       });
     },
