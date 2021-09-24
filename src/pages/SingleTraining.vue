@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 import { printPage } from "../utils";
 import html2pdf from "html2pdf.js";
 
@@ -143,6 +143,8 @@ export default {
   },
   async created() {
     this.isLoading = true;
+    this.isUserAllowedToSeeTraining();
+
     await this.getTraining();
     await this.handleVisitedTraining();
 
@@ -231,13 +233,35 @@ export default {
       await db.ref(`Trainings/${this.$route.params.id}`)
         .update({ rating: this.rating ? this.avgRating : -1 });
     },
+    isUserAllowedToSeeTraining() {
+      auth.onAuthStateChanged(async user => {
+        if (user) return true;
+
+        // Check if training belongs to the 9 most popular ones (those are public)
+        await db.ref('Trainings')
+          .orderByChild("views")
+          .limitToLast(9)
+          .once('value', snapshot => {
+            const trainingIDS = [];
+            for (let [id] of Object.entries(snapshot.val())) {
+              trainingIDS.push(id);
+            }
+
+            if (trainingIDS.includes(this.$route.params.id)) return true;
+
+            // Redirect to login page
+            this.$router.push("/account");
+            localStorage.setItem("prohibitedTrainingToAccountRoute", "true");
+          });
+      });
+    },
   },
   filters: {
     destructure(value) {
       return value.toString();
-    }
-  }
-}
+    },
+  },
+};
 
 </script>
 

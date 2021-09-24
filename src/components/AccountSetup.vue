@@ -67,24 +67,31 @@
       />
     </div>
 
-    <!-- Show login snackbar if you came from "add training" page & not logged in -->
+    <!-- Show login snackbar if you came from "add training" page -->
     <transition name="fade">
       <Snackbar
         ref="addTrainingSnackbar"
       />
     </transition>
 
-    <!-- Show login snackbar if you wanted to give a rating & not logged in -->
+    <!-- Show login snackbar if you wanted to give a rating -->
     <transition name="fade">
       <Snackbar
         ref="ratingSnackbar"
       />
     </transition>
 
-    <!-- Show login snackbar if you wanted to see all trainings & not logged in -->
+    <!-- Show login snackbar if you wanted to see all trainings -->
     <transition name="fade">
       <Snackbar
         ref="loadTrainingsSnackbar"
+      />
+    </transition>
+
+    <!-- Show login snackbar if you wanted to see training that's not part of the 9 public ones -->
+    <transition name="fade">
+      <Snackbar
+        ref="prohibitedTrainingSnackbar"
       />
     </transition>
   </section>
@@ -127,6 +134,9 @@ export default {
     } else if (localStorage.getItem("loadTrainingsToAccountRoute")) {
       this.$refs.loadTrainingsSnackbar.show("Je moet ingelogd zijn om alle trainingen te bekijken.");
       localStorage.removeItem("loadTrainingsToAccountRoute");
+    } else if (localStorage.getItem("prohibitedTrainingToAccountRoute")) {
+      this.$refs.loadTrainingsSnackbar.show("Je moet ingelogd zijn om deze training te bekijken.");
+      localStorage.removeItem("prohibitedTrainingToAccountRoute");
     }
   },
   methods: {
