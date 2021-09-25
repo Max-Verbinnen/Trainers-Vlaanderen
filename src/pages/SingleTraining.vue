@@ -191,6 +191,8 @@ export default {
       const trainingID = this.$route.params.id;
 
       if (visitedTrainings && visitedTrainings.includes(trainingID)) return;
+      if (!trainingID) return;
+
       if (!visitedTrainings) visitedTrainings = [];
 
       visitedTrainings.push(trainingID);
@@ -214,9 +216,12 @@ export default {
       this.getTraining();
     },
     async calculateRating() {
+      const trainingID = this.$route.params.id;
+      if (!trainingID) return;
+
       await db.ref('Ratings')
         .orderByChild('trainingID')
-        .equalTo(this.$route.params.id)
+        .equalTo(trainingID)
         .once('value', snapshot => {
           let ratings = [];
           snapshot.forEach(child => {
@@ -230,7 +235,7 @@ export default {
       });
 
       // Update rating in db
-      await db.ref(`Trainings/${this.$route.params.id}`)
+      await db.ref(`Trainings/${trainingID}`)
         .update({ rating: this.rating ? this.avgRating : -1 });
     },
     isUserAllowedToSeeTraining() {
