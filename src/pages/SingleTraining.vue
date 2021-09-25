@@ -206,6 +206,7 @@ export default {
       });
 
       // Update views in db
+      if (!this.$router.currentRoute.path.includes("/training/")) return;
       await db.ref(`Trainings/${this.$route.params.id}`)
         .update({ views });
     },
