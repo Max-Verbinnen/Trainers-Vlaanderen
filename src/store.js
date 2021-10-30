@@ -11,10 +11,10 @@ export const store = new Vuex.Store({
 
     // Static options
     themas: [
-      { hoofd: "Techniek", sub: ["Frontaal", "Schuin-frontaal", "Zijwaarts", "Achterwaarts", "Aanname"] },
+      { hoofd: "Techniek", sub: ["Frontaal", "Schuin-frontaal", "Zijwaarts", "Achterwaarts", "Aanname", "Handelingsnelheid", "Passing", "Leiden", "Dribbelen"] },
       { hoofd: "Speelwijze", sub: ["B+ (balbezit)", "B- (balverlies)", "Omschakeling"] },
       { hoofd: "Fysiek", sub: ["Mobiliteit", "Stabiliteit", "Flexibiliteit"] },
-      { hoofd: "Spelfases", sub: ["Vrije trappen (B+, B-)", "Penalty's", "Corners (B+, B-)"] },
+      { hoofd: "Stilstaande fases", sub: ["Vrije trappen (B+, B-)", "Penalty's", "Corners (B+, B-)"] },
     ],
     onderdelen: [
       "Opwarming",
@@ -25,6 +25,7 @@ export const store = new Vuex.Store({
       "Wedstrijdvorm",
       "Spelvorm",
       "Cooling down",
+      "Afgeleide wedstrijdvorm",
       "Keepertraining",
     ],
   },
