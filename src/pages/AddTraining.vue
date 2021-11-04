@@ -94,11 +94,28 @@
         </div>
 
         <div class="input-group onderdeel">
-          <label id="info">Onderdeel*</label><br>
+          <label id="info">Soort vorm*</label><br>
           <select id="fill" v-model="training.onderdeel" required>
             <option disabled value="">Kies één onderdeel</option>
             <option v-for="onderdeel in onderdelen" :key="onderdeel">{{ onderdeel }}</option>
           </select>
+        </div>
+
+        <div class="input-group basics">
+          <label id="info">Basics</label><br>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.basics"
+              placeholder="Kies een aantal opties"
+              track-by="name"
+              label="name"
+              :options="basics.plus.concat(basics.minus)"
+              :multiple="true"
+              :taggable="true"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group hoofdthema">
@@ -119,6 +136,36 @@
               </template>
             </template>
           </select>
+        </div>
+
+        <div v-if="training.subthema === 'TT+ (TT- => TT+)'" class="input-group tactics">
+          <label id="info">Tactics</label><br>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.tactics"
+              placeholder="Kies een aantal opties"
+              :options="tactics.plus"
+              :multiple="true"
+              :taggable="true"
+            >
+            </MultiSelect>
+          </div>
+        </div>
+
+        <div v-if="training.subthema === 'TT- (TT+ => TT-)'" class="input-group tactics">
+          <label id="info">Tactics</label><br>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.tactics"
+              placeholder="Kies een aantal opties"
+              :options="tactics.minus"
+              :multiple="true"
+              :taggable="true"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group">
@@ -181,6 +228,8 @@
 import { db, storage } from "../firebase";
 import { currentDate } from "../utils";
 
+import MultiSelect from 'vue-multiselect';
+
 export default {
   data() {
     return {
@@ -197,6 +246,8 @@ export default {
         duur: "",
         intensiteit: "",
         onderdeel: "",
+        basics: [],
+        tactics: [],
         hoofdthema: "",
         subthema: "",
         doelstellingen: "",
@@ -220,6 +271,9 @@ export default {
       hasError: false,
     }
   },
+  components: {
+    MultiSelect,
+  },
   computed: {
     user() {
       return this.$store.state.user;
@@ -237,12 +291,22 @@ export default {
     onderdelen() {
       return this.$store.state.onderdelen;
     },
+    basics() {
+      return this.$store.state.basics;
+    },
+    tactics() {
+      return this.$store.state.tactics;
+    },
   },
   methods: {
     async handleSubmit() {
       // Handle error
       this.validate();
       if (this.hasError || this.error.length > 0) return;
+
+      // Training basics are objects
+      this.unfoldTrainingBasics();
+      this.sortTrainingTactics();
 
       // Store image in firebase storage
       storage.ref(`${this.file.name}`).put(this.file).then(data => {
@@ -334,6 +398,16 @@ export default {
         userID: this.user.userID,
       };
     },
+    unfoldTrainingBasics() {
+      const basics = this.training.basics;
+      this.training.basics = [];
+      for (let basic of basics) {
+        this.training.basics.push(basic.name);
+      }
+    },
+    sortTrainingTactics() {
+      this.training.tactics.sort((a, b) => parseInt(a.slice(0, 2), 10) - parseInt(b.slice(0, 2), 10));
+    },
   },
   watch: {
     gotURL() {
@@ -379,6 +453,14 @@ export default {
 
 </script>
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
+<style scoped>
+.multiselect {
+  width: 20rem;
+}
+</style>
+
 <style scoped>
 
 h2 {
@@ -408,7 +490,7 @@ input, .players select, .keepers select, .onderdeel select, .hoofdthema select, 
 }
 
 input[type="text"], input[type="number"], select {
-  width: 15rem;
+  width: 20rem;
 }
 
 input:focus, select:focus, textarea:focus {

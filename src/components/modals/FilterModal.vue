@@ -59,7 +59,7 @@
             </div>
           </div>
           <div class="column onderdeel">
-            <h3>Onderdeel</h3>
+            <h3>Soort vorm</h3>
             <div class="input-group" v-for="onderdeel in onderdelen" :key="onderdeel">
               <input type="checkbox" :value="onderdeel" v-model="filterOnderdelen">
               <label>{{ onderdeel }}</label>

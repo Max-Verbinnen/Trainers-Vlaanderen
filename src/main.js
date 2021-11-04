@@ -15,6 +15,7 @@ library.add(fasStar, farStar);
 import moment from "moment";
 import VueRouter from "vue-router";
 import VueTippy, { TippyComponent } from "vue-tippy";
+import Multiselect from 'vue-multiselect'
 import "./firebase";
 
 // Activate plugins
@@ -23,6 +24,7 @@ Vue.use(VueRouter);
 Vue.use(VueTippy);
 Vue.component("tippy", TippyComponent);
 Vue.component('FontAwesomeIcon', FontAwesomeIcon);
+Vue.component('multiselect', Multiselect)
 
 // Router
 import routes from "./routes";

@@ -47,19 +47,34 @@
           <div>
             <p>{{ training.uitleg }}</p>
             <template v-if="training.variaties">
-              <h4 v-if="training.variaties">Variaties</h4>
-              <p>{{ training.variaties }}</p>
+              <h4>Variaties</h4>
+              <p>{{ training.variaties.trim() }}</p>
+            </template>
+            <template v-if="training.basics && training.basics.length > 0">
+              <h4>Basics</h4>
+              <ul>
+                <li v-for="basic in training.basics" :key="basic">{{ basic }}</li>
+              </ul>
+            </template>
+            <template v-if="training.tactics && training.tactics.length > 0">
+              <h4>Tactics</h4>
+              <div class="tactics-list">
+                <template v-for="tactic in training.tactics">
+                  <span :key="tactic">{{ tactic }}</span>
+                  <br :key="tactic + 'br'">
+                </template>
+              </div>
             </template>
             <template v-if="training.doelstellingen">
               <h4>Doelstellingen</h4>
               <p>{{ training.doelstellingen.trim() }}</p>
             </template>
             <template v-if="training.doorschuifsysteem">
-              <h4 v-if="training.doorschuifsysteem">Doorschuifsysteem</h4>
+              <h4>Doorschuifsysteem</h4>
               <p>{{ training.doorschuifsysteem }}</p>
             </template>
             <template v-if="training.materiaal">
-              <h4 v-if="training.materiaal">Materiaal</h4>
+              <h4>Materiaal</h4>
               <p>{{ training.materiaal }}</p>
             </template>
           </div>
@@ -308,6 +323,18 @@ img.training {
 .uitleg p {
   white-space: pre-line;
   max-width: 30rem;
+}
+
+.uitleg ul {
+  margin-left: 1.5rem;
+}
+
+.uitleg .tactics-list {
+  margin-left: 0.5rem;
+}
+
+.uitleg li, .uitleg .tactics-list {
+  line-height: 1.5em;
 }
 
 .uitleg img {
