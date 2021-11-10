@@ -8,8 +8,9 @@ import "./assets/css/style.css";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar as fasStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
+import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-library.add(fasStar, farStar);
+library.add(fasStar, farStar, faQuoteLeft);
 
 // Libraries & Plugins
 import moment from "moment";
