@@ -9,6 +9,9 @@ export const interviews = [
         answer: "We trainen 6 keer per week, maar ik doe meer dan enkel en alleen de beloften trainen. Ik ben bij Oud-Heverlee Leuven Academy Head of Coaching, dus ik ben eigenlijk verantwoordelijk voor het sportieve plan 11v11. Daarbovenop doe ik de individuele begeleiding van de jeugdtrainers.",
       },
       {
+        image: "01_EddyVanhemel_0.jpg",
+      },
+      {
         question: "Dat is vrij veel. Ik las online dat u ook nog docent bent (of bent geweest) bij Voetbal Vlaanderen.",
         answer: "Ik ben nog altijd docent bij Voetbal Vlaanderen. Ik geef daar de UEFA A cursus bij het reguliere traject, waarbij ik de mensen uit de ‘gewone’ voetbal het UEFA A verhaal probeer uit te leggen. Ik geef ook het UEFA A traject aan de ex-prof, binnen een apart circuit dat alleen maar toegankelijk is voor mensen die in het profvoetbal actief zijn geweest.",
       },
