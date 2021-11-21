@@ -9,7 +9,7 @@
           </div>
           <div class="interview-info">
             <h3>{{ interview.trainer }}</h3>
-            <p>Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.Dit is mijn inleiding.</p>
+            <p>{{ interview.preface }}</p>
           </div>
         </router-link>
       </div>
@@ -47,8 +47,14 @@ h3 {
   position: relative;
   max-width: 60em;
   margin-bottom: 3em;
-  padding: 2em;
+  padding: 2.5em;
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(.51,.09,.21,.8);
+}
+
+.card:hover {
+  margin-left: 0.5em;
+  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.2);
 }
 
 .card a {

@@ -60,6 +60,7 @@ h2 {
 
 .text-block p {
   line-height: 25px;
+  text-align: justify;
 }
 
 .text-block .quote {

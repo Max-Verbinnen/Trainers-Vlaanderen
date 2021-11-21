@@ -41,8 +41,7 @@ const router = new VueRouter({
 });
 
 // Vuex store
-import "./store";
-import { store } from "./store";
+import { store } from "./store/store.js";
 
 Vue.config.productionTip = false;
 
