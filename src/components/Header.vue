@@ -14,7 +14,7 @@
           <router-link to="/videos" exact>Trainingen op YouTube
         </router-link></li>
         <li @click="handleMobileNavClick">
-          <router-link to="/boards" exact>Coaching boards
+          <router-link to="/interviews" exact>Interviews
         </router-link></li>
         <li @click="handleMobileNavClick" class="account-link">
           <router-link to="/account" exact>

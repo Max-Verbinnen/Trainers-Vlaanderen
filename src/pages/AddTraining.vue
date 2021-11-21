@@ -190,6 +190,10 @@
 
         <div class="input-group">
           <label id="info">Afbeelding* (.jpg / .png / .gif)</label><br>
+          <p class="info-msg">
+            Voor meer informatie omtrent het maken van dergelijke afbeeldingen, kan je
+            <router-link to="/boards" target="_blank">hier</router-link> terecht.
+          </p>
           <label
             id="fill"
             class="custom-file-upload"
@@ -483,13 +487,19 @@ h2 {
   margin-top: 0.5rem;
 }
 
+.info-msg {
+  font-style: italic;
+  font-size: 0.9rem;
+  margin: 0.5em 0;
+}
+
 input, .players select, .keepers select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, .intensiteit select, textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid rgb(161, 161, 161);
 }
 
-input[type="text"], input[type="number"], select {
+input[type="text"], input[type="number"], select, p {
   width: 20rem;
 }
 
