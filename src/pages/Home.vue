@@ -4,7 +4,7 @@
       <div class="intro">
         <h2>Waar alle voetbaltrainingen samenkomen</h2>
         <h3>
-          Welkom bij Trainers Vlaanderen, een platform waar voetbalcoaches inspiratie uit kunnen halen om hun trainingen een niveau op te krikken of om een andere aanpak te ontdekken.
+          Doe inspiratie op als trainer door oefenvormen te bekijken; deel jouw vormen en krijg feedback; en leer andere invalshoeken kennen door onze interviews met verschillende trainers te lezen.
         </h3>
         <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
       </div>

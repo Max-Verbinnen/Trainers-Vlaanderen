@@ -14,7 +14,7 @@
           <img src="../assets/img/user.svg" alt="trainer" width="21" height="21">
           <span>
             {{ training.trainer || (training.user && training.user.name) }}
-            ({{ training.diploma }})
+            <template v-if="training.diploma">({{ training.diploma }})</template>
           </span>
         </p><br>
         <p class="club" v-if="training.club">
