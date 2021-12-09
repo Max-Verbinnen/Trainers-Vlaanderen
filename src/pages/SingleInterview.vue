@@ -80,8 +80,8 @@ h2 {
 
 .text-block img {
   margin: 1em 0;
-  width: 50em;
-  max-height: 35em;
+  width: 100%;
+  max-height: 32em;
   object-fit: cover;
 }
 
