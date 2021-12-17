@@ -5,6 +5,14 @@ export const themas = [
   { hoofd: "Stilstaande fases", sub: ["Vrije trappen (B+, B-)", "Penalty's", "Corners (B+, B-)"] },
 ];
 
+export const intensiteit = [
+  "Arbeid",
+  "Rust",
+  "Herhalingen",
+  "Sessie",
+  "Rustsessie",
+];
+
 export const onderdelen = [
   "Opwarming",
   "Techniekvorm",
@@ -16,6 +24,19 @@ export const onderdelen = [
   "Cooling down",
   "Afgeleide wedstrijdvorm",
   "Keepertraining",
+];
+
+export const diplomas = [
+  "Geen diploma",
+  "Keepertrainer 1",
+  "Keepertrainer 2",
+  "Physical coach 1",
+  "Physical coach 2",
+  "Initiator C",
+  "Instructeur B",
+  "UEFA B",
+  "UEFA A",
+  "UEFA Pro",
 ];
 
 export const basics = {

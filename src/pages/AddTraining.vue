@@ -10,19 +10,17 @@
 
         <div class="input-group diploma">
           <label id="info">Diploma</label><br>
-          <select id="fill" v-model="training.diploma">
-            <option disabled value="">Kies één diploma</option>
-            <option>Geen diploma</option>
-            <option>Keepertrainer 1</option>
-            <option>Keepertrainer 2</option>
-            <option>Physical coach 1</option>
-            <option>Physical coach 2</option>
-            <option>Initiator C</option>
-            <option>Instructeur B</option>
-            <option>UEFA B</option>
-            <option>UEFA A</option>
-            <option>UEFA Pro</option>
-          </select>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.diploma"
+              placeholder="Kies één diploma"
+              :options="diplomas"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group">
@@ -83,22 +81,32 @@
 
         <div class="input-group intensiteit">
           <label id="info">Intensiteit</label><br>
-          <select id="fill" v-model="training.intensiteit">
-            <option disabled value="">Kies één optie</option>
-            <option>Arbeid</option>
-            <option>Rust</option>
-            <option>Herhalingen</option>
-            <option>Sessie</option>
-            <option>Rustsessie</option>
-          </select>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.intensiteit"
+              placeholder="Kies één optie"
+              :options="intensiteit"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group onderdeel">
           <label id="info">Soort vorm*</label><br>
-          <select id="fill" v-model="training.onderdeel" required>
-            <option disabled value="">Kies één onderdeel</option>
-            <option v-for="onderdeel in onderdelen" :key="onderdeel">{{ onderdeel }}</option>
-          </select>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.onderdeel"
+              placeholder="Kies één onderdeel"
+              :options="onderdelen"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group basics">
@@ -120,22 +128,32 @@
 
         <div class="input-group hoofdthema">
           <label id="info">Hoofdthema*</label><br>
-          <select id="fill" v-model="training.hoofdthema" required>
-            <option disabled value="">Kies één hoofdthema</option>
-            <option v-for="thema in themas" :key="thema.hoofd">{{ thema.hoofd }}</option>
-          </select>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.hoofdthema"
+              placeholder="Kies één hoofdthema"
+              :options="themas.map(thema => thema.hoofd)"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div class="input-group subthema" v-if="training.hoofdthema">
           <label id="info">Subthema</label><br>
-          <select id="fill" v-model="training.subthema">
-            <option disabled value="">Kies één subthema</option>
-            <template v-for="thema in themas">
-              <template v-if="thema.hoofd === training.hoofdthema">
-                <option v-for="sub in thema.sub" :key="sub">{{ sub }}</option>
-              </template>
-            </template>
-          </select>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.subthema"
+              placeholder="Kies één subthema"
+              :options="themas.filter(thema => training.hoofdthema === thema.hoofd)[0].sub"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
         </div>
 
         <div v-if="training.subthema === 'TT+ (TT- => TT+)'" class="input-group tactics">
@@ -233,6 +251,7 @@ import { db, storage } from "../firebase";
 import { currentDate } from "../utils";
 
 import MultiSelect from 'vue-multiselect';
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -279,27 +298,21 @@ export default {
     MultiSelect,
   },
   computed: {
-    user() {
-      return this.$store.state.user;
-    },
+    ...mapState({
+      user: state => state.user,
+      themas: state => state.themas,
+      intensiteit: state => state.intensiteit,
+      onderdelen: state => state.onderdelen,
+      diplomas: state => state.diplomas,
+      basics: state => state.basics,
+      tactics: state => state.tactics,
+    }),
     orderedClubs() {
       const clubs = [...this.clubsList];
       return clubs.sort((a, b) => {
         if (a.toLowerCase() < b.toLowerCase()) return -1;
         if (a.toLowerCase() > b.toLowerCase()) return 1;
       });
-    },
-    themas() {
-      return this.$store.state.themas;
-    },
-    onderdelen() {
-      return this.$store.state.onderdelen;
-    },
-    basics() {
-      return this.$store.state.basics;
-    },
-    tactics() {
-      return this.$store.state.tactics;
     },
   },
   methods: {
