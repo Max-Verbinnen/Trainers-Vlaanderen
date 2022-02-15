@@ -73,6 +73,7 @@ export default {
         .catch(err => this.handleError(err));
     },
     handleError(error) {
+      // eslint-disable-next-line
       if (process.env.NODE_ENV === "development") console.log(error.code, ' - ', error.message);
       const code = error.code.split("/")[1];
 

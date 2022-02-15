@@ -177,6 +177,7 @@ export default {
       return nameArray.join(" ");
     },
     handleError(error, state) {
+      // eslint-disable-next-line
       if (process.env.NODE_ENV === "development") console.log(error.code, ' - ', error.message);
       const code = error.code.split("/")[1];
 
