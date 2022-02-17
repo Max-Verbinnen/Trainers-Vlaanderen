@@ -1,5 +1,21 @@
 <template>
   <div id="users-admin-page" v-if="isAdmin">
+    <section id="challenges">
+      <div class="section-content">
+        <h2>Challenges</h2>
+        <ul class="challenges-overview">
+          <li>One</li>
+          <li>Two</li>
+        </ul>
+        <button class="btn add-challenge-btn" @click="$refs.addChallengeModal.show('smdkf')">Voeg challenge toe</button>
+      </div>
+    </section>
+
+    <!-- Modal for when you forget your password -->
+    <AddChallengeModal
+      ref="addChallengeModal"
+    />
+
     <section id="users">
       <h2>Lijst van alle trainers ({{ users.length }})</h2>
       <ul class="section-content">
@@ -25,7 +41,7 @@
       </ul>
     </section>
 
-    <section id="users">
+    <section id="e-mails">
       <h2>Alle e-mails ({{ emails.length }})</h2>
       <p class="section-content">
         {{ emails.join(", ") }}
@@ -37,11 +53,16 @@
 <script>
 import { db } from "../../firebase";
 
+import AddChallengeModal from "../../components/modals/AddChallengeModal.vue";
+
 export default {
   data() {
     return {
       users: [],
     };
+  },
+  components: {
+    AddChallengeModal,
   },
   async created() {
     try {
@@ -92,6 +113,13 @@ h2 {
 
 .section-content {
   margin-bottom: 3rem;
+}
+
+.add-challenge-btn {
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
 }
 
 .user {
