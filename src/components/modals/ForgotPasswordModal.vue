@@ -12,7 +12,7 @@
           v-model="email"
         >
         <div class="underline"></div>
-        <label v-visible="!emailSent">Email</label>
+        <label v-show="!emailSent">Email</label>
       </div>
 
       <p class="errMsg">{{ forgotPasswordErrorMsg }}</p>
