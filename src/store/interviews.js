@@ -218,4 +218,62 @@ export const interviews = [
       },
     ]
   },
+  {
+    id: 4,
+    trainer: "Dennis Moerman",
+    preface: "Dennis Moerman (32) is geen onbekende in de wereld van het vrouwenvoetbal. Na eerdere ervaringen bij Zulte Waregem en AA Gent, is hij momenteel hoofdtrainer bij Club YLA.",
+    text: [
+      {
+        question: "Dennis, je bent ondertussen al een tiental jaren actief als trainer bij de vrouwen. Wanneer heb je gekozen om in die wereld te gaan coachen? Verschilt het fel van mannenvoetbal?",
+        answer: "Wel, ik had in mijn studies de keuze gemaakt voor de opleiding master lichamelijke opvoeding, specifiek met het idee om in de sporttraining actief te zijn. Met afstudeerrichting voetbal, uiteraard. (lacht) Toen al met het idee om coach te worden, maar niet per se om in het vrouwenvoetbal actief te zijn. Ik wou tijdens mijn opleiding van alle delen van het voetbal geproefd hebben. Daar hoort topsportschool bij, maar ik heb daar dan ook gebruik van gemaakt om eens te kijken hoe het bij de vrouwen was. Ik ben daar onmiddellijk verliefd geworden op deze tak van het voetbal. Een van de redenen is dat daar nog veel onontgonnen gebied was. Ik heb in die 12 jaren die ik actief ben geweest veel ontwikkeling kunnen meemaken in het vrouwenvoetbal. Met elk jaar dat vordert, is er meer en meer progressie. Ik was jong en zag veel ruimte voor vooruitgang. Ik wou dat die vrouwen goed omkaderd en begeleid gingen worden. Ik heb dan ook een ander inzicht gegeven in het anders begeleiden van jonge vrouwen. In mijn beleving ligt er een verschil [tussen mannen en vrouwen coachen] in de manier waarmee omgegaan wordt met het uiten van emoties. Vrouwen en meisjes zijn niet per se emotioneler - er mag geen illusie ontstaan dat jongens die emoties niet hebben - maar die gaan er gewoon anders mee om. Door actief te zijn in het vrouwenvoetbal ben ik tot het besef gekomen dat emoties die zich intern afspelen een belangrijk onderdeel is van het modern trainerschap. Ik ben als coach in het mannenvoetbal beter geworden door te coachen in het vrouwenvoetbal. Er zit dus niet zozeer een groot verschil in het technisch of tactisch luik, maar meer op mentaal en fysiek vlak. We kunnen niet vragen van een jong meisje om een cross bal te geven van 50m; maar naar first touch, spelen tussen de lijnen, bezetting voor doel, in die zaken zit er weinig verschil. Zij gaan in sommige situaties dezelfde emoties hebben als mannen, maar gaan dit op een expressievere manier gaan manifesteren.",
+      },
+      {
+        image: "04_DennisMoerman_0.jpg",
+      },
+      {
+        quote: "Je bent misschien technisch en tactisch de beste die er rond loopt, fysiek en periodisering op en top, maar als je beter wil worden in het people managen, ga dan ook people managen! Spreek met mensen, spreek met jouw staf. Ik maak veel fouten. Van elke fout leer je bij."
+      },
+      {
+        question: "Je spreekt over jouw omgang met emoties. Heb je doorheen jouw carrière veel samengewerkt met mental coaches? ",
+        answer: "Ik denk dat de jonge coach in mezelf recht door zee was; ik was te fel gericht op winnen. Met de jaren blijkt dat coaching effectief een ervaring vak is. Het voeren van moeilijke gesprekken, omgaan met emoties die daarbij horen. De ontwikkeling die ik zelf heb doorgemaakt is niet te herleiden naar een boek of een cursus, maar eerder uit alle ervaring die ik binnen en buiten de voetbalwereld heb opgedaan. Je begint situaties te herkennen, en je gaat je kunnen inleven met hoe die andere persoon zich bij een bepaald onderwerp gaat voelen. Ik ben niet de beste people manager, maar ik ben wel bewust geworden van het mentaal aspect van een boodschap die je geeft. Denk aan selecties doorsturen, communiceren over keuzes van een speler op die positie op te stellen. Als je daar bij stil staat en goed nadenkt over hoe je kan overkomen, vermijd je moeilijkere gesprekken. Mijn grootste advies voor coaches is als volgt: Je bent misschien technisch en tactisch de beste die er rond loopt, fysiek en periodisering op en top, maar als je beter wil worden in het people managen, ga dan ook people managen! Spreek met mensen, spreek met jouw staf. Ik maak veel fouten. Van elke fout leer je bij. Ervaring opdoen is dus voor mij het belangrijkste.",
+      },
+      {
+        quote: "Online zie je bijvoorbeeld honderden mensen kritiek geven op hoe dat onze nationale ploeg speelt. Die mensen hebben een goed Game Idea. Maar dit te gaan vertalen naar training momenten zodat de spelers deze speelwijze kunnen overnemen in wedstrijdmomenten, is toch iets heel anders.",
+      },
+      {
+        question: "Je geeft zelf UEFA A en UEFA B cursussen. Waarin raad je aan dat coaches deze volgen?",
+        answer: "De cursussen dienen er vooral voor om een referentiekader te geven. Het kan goed zijn dat jij bepaalde ideeën en visies had over een bepaald onderwerp en dat je bij het volgen van zo’n opleiding een ‘aha’ moment krijgt, waarbij je doorhebt dat je toch nog niet volledig staat waar je zou kunnen staan. Het is belangrijk om de ideeën die je hebt te kunnen omzetten naar trainingsmomenten. Online zie je bijvoorbeeld honderden mensen kritiek geven op hoe dat onze nationale ploeg speelt. Die mensen hebben een goed Game Idea. Maar dit te gaan vertalen naar training momenten zodat de spelers deze speelwijze kunnen overnemen in wedstrijdmomenten, is toch iets heel anders. De goede coach weet de beginsituatie van zijn ploeg goed in te schatten. De top coach kan een gps-navigatie naar een eindsituatie neerzetten. De trainingscursus probeert cursisten bij te staan in hun groepen naar die eindsituatie te krijgen. Je steekt veel op uit alle debatmomenten en uitwisselingen van gedachtes tussen cursisten, maar ik ben er zeker van dat er top down informatie is die gedeeld wordt met de cursisten. We moeten de cursus niet reduceren tot een discussie of een debat. De informatie die je krijgt is cruciaal voor een referentiekader te vormen. Je moet een basiskennis hebben over trainingen geven.",
+      },
+      {
+        question: "Laten we even terugkeren naar het begin. Ik neem aan dat je ook speler bent geweest, en je gaf al aan dat je sportkot gestudeerd had. Waar was dat?",
+        answer: "Aan de universiteit van Gent.",
+      },
+      {
+        question: "Waar heb je die schakel gemaakt om je te focussen op jouw trainerscarrière?",
+        answer: "Dat is eigenlijk heel toevallig begonnen, want ik was toen nog 18 bij een reserveploeg in het West-Vlaamse op een heel jonge leeftijd en je weet hoe dat dat gaat. Een ex-collega van in Waregem was ook in diezelfde ploeg komen spelen. Ik kom de papa van die jongen tegen, die coördinator was van de onderbouw. Luc Coorvits is zijn naam. Dat is eigenlijk de mens die mij het duwtje gegeven heeft in richting van het trainerschap. Ik heb dan een aantal keer training gegeven aan de U9, vervolgens aan de U6 van Waregem. Ik werd daar ook in bevestigd door medetrainers, die aangaven dat het coachen me lag. Toen zat ik in mijn eerste jaar van mijn universiteit. Ik ben dan beginnen nadenken over welke afstudeerrichting ik wou kiezen. Ik kon kiezen tussen sportmanagement, onderwijs, onderzoek… Nu dat ik dit wist, heb ik gekozen voor het trainerschap. Puur door een keertje uitgenodigd te worden door een coach is het voor mij helemaal begonnen. Luc Coorvits staat aan de oorsprong van mijn carrière.",
+      },
+      {
+        question: "Heb je ooit spijt gekregen van het stoppen met zelf te voetballen? Wanneer was je gestopt?",
+        answer: "Ik was 23 jaar oud. Ik ben niet gestopt door blessures, maar omdat die gelegenheid zich had voorgedaan. Ik heb mijn jeugd in SV Waregem gevolgd, een mooie nationale jeugd kunnen afmaken. Je kom snel tot de vaststelling dat je niet het talent hebt om mee die stap te gaan maken naar eerste nationale. Dan zak je heel snel af naar de regionale niveaus, waar niets mis mee is, maar als je dan voor die keuze staat om te stoppen, dan is die keuze sneller gemaakt. Als ik verder was blijven spelen, zou ik mijn talent als coach ook misschien tekort doen. De idealist in mezelf zei dat ik als coach een mooiere toekomst had dan blijven spelen in een 2de provinciale. Het start met minder te gaan trainen, dan toch een kwetsuren gekregen. Toen heb ik doorgekregen dat ik het eigenlijk niet miste om daar te spelen. Daarna kwam het docentschap, het aanbod als trainer in de Super League.",
+      },
+      {
+        image: "04_DennisMoerman_1.jpg",
+      },
+      {
+        quote: "Jouw mentor is van cruciaal belang. Je moet beste vrienden kunnen zijn, maar als het eens slecht is, moet jouw mentor vlak af kunnen zeggen dat het niet goed is en waarom het niet goed is. Je hebt een critical friend nodig.",
+      },
+      {
+        question: "Welke raad kan je geven aan jonge trainers die ambitie hebben om te ontwikkelen?",
+        answer: "Mijn grootste advies zou zijn om die trainingscursussen te volgen, zodat dat referentiekader daar staat. Als nieuwe coach is het een wit blad, zorg dat je jezelf maximaal voorbereid. Bij mijn overstap naar mijn ploeg in Brugge, heb ik me voorbereid. Het ervaringstraject is belangrijk. Doe het. Maar werk die opleidingen heel snel af. Ik was UEFA A gediplomeerd op mijn 26. De A in UEFA A staat voor ‘advanced’. Ik voelde me pas ‘advanced’ op mijn 28, mijn 29. Heel gek. Ik had al mijn diploma’s. Er komt nog een derde facet bij dat ik niet genoeg kan benadrukken. Jouw mentor is van cruciaal belang. Je moet beste vrienden kunnen zijn, maar als het eens slecht is, moet jouw mentor vlak af kunnen zeggen dat het niet goed is en waarom het niet goed is. Je hebt een critical friend nodig. Je kan een referentiekader hebben, daarrond een visie hebben. Je kan deze gaan toepassen in de praktijk. Jouw lessen daaruit trekken. Maar misschien trek je de verkeerde eruit! Jouw mentor moet ook in jou geloven. Barry Pauwels, die nu in America actief is: als het gaat over voetbal, een echt voetbaldier. In uw leven heb je je mensen nodig die jou kansen geven en die bereid zijn om jouw scherpe kantjes er ook bij te pakken. Ik ben aangeworven bij de federatie op mijn 27 jaar. Ik was mijn opwarming aan het geven. Barry Pauwels belde me op, en vroeg me om een contract te ondertekenen. Hij heeft me die kans gegeven om binnen die docentschap te starten. Achteraf bleek dat hij in mij veel potentieel zag. Maar ik was nog jong. Ik merkte dat ik een andere mindset moest gaan aannemen. Ik werd geconfronteerd met mijn tekortkomingen. Tijdens mijn docentenopleidingen ben ik veel diepgaande informatie gaan verwerven. Ook kan je in een situatie komen die niet fijn is, maar later zal je doorhebben dat je aan die leermomenten enorm veel heb opgestoken. Een mentor moet er dus zijn om jou kansen te geven maar jou terecht te wijzen als het niet zo goed is als het zou kunnen zijn.",
+      },
+      {
+        question: "Om af te sluiten wil ik nog een specifieke vraag stellen. Er is veel discussie omtrent wat een ideale opwarming allemaal bevat. Wat is volgens jou de ideale opwarming?",
+        answer: "Het gaat over een holistische kijk op de opwarming. Er moeten 4 elementen aanwezig zijn. Er moet klimming zijn in loopintensiteit, pasintensiteit, van duels en als laatste ook in de cognitieve intensiteit. Loop en pasintensiteit verhogen is voor de hand liggend. Dueling kan je 1v1 vormen geven, vormen waarbij er veel contact is tussen spelers. Als we weten dat we een vorm gaan geven waarbij er veel rugwaarts contact gemaakt gaat worden, gaan we het lichaam daar ook op voorbereiden. In de laatste fase gaan we proberen een keuze-element gaan toevoegen, zodat ze continu moeten gaan kijken en gaan nadenken. Afhankelijk van wat jouw match of jouw training is, ga je meer voorkeur geven aan één bepaalde bouwsteen. Bij de match willen we sowieso pre-activeren (elastiekwerk, endo- en exorotatie). De echte opwarming is best kort en krachtig. Te lange opwarmingen met lage intensiteit zorgt voor loomheid. Met hoge intensiteit zo’n lange opwarming geven, gaat de spieren te veel gaan belasten. Wij gaan 20 à 25 minuten in korte blokken in heel hoge intensiteit werken. Daar ken je de klassiekers wel in: lange naar korte passing, partijvormen.",
+      },
+      {
+        question: "Dennis, bedankt voor het gesprek. Ik wens jou en jouw ploeg nog veel succes toe dit seizoen.",
+        answer: "",
+      },
+    ]
+  },
 ];

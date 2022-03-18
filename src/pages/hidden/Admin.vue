@@ -1,6 +1,6 @@
 <template>
   <div id="users-admin-page" v-if="isAdmin">
-    <section id="challenges">
+    <!-- <section id="challenges">
       <div class="section-content">
         <h2>Challenges</h2>
         <ul class="challenges-overview">
@@ -9,7 +9,7 @@
         </ul>
         <button class="btn add-challenge-btn" @click="$refs.addChallengeModal.show('smdkf')">Voeg challenge toe</button>
       </div>
-    </section>
+    </section> -->
 
     <!-- Modal for when you forget your password -->
     <AddChallengeModal
