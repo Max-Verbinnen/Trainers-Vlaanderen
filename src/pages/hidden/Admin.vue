@@ -1,15 +1,23 @@
 <template>
   <div id="users-admin-page" v-if="isAdmin">
-    <!-- <section id="challenges">
-      <div class="section-content">
-        <h2>Challenges</h2>
-        <ul class="challenges-overview">
-          <li>One</li>
-          <li>Two</li>
-        </ul>
-        <button class="btn add-challenge-btn" @click="$refs.addChallengeModal.show('smdkf')">Voeg challenge toe</button>
-      </div>
-    </section> -->
+    <section id="challenges">
+      <h2>Challenges</h2>
+      <button class="btn add-challenge-btn" @click="$refs.addChallengeModal.show()">Voeg challenge toe</button>
+      <ul class="section-content">
+        <!-- Headings -->
+        <li class="challenge"> 
+          <div><strong>Titel</strong></div>
+          <div><strong>Startdatum</strong></div>
+          <div><strong>Einddatum</strong></div>
+        </li>
+        <!-- Challenges -->
+        <li v-for="challenge in $store.state.challenges" :key="challenge.id" class="challenge">
+          <div>{{ challenge.title }}</div>
+          <div>{{ moment(challenge.startDate).format("DD/MM/YYYY") }}</div>
+          <div>{{ moment(challenge.endDate).format("DD/MM/YYYY") }}</div>
+        </li>
+      </ul>
+    </section>
 
     <!-- Modal for when you forget your password -->
     <AddChallengeModal
@@ -120,14 +128,19 @@ h2 {
   cursor: pointer;
   font-size: 1rem;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1em;
 }
 
-.user {
+.user, .challenge {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
 
-.user div {
+.challenge {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.user div, .challenge div {
   padding: 0.75rem;
   border: 1px solid var(--grey-border);
 }

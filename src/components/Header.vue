@@ -1,5 +1,14 @@
 <template>
   <header>
+    <!-- Challenge banner -->
+    <ChallengeBanner v-if="currentChallenge" :challenge="currentChallenge" v-on:test="$refs.challengeInfoModal.show(currentChallenge)" />
+
+    <!-- Modal to view challenge info -->
+    <ChallengeInfoModal
+      ref="challengeInfoModal"
+    />
+
+    <!-- Actual navigation -->
     <nav>
       <h1 @click.stop="handleMobileNavClick"><router-link to="/" exact>
         <img src="../assets/img/logo.svg" alt="Logo" id="nav-title">
@@ -8,14 +17,14 @@
       <img class="hamburger-menu" src="../assets/img/menu.svg" alt="navigatie icoon" @click="handleMobileNavClick">
       <ul ref="list">
         <li @click="handleMobileNavClick">
-          <router-link to="/toevoegen" exact>Voeg je eigen training toe
-        </router-link></li>
+          <router-link to="/toevoegen" exact>Voeg je eigen training toe</router-link>
+        </li>
         <li @click="handleMobileNavClick">
-          <router-link to="/videos" exact>Trainingen op YouTube
-        </router-link></li>
+          <router-link to="/videos" exact>Trainingen op YouTube</router-link>
+        </li>
         <li @click="handleMobileNavClick">
-          <router-link to="/interviews" exact>Interviews
-        </router-link></li>
+          <router-link to="/interviews" exact>Interviews</router-link>
+        </li>
         <li @click="handleMobileNavClick" class="account-link">
           <router-link to="/account" exact>
             <img src="../assets/img/user.svg" alt="account" width="21" height="21">
@@ -28,12 +37,26 @@
 </template>
 
 <script>
+import ChallengeBanner from "./ChallengeBanner.vue";
+import ChallengeInfoModal from "./modals/ChallengeInfoModal.vue";
 
 export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+    currentChallenge() {
+      const challenges = this.$store.state.challenges;
+      const currentChallenges = challenges.filter(chal => {
+        return this.moment(chal.startDate).isBefore(this.moment()) && this.moment(chal.endDate).isAfter(this.moment());
+      });
+
+      return (currentChallenges.length > 0) ? currentChallenges[0] : false;
     }
+  },
+  components: {
+    ChallengeBanner,
+    ChallengeInfoModal,
   },
   methods: {
     handleMobileNavClick(e) {

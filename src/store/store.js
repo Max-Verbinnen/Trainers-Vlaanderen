@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
   state: {
     // Dynamic data
     user: null,
-    trainings: null,
+    trainings: [],
+    challenges: [],
 
     // Static data
     themas,
@@ -28,6 +29,9 @@ export const store = new Vuex.Store({
     },
     setTrainings(state, trainings) {
       state.trainings = trainings;
-    }
+    },
+    setChallenges(state, challenges) {
+      state.challenges = challenges;
+    },
   },
 });

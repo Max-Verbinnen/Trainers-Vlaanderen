@@ -43,6 +43,7 @@ export default {
     this.storeUser();
 
     await this.storeTrainings();
+    await this.storeChallenges();
     this.listenForNewTrainings();
   },
   methods: {
@@ -113,7 +114,19 @@ export default {
           }
         }
       })
-    }
+    },
+    async storeChallenges() {
+      const challenges = [];
+
+      await db.ref("Challenges").once("value", snapshot => {
+        if (!snapshot.val()) return;
+        for (let [id, value] of Object.entries(snapshot.val())) {
+          challenges.push({...value, id});
+        }
+      });
+
+      this.$store.commit("setChallenges", challenges);
+    },
   },
   async mounted() {
     /*
