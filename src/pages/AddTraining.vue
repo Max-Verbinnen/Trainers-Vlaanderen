@@ -443,7 +443,7 @@ export default {
     },
     unfoldSubthemas() {
       const subthema = this.training.subthema;
-      if (typeof subthema === Object) this.training.subthema = subthema.name;
+      if (typeof subthema === 'object' && subthema !== null) this.training.subthema = subthema.name;
     },
     sortTrainingTactics() {
       this.training.tactics.sort((a, b) => parseInt(a.slice(0, 2), 10) - parseInt(b.slice(0, 2), 10));
