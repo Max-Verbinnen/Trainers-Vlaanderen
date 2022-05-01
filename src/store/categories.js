@@ -5,6 +5,41 @@ export const themas = [
   { hoofd: "Stilstaande fases", sub: ["Vrije trappen (B+, B-)", "Penalty's", "Corners (B+, B-)"] },
 ];
 
+export const subthemas = [
+  {
+    hoofd: "Speelwijze",
+    subs: [
+      { name: "TT+ (TT- => TT+)", $isDisabled: true },
+      { name: "Opbouwen", plus: true },
+      { name: "Infiltraties naar de waarheidzone", plus: true },
+      { name: "Beheersen van de waarheidzone", plus: true },
+      { name: "Restverdediging", plus: true },
+      { name: "Omschakeling B- naar B+", plus: true },
+      { name: "TT- (TT+ => TT-)", $isDisabled: true },
+      { name: "Opbouw verstoren", plus: false },
+      { name: "Blokvorming", plus: false },
+      { name: "Beheersen defensieve waarheidzone", plus: false },
+      { name: "Beheersen van infiltraties naar defensieve waarheidzone", plus: false },
+      { name: "Omschakeling B+ naar B-", plus: false },
+    ],
+  },
+  {
+    hoofd: "Fysiek",
+    subs: [
+      { name: "Uithouding", $isDisabled: true },
+      { name: "EDT" },
+      { name: "IDT" },
+      { name: "EIT" },
+      { name: "IIT" },
+      { name: "Snelheid", $isDisabled: true },
+      { name: "HKSV" },
+      { name: "SS" },
+      { name: "VV" },
+      { name: "SUV" },
+    ],
+  },
+];
+
 export const intensiteit = [
   "Arbeid",
   "Rust",

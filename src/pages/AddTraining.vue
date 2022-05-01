@@ -141,7 +141,7 @@
           </div>
         </div>
 
-        <div class="input-group subthema" v-if="training.hoofdthema">
+        <div class="input-group subthema" v-if="training.hoofdthema && ['Techniek', 'Stilstaande fases'].includes(training.hoofdthema)">
           <label id="info">Subthema</label><br>
           <div id="fill">
             <MultiSelect
@@ -156,7 +156,24 @@
           </div>
         </div>
 
-        <div v-if="training.subthema === 'TT+ (TT- => TT+)'" class="input-group tactics">
+        <div class="input-group subthema" v-if="training.hoofdthema && ['Speelwijze', 'Fysiek'].includes(training.hoofdthema)">
+          <label id="info">Subthema</label><br>
+          <div id="fill">
+            <MultiSelect
+              id="fill"
+              v-model="training.subthema"
+              track-by="name"
+              label="name"
+              placeholder="Kies één subthema"
+              :options="subthemas.filter(s => s.hoofd === training.hoofdthema)[0].subs"
+              :multiple="false"
+              :searchable="false"
+            >
+            </MultiSelect>
+          </div>
+        </div>
+
+        <div v-if="training.subthema && training.subthema.plus === true" class="input-group tactics">
           <label id="info">Tactics</label><br>
           <div id="fill">
             <MultiSelect
@@ -171,7 +188,7 @@
           </div>
         </div>
 
-        <div v-if="training.subthema === 'TT- (TT+ => TT-)'" class="input-group tactics">
+        <div v-if="training.subthema && training.subthema.plus === false" class="input-group tactics">
           <label id="info">Tactics</label><br>
           <div id="fill">
             <MultiSelect
@@ -301,6 +318,7 @@ export default {
     ...mapState({
       user: state => state.user,
       themas: state => state.themas,
+      subthemas: state => state.subthemas,
       intensiteit: state => state.intensiteit,
       onderdelen: state => state.onderdelen,
       diplomas: state => state.diplomas,
@@ -323,6 +341,7 @@ export default {
 
       // Training basics are objects
       this.unfoldTrainingBasics();
+      this.unfoldSubthemas();
       this.sortTrainingTactics();
 
       // Store image in firebase storage
@@ -421,6 +440,10 @@ export default {
       for (let basic of basics) {
         this.training.basics.push(basic.name);
       }
+    },
+    unfoldSubthemas() {
+      const subthema = this.training.subthema;
+      if (typeof subthema === Object) this.training.subthema = subthema.name;
     },
     sortTrainingTactics() {
       this.training.tactics.sort((a, b) => parseInt(a.slice(0, 2), 10) - parseInt(b.slice(0, 2), 10));

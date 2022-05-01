@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 // Data
 import { interviews } from "./interviews";
-import { themas, intensiteit, onderdelen, diplomas, basics, tactics } from "./categories";
+import { themas, subthemas, intensiteit, onderdelen, diplomas, basics, tactics } from "./categories";
 
 export const store = new Vuex.Store({
   state: {
@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
 
     // Static data
     themas,
+    subthemas,
     intensiteit,
     onderdelen,
     diplomas,
