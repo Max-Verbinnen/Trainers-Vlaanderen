@@ -79,7 +79,7 @@
           <input id="fill" type="number" required autocomplete="off" v-model="training.duur">
         </div>
 
-        <div class="input-group intensiteit">
+        <!-- <div class="input-group intensiteit">
           <label id="info">Intensiteit</label><br>
           <div id="fill">
             <MultiSelect
@@ -92,7 +92,7 @@
             >
             </MultiSelect>
           </div>
-        </div>
+        </div> -->
 
         <div class="input-group onderdeel">
           <label id="info">Soort vorm*</label><br>
