@@ -11,8 +11,7 @@
     <!-- Actual navigation -->
     <nav>
       <h1 @click.stop="handleMobileNavClick"><router-link to="/" exact>
-        <img src="../assets/img/logo.svg" alt="Logo" id="nav-title">
-        <span id="nav-title">Trainers Vlaanderen</span>
+        <img src="../assets/img/new-logo.jpg" alt="Logo" id="nav-title">
       </router-link></h1>
       <img class="hamburger-menu" src="../assets/img/menu.svg" alt="navigatie icoon" @click="handleMobileNavClick">
       <ul ref="list">
@@ -109,8 +108,8 @@ nav a {
 }
 
 h1 img {
-  width: 40px;
-  margin-right: 1rem;
+  margin-left: 0.1em;
+  width: 130px;
 }
 
 h1 a {
