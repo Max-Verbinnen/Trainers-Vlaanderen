@@ -11,6 +11,9 @@
             <h3>{{ interview.trainer }}</h3>
             <p>{{ interview.preface }}</p>
           </div>
+          <div class="thumbnail">
+            <img :src="require(`../assets/interviews/${interview.thumbnail}`)" :alt="interview.trainer">
+          </div>
         </router-link>
       </div>
     </section>
@@ -50,6 +53,8 @@ h3 {
   padding: 2.5em;
   box-shadow: 0 5px 45px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(.51,.09,.21,.8);
+  border-radius: 0% 1% 1% 0% / 0% 50% 50% 0% ;
+  overflow: hidden;
 }
 
 .card:hover {
@@ -73,6 +78,17 @@ h3 {
 
 .interview-info {
   margin-left: 2em;
+  max-width: 65%;
+}
+
+.thumbnail img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.4) opacity(0.8);
 }
 
 </style>

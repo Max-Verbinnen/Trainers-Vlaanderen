@@ -3,6 +3,7 @@ export const interviews = [
     id: 1,
     trainer: "Eddy Vanhemel",
     preface: "De meeste coaches starten bij de jeugd en bouwen hun carrière op naar eerste ploegen. Hoe zit dat nu met coaches die het omgekeerd parcours afleggen? Lees hier het interview met Eddy Vanhemel, coach van de beloften van OHL.",
+    thumbnail: "01_EddyVanhemel_0.jpg",
     text: [
       {
         question: "Hoeveel trainingen is dat zo per week, OHL-beloften?",
@@ -70,6 +71,7 @@ export const interviews = [
     id: 2,
     trainer: "Werner Martens",
     preface: "Werner Martens is een 39-jaar-oude coach die actief is bij Kerala Blasters, een club in de Indian Super League. Hij is hier de assisten-coach. In een verder verleden bekleedde hij rollen in clubs als Lokeren, Beerschot, Willem II, Taawon, Trencin, Lommel, etc. Lees hier het interview met deze coach vol met ervaringen!",
+    thumbnail: "02_WernerMartens_0.jpg",
     text: [
       {
         question: "Werner, jij bent nu actief als trainer in het buitenland. Waar is dat en welke functie bekleed je?",
@@ -151,6 +153,7 @@ export const interviews = [
     id: 3,
     trainer: "Michel Bruyninckx",
     preface: "Michel Bruyninckx is een trainer en lesgever, die zijn eigen trainingsmethodiek ontwikkeld heeft rond brein centraal leren. Door wetenschappelijke principes te gaan integreren binnen zijn oefenvormen boekte hij enorme progressie met elke ploeg waarmee hij aan de slag ging.",
+    thumbnail: "03_MichelBruyninckx_0.jpg",
     text: [
       {
         question: "Als we nu eens volledig terugdraaien in de tijd. Waar is jouw verhaal binnen het voetbalwereldje gestart?",
@@ -222,6 +225,7 @@ export const interviews = [
     id: 4,
     trainer: "Dennis Moerman",
     preface: "Dennis Moerman (32) is geen onbekende in de wereld van het vrouwenvoetbal. Na eerdere ervaringen bij Zulte Waregem en AA Gent, is hij momenteel hoofdtrainer bij Club YLA.",
+    thumbnail: "04_DennisMoerman_0.jpg",
     text: [
       {
         question: "Dennis, je bent ondertussen al een tiental jaren actief als trainer bij de vrouwen. Wanneer heb je gekozen om in die wereld te gaan coachen? Verschilt het fel van mannenvoetbal?",
