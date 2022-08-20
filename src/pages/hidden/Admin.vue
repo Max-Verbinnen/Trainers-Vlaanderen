@@ -77,7 +77,7 @@ export default {
       await this.getAllUsers();
       this.sortUsers();
     } catch (err) {
-      if (!this.isAdmin) {
+      if (!this.isAdmin || this.isInDevelopment) {
         localStorage.setItem("404", "true");
         this.$router.push("/");
         return;
@@ -85,9 +85,12 @@ export default {
     }
   },
   computed: {
+		isInDevelopment() {
+			return process.env.NODE_ENV === "development";
+		},
     isAdmin() {
       // Tijl & Max are admins
-      const email = this.$store.state.user?.email;
+      const email = this.$store.state.user?.email || "nope";
       return email === process.env.VUE_APP_ADMIN_ONE || email === process.env.VUE_APP_ADMIN_TWO;
     },
     emails() {
