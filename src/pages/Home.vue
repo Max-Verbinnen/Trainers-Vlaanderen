@@ -1,14 +1,6 @@
 <template>
   <div id="home-page">    
     <section id="home">
-      <div class="intro">
-        <h2>Waar alle voetbaltrainingen samenkomen</h2>
-        <h3>
-          Doe inspiratie op als trainer door oefenvormen te bekijken; deel jouw vormen en krijg feedback; en leer andere invalshoeken kennen door onze interviews met verschillende trainers te lezen.
-        </h3>
-        <router-link to="/toevoegen" class="btn main-cta">Deel je eigen training &nbsp; <span class="bounce-animation">⚽</span></router-link>
-      </div>
-
       <Loading
         :active.sync="isLoading"
         color="var(--primary-green)"
@@ -286,21 +278,6 @@ export default {
 #snackbar {
   left: 50%;
   transform: translateX(-50%);
-}
-
-.intro h2 {
-  max-width: 40rem;
-}
-
-.intro h3 {
-  font-weight: 300;
-  font-size: 1.1rem;
-  margin: 1.5rem 0 2rem 0;
-  max-width: 40rem;
-}
-
-.intro {
-  margin-bottom: 10rem;
 }
 
 .trainings h3 {
