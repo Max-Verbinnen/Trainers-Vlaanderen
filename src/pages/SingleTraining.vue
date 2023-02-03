@@ -260,7 +260,6 @@ export default {
 
         // Check if training belongs to the 9 most popular ones (those are public)
         await db.ref('Trainings')
-          .orderByChild("views")
           .limitToLast(9)
           .once('value', snapshot => {
             const trainingIDS = [];

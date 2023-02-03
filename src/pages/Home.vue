@@ -133,7 +133,7 @@ export default {
       loading: true,
 
       search: "",
-      sortBy: "Weergaven",
+      sortBy: "Recentste",
     }
   },
   async mounted() {
@@ -181,6 +181,12 @@ export default {
           });
       }
     },
+    async getPublicTrainings() {
+      await db.ref('Trainings')
+        .once('value', snapshot => {
+          this.handleSnapshot(snapshot, true);
+        });
+    },
     handleSnapshot(snapshot, isPublic = false) {
       let trainingsArray = [];
       snapshot.forEach(child => {
@@ -199,13 +205,6 @@ export default {
       }
 
       this.loading = false;
-    },
-    async getPublicTrainings() {
-      await db.ref('Trainings')
-        .orderByChild("views")
-        .once('value', snapshot => {
-          this.handleSnapshot(snapshot, true);
-        });
     },
     async getClubs() {
       let clubs = [];
@@ -246,10 +245,6 @@ export default {
     sortBy() {
       sessionStorage.setItem("sortBy", this.sortBy);
       this.getTrainings();
-    },
-    user() {
-      // There is a user
-      this.sortBy = "Recentste";
     },
   },
   filters: {
