@@ -12,16 +12,16 @@
         <h3>Bekijk de trainingen ({{ trainings.length }})</h3>
 
         <div class="filter-wrapper">
-          <button class="filter" @click="$refs.filterModal.show($store.state.user ? trainings : publicTrainings, clubs);">
+          <button class="filter" @click="$refs.filterModal.show(user ? trainings : publicTrainings, clubs);">
             <span>Filter</span>&nbsp;<img src="../assets/img/filter.svg" alt="filter trainingen" width="21" height="21">
           </button>
           <div class="input-wrap">
             <input type="text" v-model="search" placeholder="Zoek op titel...">
             <img src="../assets/img/cross.svg" alt="verwijder tekst" @click="search = ''" width="21" height="21">
           </div>
-          <div
+          <!-- <div
             class="select-group"
-            v-if="$store.state.user"
+            v-if="user"
           >
             <select v-model="sortBy">
               <option disabled value="">Sorteer op</option>
@@ -42,10 +42,10 @@
               <option>Weergaven</option>
               <option>Beoordeling</option>
             </select>
-          </div>
+          </div> -->
         </div>
 
-        <p v-if="(filteredTrainings.length === 0 || publicTrainings.length === 0) && !loading" class="error-msg">
+        <p v-if="filteredTrainings.length === 0 || publicTrainings.length === 0" class="error-msg">
           Er zijn geen trainingen gevonden. 
           Pas de filters aan of 
           <span id="delete-filters" @click="deleteFilters">verwijder de filters</span>.
@@ -53,7 +53,7 @@
         <div class="container" ref="container">
           <div
             class="card"
-            v-for="training in ($store.state.user ? filteredTrainings : filteredPublicTrainings)"
+            v-for="training in (user ? filteredTrainings : filteredPublicTrainings)"
             :key="training.id" :id="training.id"
           >
             <router-link :to="`/training/${training.id}/${training.titel.replace(/\W+/g, '-').toLowerCase()}`">
@@ -90,7 +90,7 @@
             </router-link>
           </div>
         </div>
-        <div class="more-trainings" v-if="!$store.state.user && !loading" @click="loadMoreTrainings">
+        <div class="more-trainings" v-if="!user" @click="loadMoreTrainings">
           <button>Laad meer trainingen</button>
         </div>
       </div>
@@ -126,11 +126,9 @@ export default {
     return {
       isLoading: false,
 
-      trainings: [],
       trainingsCopy: [],
       publicTrainings: [],
       clubs: [],
-      loading: true,
 
       search: "",
       sortBy: "Recentste",
@@ -145,11 +143,12 @@ export default {
       localStorage.removeItem("404");
     }
 
-    this.isLoading = true;
-    await this.getTrainings();
-    await this.getPublicTrainings();
+    if (this.trainings && this.trainings.length) {
+      this.initTrainings();
+    } else {
+      this.isLoading = true;
+    }
     await this.getClubs();
-    this.isLoading = false;
   },
   components: {
     FilterModal: () => import("../components/modals/FilterModal.vue"),
@@ -162,49 +161,13 @@ export default {
       this.trainingsCopy = filtered;
       this.publicTrainings = filtered;
     },
+    initTrainings() {
+      this.trainingsCopy = [...this.trainings].reverse();
+      this.publicTrainings = [...this.trainingsCopy].slice(0, 9);
+    },
     deleteFilters() {
-      location.reload();
-    },
-    async getTrainings() {
-      const sortByOption = this.sortByNaming[this.sortBy];
-
-      if (sortByOption) {
-        await db.ref('Trainings')
-          .orderByChild(sortByOption)
-          .once('value', snapshot => {
-            this.handleSnapshot(snapshot);
-          });
-      } else {
-        await db.ref('Trainings')
-          .once('value', snapshot => {
-            this.handleSnapshot(snapshot);
-          });
-      }
-    },
-    async getPublicTrainings() {
-      await db.ref('Trainings')
-        .once('value', snapshot => {
-          this.handleSnapshot(snapshot, true);
-        });
-    },
-    handleSnapshot(snapshot, isPublic = false) {
-      let trainingsArray = [];
-      snapshot.forEach(child => {
-        trainingsArray.push({
-          ...child.val(),
-          id: child.key,
-        });
-      });
-
-      trainingsArray.reverse();
-      if (isPublic) {
-        this.publicTrainings = trainingsArray.slice(0, 9);
-      } else {
-        this.trainings = trainingsArray;
-        this.trainingsCopy = [...this.trainings];
-      }
-
-      this.loading = false;
+      this.initTrainings();
+      this.search = "";
     },
     async getClubs() {
       let clubs = [];
@@ -230,6 +193,9 @@ export default {
     filteredPublicTrainings() {
       return this.publicTrainings.filter(training => training.titel.toLowerCase().match(this.search));
     },
+    trainings() {
+      return this.$store.state.trainings;
+    },
     user() {
       return this.$store.state.user;
     },
@@ -244,7 +210,10 @@ export default {
   watch: {
     sortBy() {
       sessionStorage.setItem("sortBy", this.sortBy);
-      this.getTrainings();
+    },
+    trainings() {
+      this.initTrainings();
+      this.isLoading = false;
     },
   },
   filters: {

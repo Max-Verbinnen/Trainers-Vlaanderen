@@ -258,7 +258,7 @@ export default {
       auth.onAuthStateChanged(async user => {
         if (user) return true;
 
-        // Check if training belongs to the 9 most popular ones (those are public)
+        // Check if training belongs to the 9 most recent ones (those are public)
         await db.ref('Trainings')
           .limitToLast(9)
           .once('value', snapshot => {
