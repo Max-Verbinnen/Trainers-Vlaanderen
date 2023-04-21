@@ -188,10 +188,10 @@ export default {
   },
   computed: {
     filteredTrainings() {
-      return this.trainingsCopy.filter(training => training.titel.toLowerCase().match(this.search));
+      return this.trainingsCopy.filter(training => training.titel.toLowerCase().match(this.search.toLowerCase()));
     },
     filteredPublicTrainings() {
-      return this.publicTrainings.filter(training => training.titel.toLowerCase().match(this.search));
+      return this.publicTrainings.filter(training => training.titel.toLowerCase().match(this.search.toLowerCase()));
     },
     trainings() {
       return this.$store.state.trainings;

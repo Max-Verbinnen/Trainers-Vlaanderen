@@ -8,8 +8,8 @@ export default [
   { path: "/boards", component: () => import("./pages/Boards.vue") },
   { path: "/account", component: () => import("./pages/Account.vue") },
   { path: "/overons", component: () => import("./pages/AboutUs.vue") },
-  { path: "/interviews", component: () => import("./pages/Interviews.vue") },
-  { path: "/interviews/:name", component: () => import("./pages/SingleInterview.vue") },
+  // { path: "/interviews", component: () => import("./pages/Interviews.vue") },
+  // { path: "/interviews/:name", component: () => import("./pages/SingleInterview.vue") },
   { path: "/training/:id", component: () => import("./pages/SingleTraining.vue") },
   { path: "/training/:id/:name", component: () => import("./pages/SingleTraining.vue") },
 
