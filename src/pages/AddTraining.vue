@@ -60,12 +60,12 @@
         </div>
 
         <div class="input-group spelsituatie">
-          <label id="info">Spelsituatie*</label><br>
-          <select id="fill" v-model="training.spelsituatie1" required>
+          <label id="info">Spelsituatie</label><br>
+          <select id="fill" v-model="training.spelsituatie1">
             <option v-for="n in 11" :key="n">{{ n }}</option>
           </select>
           v
-          <select id="fill" v-model="training.spelsituatie2" required>
+          <select id="fill" v-model="training.spelsituatie2">
             <option v-for="n in 11" :key="n">{{ n }}</option>
           </select>
         </div>
