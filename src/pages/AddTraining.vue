@@ -35,43 +35,39 @@
           <label id="info">Categorie</label><br>
           <div id="fill">
             <input type="checkbox" value="Onderbouw" v-model="training.categorie">
-            <label>Onderbouw (U6 - U9)</label><br>
+            <label> Onderbouw (U6 - U9)</label><br>
             <input type="checkbox" value="Middenbouw" v-model="training.categorie">
-            <label>Middenbouw (U10 - U13)</label><br>
+            <label> Middenbouw (U10 - U13)</label><br>
             <input type="checkbox" value="Bovenbouw" v-model="training.categorie">
-            <label>Bovenbouw (U14 - U21)</label><br>
+            <label> Bovenbouw (U14 - U21)</label><br>
             <input type="checkbox" value="Volwassen" v-model="training.categorie">
-            <label>Volwassen ploegen</label>
+            <label> Volwassen ploegen</label>
           </div>
         </div>
 
         <div class="input-group players">
           <label id="info">Spelers*</label><br>
           <select id="fill" v-model="training.spelers" required>
-            <option v-for="n in 23" :key="n">{{n - 1}}</option>
+            <option v-for="n in 23" :key="n">{{ n - 1 }}</option>
           </select>
         </div>
 
         <div class="input-group keepers">
           <label id="info">Keepers*</label><br>
           <select id="fill" v-model="training.keepers" required>
-            <option v-for="n in 6" :key="n">{{n - 1}}</option>
+            <option v-for="n in 6" :key="n">{{ n - 1 }}</option>
           </select>
         </div>
 
-        <div class="input-group">
-          <label id="info">Materiaal</label><br>
-          <textarea id="fill" v-model="training.materiaal" autocomplete="off"></textarea>
-        </div>
-
-        <div class="input-group niveau">
-          <label id="info">Niveau van spelers</label><br>
-          <div id="fill">
-            <div><input type="radio" value="Gemiddeld" v-model="training.niveau"><label>Gemiddeld</label></div>
-            <div><input type="radio" value="Goed" v-model="training.niveau"><label>Goed</label></div>
-            <div><input type="radio" value="Heel goed" v-model="training.niveau"><label>Heel goed</label></div>
-            <div><input type="radio" value="Uitstekend" v-model="training.niveau"><label>Uitstekend</label></div>
-          </div>
+        <div class="input-group spelsituatie">
+          <label id="info">Spelsituatie*</label><br>
+          <select id="fill" v-model="training.spelsituatie1" required>
+            <option v-for="n in 11" :key="n">{{ n }}</option>
+          </select>
+          v
+          <select id="fill" v-model="training.spelsituatie2" required>
+            <option v-for="n in 11" :key="n">{{ n }}</option>
+          </select>
         </div>
 
         <div class="input-group duur">
@@ -141,22 +137,7 @@
           </div>
         </div>
 
-        <div class="input-group subthema" v-if="training.hoofdthema && ['Techniek', 'Stilstaande fases'].includes(training.hoofdthema)">
-          <label id="info">Subthema</label><br>
-          <div id="fill">
-            <MultiSelect
-              id="fill"
-              v-model="training.subthema"
-              placeholder="Kies één subthema"
-              :options="themas.filter(thema => training.hoofdthema === thema.hoofd)[0].sub"
-              :multiple="false"
-              :searchable="false"
-            >
-            </MultiSelect>
-          </div>
-        </div>
-
-        <div class="input-group subthema" v-if="training.hoofdthema && ['Speelwijze', 'Fysiek'].includes(training.hoofdthema)">
+        <div class="input-group subthema" v-if="training.hoofdthema">
           <label id="info">Subthema</label><br>
           <div id="fill">
             <MultiSelect
@@ -165,7 +146,7 @@
               track-by="name"
               label="name"
               placeholder="Kies één subthema"
-              :options="subthemas.filter(s => s.hoofd === training.hoofdthema)[0].subs"
+              :options="subthemas.find(s => s.hoofd === training.hoofdthema).subs"
               :multiple="false"
               :searchable="false"
             >
@@ -204,13 +185,23 @@
         </div>
 
         <div class="input-group">
-          <label id="info">Doelstellingen</label><br>
-          <textarea id="fill" v-model="training.doelstellingen" placeholder="Wat wil je bereiken met deze vorm?"></textarea>
+          <label id="info">Organization</label><br>
+          <textarea id="fill" v-model="training.materiaal" autocomplete="off" placeholder="Materiaal, afstanden, ruimtes"></textarea>
         </div>
 
         <div class="input-group">
-          <label id="info">Uitleg van de training*</label><br>
-          <textarea id="fill" v-model="training.uitleg" required></textarea>
+          <label id="info">Drill explanation*</label><br>
+          <textarea id="fill" v-model="training.uitleg" required placeholder="Rewards (puntensysteem), restrictions (opdrachten), 2nd action (tweede bal? omschakeling?)"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label id="info">Coaching points</label><br>
+          <textarea id="fill" v-model="training.doelstellingen" placeholder="Wat verwacht je van je spelers in possession, out of possession en in transition? Waar focus je op als coach?"></textarea>
+        </div>
+
+        <div class="input-group">
+          <label id="info">Progressions & regressions</label><br>
+          <textarea id="fill" v-model="training.challenge" :placeholder="`Progression: hoe maak je het moeilijker voor je spelers?\nRegression: hoe maak je het gemakkelijker voor je spelers?`"></textarea>
         </div>
 
         <div class="input-group">
@@ -279,8 +270,10 @@ export default {
         diploma: "",
         club: "",
         categorie: [],
-        spelers: 0,
-        keepers: 0,
+        spelers: null,
+        keepers: null,
+        spelsituatie1: null,
+        spelsituatie2: null,
         materiaal: "",
         niveau: "",
         duur: "",
@@ -292,6 +285,7 @@ export default {
         subthema: "",
         doelstellingen: "",
         uitleg: "",
+        challenge: "",
         variaties: "",
         doorschuifsysteem: "",
         img: "",
@@ -529,7 +523,7 @@ h2 {
   margin: 0.5em 0;
 }
 
-input, .players select, .keepers select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, .intensiteit select, textarea {
+input, .players select, .keepers select, .spelsituatie select, .onderdeel select, .hoofdthema select, .subthema select, .diploma select, .duur select, .intensiteit select, textarea {
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: 1px solid rgb(161, 161, 161);
@@ -544,6 +538,10 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 2px var(--primary-green);
 }
 
+.spelsituatie select {
+  width: 9.5rem;
+}
+
 .category #fill {
   max-width: 25rem;
 }
@@ -552,11 +550,11 @@ input:focus, select:focus, textarea:focus {
   display: inline-block;
 }
 
-.category #fill input[type="checkbox"], .niveau #fill input[type="radio"] {
+.category #fill input[type="checkbox"] {
   margin-right: 0.15rem;
 }
 
-.category #fill label, .niveau #fill label {
+.category #fill label {
   margin-right: 0.5rem;
 }
 

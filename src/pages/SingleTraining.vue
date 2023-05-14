@@ -77,6 +77,10 @@
               <h4>Materiaal</h4>
               <p>{{ training.materiaal }}</p>
             </template>
+            <template v-if="training.challenge">
+              <h4>Progressions & regressions</h4>
+              <p>{{ training.challenge }}</p>
+            </template>
           </div>
           <img :src="training.img" :alt="'Trainers Vlaanderen | ' + training.titel" class="training">
         </div>
@@ -85,6 +89,7 @@
         <p v-if="training.categorie"><span id="subtitle">Categorie</span>: {{ training.categorie | destructure }}</p>
         <p v-if="training.spelers"><span id="subtitle">Spelers</span>: {{ training.spelers }}</p>
         <p v-if="training.keepers"><span id="subtitle">Keepers</span>: {{ training.keepers }}</p>
+        <p v-if="training.spelsituatie1 && training.spelsituatie2"><span id="subtitle">Spelsituatie</span>: {{`${training.spelsituatie1} v ${training.spelsituatie2}`}}</p>
         <p v-if="training.niveau"><span id="subtitle">Niveau van de spelers</span>: {{ training.niveau }}</p>
         <p v-if="training.duur"><span id="subtitle">Duur van de training</span>: {{ training.duur }}</p>
         <p v-if="training.intensiteit"><span id="subtitle">Intensiteit</span>: {{ training.intensiteit }}</p>
