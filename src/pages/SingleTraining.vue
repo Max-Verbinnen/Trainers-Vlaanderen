@@ -66,7 +66,7 @@
               </div>
             </template>
             <template v-if="training.doelstellingen">
-              <h4>Doelstellingen</h4>
+              <h4>Coaching points</h4>
               <p>{{ training.doelstellingen.trim() }}</p>
             </template>
             <template v-if="training.doorschuifsysteem">
@@ -74,7 +74,7 @@
               <p>{{ training.doorschuifsysteem }}</p>
             </template>
             <template v-if="training.materiaal">
-              <h4>Materiaal</h4>
+              <h4>Organization</h4>
               <p>{{ training.materiaal }}</p>
             </template>
             <template v-if="training.challenge">

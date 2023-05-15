@@ -1,5 +1,5 @@
 <template>
-  <div id="home-page">    
+  <div id="home-page">
     <section id="home">
       <Loading
         :active.sync="isLoading"
@@ -19,7 +19,7 @@
             <input type="text" v-model="search" placeholder="Zoek op titel...">
             <img src="../assets/img/cross.svg" alt="verwijder tekst" @click="search = ''" width="21" height="21">
           </div>
-          <!-- <div
+          <div
             class="select-group"
             v-if="user"
           >
@@ -42,7 +42,7 @@
               <option>Weergaven</option>
               <option>Beoordeling</option>
             </select>
-          </div> -->
+          </div>
         </div>
 
         <p v-if="filteredTrainings.length === 0 || publicTrainings.length === 0" class="error-msg">
@@ -188,7 +188,18 @@ export default {
   },
   computed: {
     filteredTrainings() {
-      return this.trainingsCopy.filter(training => training.titel.toLowerCase().match(this.search.toLowerCase()));
+      const filtered = this.trainingsCopy.filter(training => training.titel.toLowerCase().match(this.search.toLowerCase()));
+
+      switch (this.sortBy) {
+        case "Recentste":
+          return filtered.sort((a, b) => b.date - a.date);
+        case "Weergaven":
+          return filtered.sort((a, b) => b.views - a.views);
+        case "Beoordeling":
+          return filtered.sort((a, b) => (b.rating || -1) - (a.rating || -1));
+      }
+
+      return filtered;
     },
     filteredPublicTrainings() {
       return this.publicTrainings.filter(training => training.titel.toLowerCase().match(this.search.toLowerCase()));
@@ -198,13 +209,6 @@ export default {
     },
     user() {
       return this.$store.state.user;
-    },
-    sortByNaming() {
-      return {
-        "Recentste": null,
-        "Weergaven": "views",
-        "Beoordeling": "rating",
-      };
     },
   },
   watch: {
