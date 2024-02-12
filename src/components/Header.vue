@@ -11,7 +11,7 @@
     <!-- Actual navigation -->
     <nav>
       <h1 @click.stop="handleMobileNavClick"><router-link to="/" exact>
-        <img src="../assets/img/new-logo.jpg" alt="Logo" id="nav-title">
+        <img src="../assets/img/logo.png" alt="Logo" id="nav-title">
       </router-link></h1>
       <img class="hamburger-menu" src="../assets/img/menu.svg" alt="navigatie icoon" @click="handleMobileNavClick">
       <ul ref="list">
@@ -74,6 +74,7 @@ header {
   margin-bottom: 5rem;
   z-index: 100;
   background: white;
+  background-color: var(--primary-dark);
 }
 
 nav {
@@ -91,22 +92,24 @@ ul li {
 
 ul li a img {
   transform: translateY(5px);
+  filter: invert(100%);
 }
 
 nav a {
   text-decoration: none;
-  color: initial;
+  color: white;
 }
 
 .hamburger-menu {
   width: 2em;
   cursor: pointer;
   display: none;
+  filter: invert(100%);
 }
 
 h1 img {
   margin-left: 0.1em;
-  width: 130px;
+  width: 65px;
 }
 
 h1 a {
@@ -163,7 +166,7 @@ a.router-link-active:not(h1 a)::before {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background: var(--light-green);
+    background: var(--primary-dark);
     padding: 0 2rem;
     transition: 0.5s ease;
     font-size: 1.5rem;
